@@ -1,0 +1,28 @@
+From: Maximiliano Curia <maxy@debian.org>
+Date: Fri, 19 Feb 2016 13:26:43 +0100
+Subject: mayhem_rootv
+
+commit 358b8ca76876d7e4a1d3cd417f365a48291b1539
+Author: Maximiliano Curia <maxy@gnuservers.com.ar>
+Date:   Thu Jun 27 09:53:17 2013 +0200
+
+    rootv mayhem fix.
+---
+ x11/rootv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/x11/rootv.c b/x11/rootv.c
+index ba71fa9..7e8ff66 100644
+--- a/x11/rootv.c
++++ b/x11/rootv.c
+@@ -175,6 +175,10 @@ main(int argc, char *argv[])
+     int i,bg,newwin,do_mute,have_mute,grab;
+ 
+     dpy = XOpenDisplay(NULL);
++    if (dpy == NULL) {
++        fprintf(stderr, "failed to open X11 display\n");
++        exit(1);
++    }
+     scr = DefaultScreenOfDisplay(dpy);
+     init_atoms(dpy);
+ 

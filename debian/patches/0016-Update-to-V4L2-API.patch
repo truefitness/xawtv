@@ -1,0 +1,128 @@
+From: Philipp Matthias Hahn <pmhahn@debian.org>
+Date: Fri, 19 Feb 2016 16:12:04 +0100
+Subject: Update to V4L2 API
+
+---
+ structs/struct-v4l2.c | 39 +++++++++++++++++++++++++++++++++------
+ 1 file changed, 33 insertions(+), 6 deletions(-)
+
+diff --git a/structs/struct-v4l2.c b/structs/struct-v4l2.c
+index 7237c5d..cb5a89b 100644
+--- a/structs/struct-v4l2.c
++++ b/structs/struct-v4l2.c
+@@ -9,6 +9,7 @@
+ #include "struct-v4l2.h"
+ 
+ /* ---------------------------------------------------------------------- */
++/* See <http://v4l2spec.bytesex.org/spec/> */
+ 
+ char *desc_v4l2_field[] = {
+ 	[V4L2_FIELD_ANY]        = "ANY",
+@@ -19,6 +20,8 @@ char *desc_v4l2_field[] = {
+ 	[V4L2_FIELD_SEQ_TB]     = "SEQ_TB",
+ 	[V4L2_FIELD_SEQ_BT]     = "SEQ_BT",
+ 	[V4L2_FIELD_ALTERNATE]  = "ALTERNATE",
++	[V4L2_FIELD_INTERLACED_TB] = "INTERLACED_TB",
++	[V4L2_FIELD_INTERLACED_BT] = "INTERLACED_BT",
+ };
+ 
+ char *desc_v4l2_buf_type[] = {
+@@ -27,6 +30,9 @@ char *desc_v4l2_buf_type[] = {
+ 	[V4L2_BUF_TYPE_VIDEO_OVERLAY] = "VIDEO_OVERLAY",
+ 	[V4L2_BUF_TYPE_VBI_CAPTURE]   = "VBI_CAPTURE",
+ 	[V4L2_BUF_TYPE_VBI_OUTPUT]    = "VBI_OUTPUT",
++	[V4L2_BUF_TYPE_SLICED_VBI_CAPTURE]   = "SLICED_VBI_CAPTURE",
++	[V4L2_BUF_TYPE_SLICED_VBI_OUTPUT]    = "SLICED_VBI_OUTPUT",
++	[V4L2_BUF_TYPE_VIDEO_OUTPUT_OVERLAY] = "VIDEO_OUTPUT_OVERLAY",
+ 	[V4L2_BUF_TYPE_PRIVATE]       = "PRIVATE",
+ };
+ 
+@@ -35,11 +41,23 @@ char *desc_v4l2_ctrl_type[] = {
+ 	[V4L2_CTRL_TYPE_BOOLEAN] = "BOOLEAN",
+ 	[V4L2_CTRL_TYPE_MENU]    = "MENU",
+ 	[V4L2_CTRL_TYPE_BUTTON]  = "BUTTON",
++	[V4L2_CTRL_TYPE_INTEGER64]  = "INTEGER64",
++	[V4L2_CTRL_TYPE_CTRL_CLASS] = "CTRL_CLASS",
++};
++
++char *desc_v4l2_ctrl_flags[] = {
++	[V4L2_CTRL_FLAG_DISABLED]  = "DISABLED",
++	[V4L2_CTRL_FLAG_GRABBED]   = "GRABBED",
++	[V4L2_CTRL_FLAG_READ_ONLY] = "READ_ONLY",
++	[V4L2_CTRL_FLAG_UPDATE]    = "UPDATE",
++	[V4L2_CTRL_FLAG_INACTIVE]  = "INACTIVE",
++	[V4L2_CTRL_FLAG_SLIDER]    = "SLIDER",
+ };
+ 
+ char *desc_v4l2_tuner_type[] = {
+ 	[V4L2_TUNER_RADIO]     = "RADIO",
+ 	[V4L2_TUNER_ANALOG_TV] = "ANALOG_TV",
++	[V4L2_TUNER_DIGITAL_TV] = "DIGITAL_TV",
+ };
+ 
+ char *desc_v4l2_memory[] = {
+@@ -61,10 +79,10 @@ char *desc_v4l2_colorspace[] = {
+ 
+ char *bits_capabilities[32] = {
+ 	"VIDEO_CAPTURE", "VIDEO_OUTPUT", "VIDEO_OVERLAY", "",
+-	"VBI_CAPTURE", "VBI_OUTPUT",   "?","?",
+-	"RDS_CAPTURE", "?", "?", "?",
++	"VBI_CAPTURE", "VBI_OUTPUT", "SLICED_VBI_CAPTURE", "SLICED_VBI_OUTPUT",
++	"RDS_CAPTURE", "VIDEO_OUTPUT_OVERLAY", "?", "?",
+ 	"?", "?", "?", "?",
+-	"TUNER", "AUDIO", "?", "?",
++	"TUNER", "AUDIO", "RADIO", "?",
+ 	"?", "?", "?", "?",
+ 	"READWRITE", "ASYNCIO", "STREAMING", "?",
+ };
+@@ -73,9 +91,9 @@ char *bits_standard[64] = {
+ 	"PAL_B",      "PAL_B1",      "PAL_G",   "PAL_H",
+ 	"PAL_I",      "PAL_D",       "PAL_D1",  "PAL_K",
+ 	"PAL_M",      "PAL_N",       "PAL_Nc",  "PAL_60",
+-	"NTSC_M",     "NTSC_M_JP",   "?", "?",
++	"NTSC_M",     "NTSC_M_JP",   "NTSC_433", "NTSC_M_KR",
+ 	"SECAM_B",    "SECAM_D",     "SECAM_G", "SECAM_H",
+-	"SECAM_K",    "SECAM_K1",    "SECAM_L", "?"
++	"SECAM_K",    "SECAM_K1",    "SECAM_L", "SECAM_LC"
+ 	"ATSC_8_VSB", "ATSC_16_VSB",
+ };
+ 
+@@ -88,6 +106,7 @@ char *bits_buf_flags[32] = {
+ 	"BFRAME",
+ 	"?", "?",
+ 	"TIMECODE",
++	"INPUT",
+ };
+ 
+ char *bits_fbuf_cap[32] = {
+@@ -95,12 +114,18 @@ char *bits_fbuf_cap[32] = {
+ 	"CHROMAKEY",
+ 	"LIST_CLIPPING",
+ 	"BITMAP_CLIPPING",
++	"LOCAL_ALPHA",
++	"GLOBAL_ALPHA",
++	"LOCAL_INV_ALPHA",
+ };
+ 
+ char *bits_fbuf_flags[32] = {
+ 	"PRIMARY",
+ 	"OVERLAY",
+ 	"CHROMAKEY",
++	"LOCAL_ALPHA",
++	"GLOBAL_ALPHA",
++	"LOCAL_INV_ALPHA",
+ };
+ 
+ char *desc_input_type[32] = {
+@@ -616,8 +641,10 @@ struct struct_desc desc_v4l2_queryctrl[] = {{
+ 	.type   = SINT32,
+ 	.name   = "default_value",
+ },{
+-	.type   = UINT32,
++	.type   = ENUM32,
+ 	.name   = "flags",
++	.enums  = desc_v4l2_ctrl_flags,
++	.length = sizeof(desc_v4l2_ctrl_flags) / sizeof(char*),
+ },{
+ 	/* end of list */
+ }};

@@ -1,0 +1,21 @@
+From: Maximiliano Curia <maxy@debian.org>
+Date: Fri, 19 Feb 2016 13:26:43 +0100
+Subject: do_not_link_xprint
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 10756e8..e8ea944 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -39,7 +39,7 @@ LIB_FLAGS	:= -I. -I./vbistuff -I./x11 \
+ # various libraries
+ ATHENA_LIBS	:= @X_LIBS@ @XFT_LIBS@ @LIBS@ @ATHENA@
+ MOTIF_LIBS	:= @X_LIBS@ @XFT_LIBS@ @LIBS@ -lXm -lXmu -lXt @X_PRE_LIBS@ \
+-		   -lXp -lXpm -lXext -lX11 @X_EXTRA_LIBS@
++		   -lXpm -lXext -lX11 @X_EXTRA_LIBS@
+ THREAD_LIBS	:= @LIBPTHREAD@
+ CURSES_LIBS	:= @LIBCURSES@
+ LIRC_LIBS	:= @LIRC@

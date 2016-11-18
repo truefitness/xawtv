@@ -1,0 +1,59 @@
+From: Stas Sergeev <stsp@users.sourceforge.net>
+Date: Sat, 27 Dec 2014 22:04:58 +0300
+Subject: v4l2_getimage: prefer CAP_STREAMING over CAP_READWRITE
+
+This patch fixes Fedora buzilla #1155784:
+	https://bugzilla.redhat.com/show_bug.cgi?id=1155784
+
+And got merged at Fedora xawtv package by:
+	Dmitry Butskoy <buc@fedoraproject.org>
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab@osg.samsung.com>
+---
+ libng/plugins/drv0-v4l2.tmpl.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/libng/plugins/drv0-v4l2.tmpl.c b/libng/plugins/drv0-v4l2.tmpl.c
+index ded868d..2cbd34b 100644
+--- a/libng/plugins/drv0-v4l2.tmpl.c
++++ b/libng/plugins/drv0-v4l2.tmpl.c
+@@ -1241,7 +1241,19 @@ v4l2_getimage(void *handle)
+ 
+     size = h->fmt_me.bytesperline * h->fmt_me.height;
+     buf = ng_malloc_video_buf(&h->fmt_me,size);
+-    if (h->cap.capabilities & V4L2_CAP_READWRITE) {
++    if (h->cap.capabilities & V4L2_CAP_STREAMING) {
++	if (-1 == v4l2_start_streaming(h,1)) {
++	    v4l2_stop_streaming(h);
++	    return NULL;
++	}
++	frame = v4l2_waiton(h);
++	if (-1 == frame) {
++	    v4l2_stop_streaming(h);
++	    return NULL;
++	}
++	memcpy(buf->data,h->buf_me[0].data,size);
++	v4l2_stop_streaming(h);
++    } else {
+ #ifndef USE_LIBV4L
+ 	rc = read(h->fd,buf->data,size);
+ #else /* USE_LIBV4L */
+@@ -1269,18 +1281,6 @@ v4l2_getimage(void *handle)
+ 	    ng_release_video_buf(buf);
+ 	    return NULL;
+ 	}
+-    } else {
+-	if (-1 == v4l2_start_streaming(h,1)) {
+-	    v4l2_stop_streaming(h);
+-	    return NULL;
+-	}
+-	frame = v4l2_waiton(h);
+-	if (-1 == frame) {
+-	    v4l2_stop_streaming(h);
+-	    return NULL;
+-	}
+-	memcpy(buf->data,h->buf_me[0].data,size);
+-	v4l2_stop_streaming(h);
+     }
+     return buf;
+ }

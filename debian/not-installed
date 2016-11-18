@@ -1,0 +1,8 @@
+# False positives
+usr/share/man
+# Not including motv
+etc/X11/app-defaults/MoTV
+etc/X11/*/app-defaults/MoTV
+usr/bin/motv
+# Nor showqt
+usr/bin/showqt

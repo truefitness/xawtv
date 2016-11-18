@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export verbose = yes
+
+%:
+	dh $@ --buildsystem=autoconf --with autoreconf
+
+override_dh_fixperms:
+	dh_fixperms
+	-chmod 4755 $(CURDIR)/debian/v4l-conf/usr/bin/v4l-conf
+
+override_dh_strip:
+	dh_strip --ddeb-migration='xawtv-dbg (<= 3.103-4~~)'
+
+override_dh_installdocs:
+	dh_installdocs -XREADME.xfree4

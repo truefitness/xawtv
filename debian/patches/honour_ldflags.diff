@@ -1,0 +1,26 @@
+From: Maximiliano Curia <maxy@debian.org>
+Date: Fri, 19 Feb 2016 13:26:43 +0100
+Subject: honour_ldflags
+
+commit fec630afc3985fc5cc02b05741d42d5dda211740
+Author: Maximiliano Curia <maxy@gnuservers.com.ar>
+Date:   Thu May 16 09:53:52 2013 +0200
+
+    Honour LDFLAGS
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index d0aeda3..10756e8 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -51,7 +51,7 @@ QT_FLAGS	:= @QTFLAGS@
+ VBI_LIBS	:= @LIBZVBI@
+ GL_LIBS		:= @LIBGL@
+ DV_LIBS		:= @LIBDV@
+-DLFLAGS		:= @DLFLAGS@
++DLFLAGS		:= @LDFLAGS@ @DLFLAGS@
+ 
+ # stuff configure has found
+ FOUND_AALIB	:= @FOUND_AALIB@

@@ -1,0 +1,36 @@
+From: Maximiliano Curia <maxy@debian.org>
+Date: Fri, 19 Feb 2016 13:26:43 +0100
+Subject: mayhem_showriff
+
+commit 827a65afc74a0078b62a4bb6a56861c3071844ae
+Author: Maximiliano Curia <maxy@gnuservers.com.ar>
+Date:   Thu Jun 27 09:36:23 2013 +0200
+
+    showriff mayhem fix.
+---
+ console/showriff.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/console/showriff.c b/console/showriff.c
+index 012f1ee..75db5e4 100644
+--- a/console/showriff.c
++++ b/console/showriff.c
+@@ -410,7 +410,8 @@ static boolean ProcessChunk(FILE* f, size_t filepos, size_t filesize,
+     printf("(0x%s) %*c  ID:<%s>   Size: 0x%08x\n",
+ 	   off_t_to_char(filepos,16,8),(RekDepth+1)*4,' ',tagstr,*chunksize);
+ 
+-    if (datapos + ((*chunksize+1)&~1) > filesize) {      /* too long? */
++    if ((   *chunksize             > filesize - datapos) ||
++        ((((*chunksize) + 1) & ~1) > filesize - datapos)) {      /* too long? */
+ 	printf("  *****  Error: Chunk exceeds file\n");
+ 	if (stop_on_errors)
+ 	    return(FALSE);
+@@ -448,7 +449,7 @@ static boolean ProcessChunk(FILE* f, size_t filepos, size_t filesize,
+ 
+ 	while (datashowed<*chunksize) {      /* while not showed all: */
+ 
+-	    long subchunklen;           /* complete size of a subchunk  */
++	    DWORD subchunklen;           /* complete size of a subchunk  */
+ 
+ 	    /* recurse for subchunks of RIFF and LIST chunks: */
+ 	    if (!ProcessChunk(f,datapos,filesize,0,

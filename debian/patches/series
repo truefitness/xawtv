@@ -1,0 +1,16 @@
+honour_ldflags.diff
+manpages_minor_changes.diff
+minor_spelling_change.diff
+mayhem_showriff.diff
+mayhem_rootv.diff
+do_not_link_xprint.diff
+0007-XV-Fix-segfault-under-certain-conditions.patch
+0008-v4l2_getimage-prefer-CAP_STREAMING-over-CAP_READWRIT.patch
+0009-alsa-Fix-not-being-able-to-get-a-larger-latency-on-c.patch
+0010-xawtv-Allow-setting-alsa_latency-from-.xawtv.patch
+0011-v4l2-Add-a-workaround-for-bttv-kernel-driver-planar-.patch
+0012-get_media_devices.c-Remove-superfluous-add-end-of-fu.patch
+0013-mtt-Fix-mtt-not-being-able-to-tune-tv-channels.patch
+0014-Add-desktop-and-appdata-files-for-xawtv-motv-and-mtt.patch
+0015-alevtd-Drop-supplementary-group-IDs-when-dropping-pr.patch
+0016-Update-to-V4L2-API.patch

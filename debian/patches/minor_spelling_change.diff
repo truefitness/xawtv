@@ -1,0 +1,311 @@
+From: Maximiliano Curia <maxy@debian.org>
+Date: Fri, 19 Feb 2016 13:26:43 +0100
+Subject: minor_spelling_change
+
+commit cd350609ea78b325225a171f67e5a48bd87b7430
+Author: Maximiliano Curia <maxy@gnuservers.com.ar>
+Date:   Thu May 16 11:16:11 2013 +0200
+
+    Minor spelling change.
+---
+ console/record.c   |  2 +-
+ console/showriff.c |  2 +-
+ console/streamer.c |  4 ++--
+ debug/xvideo.c     |  4 ++--
+ x11/blit.c         | 10 +++++-----
+ x11/blit.h         |  2 +-
+ x11/motv.c         |  8 ++++----
+ x11/pia.c          |  2 +-
+ x11/rootv.c        |  4 ++--
+ x11/rootv.xml      |  2 +-
+ x11/xawtv.c        |  8 ++++----
+ x11/xt.c           | 16 ++++++++--------
+ x11/xv.c           |  4 ++--
+ 13 files changed, 34 insertions(+), 34 deletions(-)
+
+diff --git a/console/record.c b/console/record.c
+index 685221b..8ebc133 100644
+--- a/console/record.c
++++ b/console/record.c
+@@ -527,7 +527,7 @@ usage(FILE *fp)
+ 	    "%s has several options:\n"
+ 	    "  -h        this text\n"
+ 	    "  -o file   output file basename [%s], a number and the .wav\n"
+-	    "            extention are added by %s.\n"
++	    "            extension are added by %s.\n"
+ 	    "  -i ctrl   mixer control [%s].  This should be the one\n"
+ 	    "            where you can adjust the record level for\n"
+ 	    "            your audio source, \"line\", \"mic\" and \"igain\"\n"
+diff --git a/console/showriff.c b/console/showriff.c
+index 2c3405c..012f1ee 100644
+--- a/console/showriff.c
++++ b/console/showriff.c
+@@ -519,7 +519,7 @@ usage(char *prog)
+ 	    "\n"
+ 	    "%s shows contents of RIFF files (AVI,WAVE...).\n"
+ 	    "(c) 1994 UP-Vision Computergrafik for c't\n"
+-	    "unix port and some extentions (for avi) by Gerd Knorr\n"
++	    "unix port and some extensions (for avi) by Gerd Knorr\n"
+ 	    "\n"
+ 	    "usage:  %s [ -j ] [ -e ] filename\n"
+ 	    "options:\n"
+diff --git a/console/streamer.c b/console/streamer.c
+index 9b0aa3e..6cb1b6b 100644
+--- a/console/streamer.c
++++ b/console/streamer.c
+@@ -150,8 +150,8 @@ usage(FILE *out)
+ 	    "For file formats which can hold *both* audio and video (like AVI and\n"
+ 	    "QuickTime) the -O option has no effect.\n"
+ 	    "\n"
+-	    "streamer will use the file extention of the output file name to figure\n"
+-	    "which format to use.  You need the -f/-F options only if the extention\n"
++	    "streamer will use the file extension of the output file name to figure\n"
++	    "which format to use.  You need the -f/-F options only if the extension\n"
+ 	    "allows more than one format.\n"
+ 	    "\n"
+ 	    "Examples:\n"
+diff --git a/debug/xvideo.c b/debug/xvideo.c
+index d1a056e..9a678bd 100644
+--- a/debug/xvideo.c
++++ b/debug/xvideo.c
+@@ -2,11 +2,11 @@
+ #ifndef HAVE_LIBXV
+ #include "stdio.h"
+ int main(void)
+-{puts("Compiled without Xvideo extention support, sorry.");exit(0);}
++{puts("Compiled without Xvideo extension support, sorry.");exit(0);}
+ #else
+ 
+ /*
+- * this is a simple test app for playing around with the xvideo extention
++ * this is a simple test app for playing around with the xvideo extension
+  */
+ 
+ #include "config.h"
+diff --git a/x11/blit.c b/x11/blit.c
+index 0ac88b8..76bb1ee 100644
+--- a/x11/blit.c
++++ b/x11/blit.c
+@@ -346,7 +346,7 @@ x11_create_pixmap(Display *dpy, XVisualInfo *vinfo, struct ng_video_buf *buf)
+ }
+ 
+ /* ------------------------------------------------------------------------ */
+-/* XVideo extention code                                                    */
++/* XVideo extension code                                                    */
+ 
+ #ifdef HAVE_LIBXV
+ void xv_image_init(Display *dpy)
+@@ -355,7 +355,7 @@ void xv_image_init(Display *dpy)
+ 
+     if (Success != XvQueryExtension(dpy,&ver,&rel,&req,&ev,&err)) {
+ 	if (debug)
+-	    fprintf(stderr,"Xvideo: Server has no Xvideo extention support\n");
++	    fprintf(stderr,"Xvideo: Server has no Xvideo extension support\n");
+ 	return;
+     }
+     if (Success != XvQueryAdaptors(dpy,DefaultRootWindow(dpy),&adaptors,&ai)) {
+@@ -585,7 +585,7 @@ static int gl_ext(GLubyte *find)
+     if (pos[len] != ' ' && pos[len] != '\0')
+ 	return 0;
+     if (debug)
+-	fprintf(stderr,"blit: gl: extention %s is available\n",find);
++	fprintf(stderr,"blit: gl: extension %s is available\n",find);
+     return 1;
+ }
+ 
+@@ -727,7 +727,7 @@ void blit_get_formats(struct blit_state *st, int *fmtids, int max)
+ 
+     BUG_ON(NULL == st, "blit handle is NULL");
+ 
+-    /* Xvideo extention */
++    /* Xvideo extension */
+ #ifdef HAVE_LIBXV
+     for (i = 0; i < VIDEO_FMT_COUNT; i++) {
+ 	if (0 != im_formats[i])
+@@ -787,7 +787,7 @@ void blit_init_frame(struct blit_state *st, struct ng_video_fmt *fmt)
+     struct ng_video_conv *conv;
+     int i;
+ 
+-    /* Xvideo extention */
++    /* Xvideo extension */
+ #ifdef HAVE_LIBXV
+     if (0 != im_formats[fmt->fmtid]) {
+ 	st->xvimage = xv_create_ximage(XtDisplay(st->widget),
+diff --git a/x11/blit.h b/x11/blit.h
+index 7de6e20..1cf2258 100644
+--- a/x11/blit.h
++++ b/x11/blit.h
+@@ -12,7 +12,7 @@ Pixmap x11_create_pixmap(Display *dpy, XVisualInfo *vinfo,
+ void x11_blit(Display *dpy, Drawable dr, GC gc, XImage *xi,
+ 	      int a, int b, int c, int d, int w, int h);
+ 
+-/* xvideo extention */
++/* xvideo extension */
+ #ifdef HAVE_LIBXV
+ void xv_image_init(Display *dpy);
+ XvImage* xv_create_ximage(Display *dpy, int width, int height,
+diff --git a/x11/motv.c b/x11/motv.c
+index 998d4e2..209230c 100644
+--- a/x11/motv.c
++++ b/x11/motv.c
+@@ -3301,18 +3301,18 @@ main(int argc, char *argv[])
+     x11_misc_init(dpy);
+     XmAddWMProtocolCallback(app_shell,WM_DELETE_WINDOW,ExitCB,NULL);
+     if (debug)
+-	fprintf(stderr,"main: dga extention...\n");
++	fprintf(stderr,"main: dga extension...\n");
+     xfree_dga_init(dpy);
+     if (debug)
+-	fprintf(stderr,"main: xinerama extention...\n");
++	fprintf(stderr,"main: xinerama extension...\n");
+     xfree_xinerama_init(dpy);
+ #ifdef HAVE_LIBXV
+     if (debug)
+-	fprintf(stderr,"main: xvideo extention [video]...\n");
++	fprintf(stderr,"main: xvideo extension [video]...\n");
+     if (args.xv_video)
+ 	xv_video_init(args.xv_port,0);
+     if (debug)
+-	fprintf(stderr,"main: xvideo extention [image]...\n");
++	fprintf(stderr,"main: xvideo extension [image]...\n");
+     if (args.xv_image)
+ 	xv_image_init(dpy);
+ #endif
+diff --git a/x11/pia.c b/x11/pia.c
+index 96718c6..bb36c8f 100644
+--- a/x11/pia.c
++++ b/x11/pia.c
+@@ -221,7 +221,7 @@ static void usage(FILE *out, char *prog)
+ 	    "      -debug      enable debug messages\n"
+ 	    "      -dsp <dev>  use sound device <dev>\n"
+ #ifdef HAVE_LIBXV
+-	    "      -noxv       disable Xvideo extention\n"
++	    "      -noxv       disable Xvideo extension\n"
+ #endif
+ #ifdef HAVE_GL
+ 	    "      -nogl       disable OpenGL\n"
+diff --git a/x11/rootv.c b/x11/rootv.c
+index 60a8406..ba71fa9 100644
+--- a/x11/rootv.c
++++ b/x11/rootv.c
+@@ -3,7 +3,7 @@
+ #include "stdio.h"
+ #include "stdlib.h"
+ int main(void)
+-{puts("Compiled without Xvideo extention support, sorry.");exit(0);}
++{puts("Compiled without Xvideo extension support, sorry.");exit(0);}
+ #else
+ /*
+  * put a TV image to the root window - requires Xvideo
+@@ -360,7 +360,7 @@ main(int argc, char *argv[])
+ 	}
+ 
+ 	if (event.type > ev) {
+-	    /* Xvideo extention event */
++	    /* Xvideo extension event */
+ 	    switch (event.type-ev) {
+ 	    case XvVideoNotify:
+ 	    {
+diff --git a/x11/rootv.xml b/x11/rootv.xml
+index 0229858..315215f 100644
+--- a/x11/rootv.xml
++++ b/x11/rootv.xml
+@@ -11,7 +11,7 @@
+ 	 />
+  <_description>
+   This hack displays some TV station using
+-  the Xvideo extention.  Use CNN or MTV as
++  the Xvideo extension.  Use CNN or MTV as
+   screen saver :-)
+   (c) Gerd Knorr &lt;kraxel@bytesex.org&gt;
+  </_description>
+diff --git a/x11/xawtv.c b/x11/xawtv.c
+index b87f53e..59c53c3 100644
+--- a/x11/xawtv.c
++++ b/x11/xawtv.c
+@@ -1680,18 +1680,18 @@ main(int argc, char *argv[])
+ 		    sizeof(actionTable)/sizeof(XtActionsRec));
+     x11_misc_init(dpy);
+     if (debug)
+-	fprintf(stderr,"main: dga extention...\n");
++	fprintf(stderr,"main: dga extension...\n");
+     xfree_dga_init(dpy);
+     if (debug)
+-	fprintf(stderr,"main: xinerama extention...\n");
++	fprintf(stderr,"main: xinerama extension...\n");
+     xfree_xinerama_init(dpy);
+ #ifdef HAVE_LIBXV
+     if (debug)
+-	fprintf(stderr,"main: xvideo extention [video]...\n");
++	fprintf(stderr,"main: xvideo extension [video]...\n");
+     if (args.xv_video)
+ 	xv_video_init(args.xv_port,0);
+     if (debug)
+-	fprintf(stderr,"main: xvideo extention [image]...\n");
++	fprintf(stderr,"main: xvideo extension [image]...\n");
+     if (args.xv_image)
+ 	xv_image_init(dpy);
+ #endif
+diff --git a/x11/xt.c b/x11/xt.c
+index 2065ff4..4623e6a 100644
+--- a/x11/xt.c
++++ b/x11/xt.c
+@@ -1676,19 +1676,19 @@ usage(void)
+ 	    "  -m  -nomouse        startup with mouse pointer disabled\n"
+ 	    "  -f  -fullscreen     startup in fullscreen mode\n"
+ #ifdef HAVE_LIBXXF86DGA
+-	    "      -(no)dga        enable/disable DGA extention\n"
++	    "      -(no)dga        enable/disable DGA extension\n"
+ #endif
+ #ifdef HAVE_LIBXXF86VM
+-	    "      -(no)vm         enable/disable VidMode extention\n"
++	    "      -(no)vm         enable/disable VidMode extension\n"
+ #endif
+ #ifdef HAVE_LIBXRANDR
+-	    "      -(no)randr      enable/disable Xrandr extention\n"
++	    "      -(no)randr      enable/disable Xrandr extension\n"
+ #endif
+ #ifdef HAVE_LIBXV
+-	    "      -(no)xv         enable/disable Xvideo extention altogether\n"
+-	    "      -(no)xv-video   enable/disable Xvideo extention (for video only,\n"
++	    "      -(no)xv         enable/disable Xvideo extension altogether\n"
++	    "      -(no)xv-video   enable/disable Xvideo extension (for video only,\n"
+ 	    "                      i.e. XvPutVideo() calls)\n"
+-	    "      -(no)xv-image   enable/disable Xvideo extention (for image scaling\n"
++	    "      -(no)xv-image   enable/disable Xvideo extension (for image scaling\n"
+ 	    "                      only, i.e. XvPutImage() calls)\n"
+ #endif
+ #ifdef HAVE_GL
+@@ -2241,10 +2241,10 @@ int xt_vm_randr_input_init(Display *dpy)
+ {
+     /* vidmode / randr */
+     if (debug)
+-	fprintf(stderr,"xt: checking for randr extention ...\n");
++	fprintf(stderr,"xt: checking for randr extension ...\n");
+     xfree_randr_init(dpy);
+     if (debug)
+-	fprintf(stderr,"xt: checking for vidmode extention ...\n");
++	fprintf(stderr,"xt: checking for vidmode extension ...\n");
+     xfree_vm_init(dpy);
+ 
+     /* input */
+diff --git a/x11/xv.c b/x11/xv.c
+index 45be1c5..44b3681 100644
+--- a/x11/xv.c
++++ b/x11/xv.c
+@@ -1,5 +1,5 @@
+ /*
+- * (most) Xvideo extention code is here.
++ * (most) Xvideo extension code is here.
+  *
+  * (c) 2001 Gerd Knorr <kraxel@bytesex.org>
+  */
+@@ -336,7 +336,7 @@ void xv_video_init(unsigned int port, int hwscan)
+ 
+     if (Success != XvQueryExtension(dpy,&ver,&rel,&req,&ev,&err)) {
+ 	if (debug)
+-	    fprintf(stderr,"Xvideo: Server has no Xvideo extention support\n");
++	    fprintf(stderr,"Xvideo: Server has no Xvideo extension support\n");
+ 	return;
+     }
+     if (Success != XvQueryAdaptors(dpy,DefaultRootWindow(dpy),&adaptors,&ai)) {

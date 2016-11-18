@@ -1,0 +1,23 @@
+From: "Bernhard M. Wiedemann" <bernhardout2@lsmod.de>
+Date: Sat, 27 Dec 2014 14:42:24 +0100
+Subject: XV: Fix segfault under certain conditions
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+---
+ x11/blit.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/x11/blit.c b/x11/blit.c
+index 76bb1ee..0bd5030 100644
+--- a/x11/blit.c
++++ b/x11/blit.c
+@@ -937,7 +937,8 @@ void blit_putframe(struct blit_state *st, struct ng_video_buf *buf)
+ 
+ #ifdef HAVE_LIBXV
+     case STATUS_XVIDEO:
+-	memcpy(st->xvimage->data,buf->data,buf->size);
++	memcpy(st->xvimage->data,buf->data,
++	    buf->size < st->xvimage->data_size ? buf->size : st->xvimage->data_size);
+ 	ng_release_video_buf(buf);
+ 	xv_blit(XtDisplay(st->widget), XtWindow(st->widget),
+ 		st->gc, st->xvimage,
