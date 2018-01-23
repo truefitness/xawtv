@@ -1,0 +1,252 @@
+.TH xawtv 1 "(c) 1997-2001 Gerd Knorr"
+.SH NOMBRE
+xawtv - un programa X11 para ver la tele
+.SH SINOPSIS
+.B xawtv [ opciones ] [ nombre cadena ]
+.SH DESCRIPCIÓN
+.B xawtv
+es un programa para X11 para ver la tele en su equipo unix. Usa los widgets
+Athena.
+.SH OPCIONES
+Todas las opciones de la línea de comandos tienen un recurso, por tanto puede
+ponerlas también en el fichero .Xdefaults.
+.TP
+\fB-h\fP, \fB-help\fP
+Muestra una breve descripción de todas las opciones de línea de comandos.
+.TP
+\fB-hwscan\fP
+Muestra una lista de los dispositivos disponibles.
+.TP
+\fB-f\fP, \fB-fullscreen\fP
+arranca en modo de pantalla completa.
+.br
+Recurso: xawtv.fullscreen (bool).
+.TP
+\fB-n\fP, \fB-noconf\fP
+no lee el fichero de configuración ($HOME/.xawtv).
+.br
+Recurso: xawtv.readconfig (bool).
+.TP
+\fB-o\fP, \fB-outfile\fP base
+establece la cadena base para los ficheros de capturas. El nombre del fichero
+será "base-fecha-nr.ext".
+.br
+Recurso: xawtv.basename (string).
+.TP
+\fB-c\fP, \fB-device\fP dispositivo
+establece el dispositivo video4linux (por defecto /dev/video0). Esta opción
+también deshabilita Xvideo.
+.br
+Recurso: xawtv.device (string).
+.TP
+\fB-D\fP, \fB-driver\fP nombre
+establece el driver video4linux (por defecto "libv4l"). Esta opción
+también deshabilita Xvideo.
+.br
+Recurso: xawtv.driver (string).
+.TP
+\fB-C\fP, \fB-dspdev\fP dispositivo
+establece el dispositivo de audio (por defecto /dev/dsp).
+.br
+Recurso: xawtv.dspdev (string).
+.TP
+\fB-vbidev\fP dispositivo
+establece el dispositivo vbi (por defecto /dev/vbi0).
+.br
+Recurso: xawtv.vbidev (string).
+.TP
+\fB-c\fP, \fB-xvport\fP número
+establece el puerto Xvideo (por defecto el primero que sea usable si Xvideo
+está disponible).
+Esta opción también habilita el soporte Xvideo.
+.br
+Recurso: xawtv.xvport (int).
+.TP
+\fB-joydev\fP dispositivo
+dispositivo del joystick a usar para controlar xawtv.
+.br
+Recurso: xawtv.joydev (string).
+.TP
+\fB-v\fP, \fB-debug\fP nivel
+Aporta mayor nivel de información,
+.B nivel
+puede ser 0 (por defecto), 1 o 2.  Existe sólo para depuración y en caso
+de problemas.
+.br
+Recurso: xawtv.debug (int).
+.TP
+\fB-remote\fP
+el display X11 es remoto. Esto básicamente deshabilita el modo overlay, lo
+puede necesitar si xawtv no consigue detectar un display X11 remoto.
+.br
+Recurso: xawtv.remote (bool).
+.TP
+\fB-b\fP, \fB-bpp\fP n
+obliga a xawtv a usar un color de profundidad
+.B n.
+Funciona para seleccionar entre 15/16 y 24/32 bpp.
+Simplemente se le pasa la opción a v4l-conf(1).
+.br
+Recurso: xawtv.bpp (int).
+.TP
+\fB-shift\fP n
+Desplaza la imagen de video
+.B n
+bytes.  Puede usar esta opción si la imagen de video no está dentro de la
+ventana del xawtv, algunas tarjetas antiguas matrox muestran este problema.
+Simplemente se le pasa la opción a v4l-conf(1).
+.br
+Recurso: xawtv.shift (int).
+.TP
+\fB-fb\fP
+Usa el dispositivo framebuffer para determinar la dirección del buffer de
+video (en lugar de la extensión DGA).  De nuevo un simple paso de opciones.
+.br
+Recurso: xawtv.fbdev (bool).
+.TP
+\fB-xv/-noxv \fP
+habilita/deshabilita el uso de la extensión Xvideo (para overlay),
+por defecto está activado.
+.br
+Recurso: xawtv.xvideo (bool).
+.TP
+\fB-scale/-noscale \fP
+habilita/deshabilita el uso de la extensión Xvideo (para escalada por
+hardware en modo grabdisplay), por defecto está activado.
+.br
+Recurso: xawtv.hwscale (bool).
+.TP
+\fB-vm/-novm\fP
+habilita/deshabilita el uso de la extensión VidMode, por defecto desactivado.
+Si hay un modo a pantalla completa configurado en el fichero de configuración,
+entonces se habilitará automáticamente la extensión vidmode.
+.br
+Recurso: xawtv.vidmode (bool).
+.TP
+\fB-dga/-nodga\fP
+habilita/deshabilita el uso de la extensión DGA, por defecto activada.
+.br
+Recurso: xawtv.dga (bool).
+.TP
+\fB-parallel\fP n
+usa n hilos de compresión (por defecto: uno).
+.br
+Recurso: xawtv.parallel (int).
+.P
+Se soportan también las opciones habituales del toolkit como \fB-geometry\fP.
+.SH HARDWARE / INTERFACES SOPORTADOS
+.TP
+.B v4l2
+video4linux dos - moderna Linux estándar de captura de vídeo API.
+.TP
+.B libv4l
+trabajo a través de la biblioteca libv4l, que proporciona una fina capa
+adicional en la parte superior de Video4Linux2 dispositivos de apoyo a la más
+amplia gama de formatos de dispositivos 'pixel (a menudo necesaria para
+cámaras web, etc).
+Es la interfaz por defecto en sistemas Linux.
+.TP
+.B bktr
+Driver para tarjetas bt848/878 para FreeBSD / OpenBSD.
+.TP
+.B Xvideo
+Extensión X11 para dispositivos de video. Tenga en cuenta que la extensión
+Xvideo sólo soporta overlay, no puede capturar imágenes o películas si
+se usa la extensión Xvideo.  Por otra parte es la única manera para escalar
+video en overlay (por ejemplo, pantalla completa sin bordes negros a 1024x748)
+en el caso de que tanto el hardware como el driver xfree86 lo soporten. Mire
+el fichero README.xfree4 para más detalles y pistas para configurar Xvideo.
+.SH EMPEZANDO
+Arranque xawtv.  Entonces verifique las opciones del menú (botón derecho
+del ratón) y ajuste las opciones (norma de TV, fuente de video, tabla de
+frecuencias). Con las teclas del cursor puede controlar el sintonizador
+y buscar cadenas de TV. Otras teclas útiles se listan a continuación.
+.P
+La tecla 'E' mostrará el editor de canales donde puede crear/editar
+entradas para sus cadenas de TV.  No olvide pulsar en "save" para grabar
+el fichero de configuración. También puede crear o editar un fichero
+de configuración con cualquier editor de textos, vea xawtvrc(5)
+para la descripción de la sintaxis del fichero de configuración.
+Hay unas cuantas opciones de configuración que sólo se pueden establecer
+editando el fichero de configuración.
+.P
+También puede probar scantv.  Se trata de una herramienta de línea de
+comandos que realizará una búsqueda de canales y escribirá un fichero
+de configuración para el xawtv con todos los canales que haya encontrado.
+.SS Funciones del ratón
+El botón izquierdo del ratón mostrará un menú con todas las cadenas de TV
+encontradas en el fichero de configuración. El botón central cambia a
+la siguiente cadena. El botón derecho mostrará una ventana con un
+montón de opciones y funciones.
+.SS Atajos de teclado
+.nf
+V            Captura de \fIV\fPideo on/off
+A            \fIA\fPudio on/off
+F            Pantalla completa (\fIF\fPullscreen) on/off
+G            Capturar (\fIG\fPrab) imagen (tamaño completo, ppm)
+J            Capturar imagen (tamaño completo, \fIj\fPpeg)
+Ctrl+G       Capturar (\fIG\fPrab) imagen (tamaño ventana, ppm)
+Ctrl+J       Capturar imagen (tamaño ventana, \fIj\fPpeg)
+O            Muestra ventana de \fIO\fPpciones
+C            Muestra ventana de \fIC\fPanales
+E            Muestra \fIE\fPditor de canales
+R            Muestra ventana de grabación AVI (\fIR\fPecording)
+Z            Salto de canales (\fIz\fPapping, sintoniza cada cadena
+             unos cuantos segundos)
+Ctrl+Z       Salto rápido de canales (captura las imágenes para los
+             botones de los canales)
+
+arr./abaj.   sintoniza el anterior/siguiente canal
+izq./der.    ajuste fino
+repag/avpag  anterior/siguiente cadena (las del fichero de configuración)
+espacio      siguiente cadena (lo mismo que repag.)
+retroceso    cadena sintonizada anteriormente
+Ctrl+arr.    busca la siguiente cadena
+F5-F12       ajusta brillo/tonalidad/contraste/color
+
+ESC,Q        \fIQ\fPuitar
+
++/-          Subir o bajar volumen (en el teclado numérico)
+Intro        silencio (teclado numérico)
+.fi
+.SH BUGS
+.B Los informes de bugs con imágenes adjuntas van a /dev/null sin ser vistos.
+.P
+xawtv depende de una correcta configuración del driver. Si no puede
+sintonizar cadenas de TV incluso si los ajustes en la ventana de opciones
+son correctos, es muy posible que se trate de un asunto del driver.
+.P
+La indicación mono/estéreo \fBno\fP es fiable debido a restricciones en el
+API del v4l.  El API no informa del modo actual del audio, sino que
+devuelve una lista de los modos disponibles en ese momento.
+xawtv simplemente hace una suposición basándose en que el driver
+usa el mejor modo disponible.
+Dependiendo de su hardware puede que esto no sea cierto. Si duda de
+si \fBde verdad\fP el modo estéreo funciona, sintonice la MTV y escuche,
+no se fie en lo que le diga xawtv.
+.SH VEA TAMBIÉN
+xawtvrc(5), fbtv(1), v4l-conf(1), scantv(1)
+.br
+http://bytesex.org/xawtv/ (homepage)
+.SH AUTOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+Copyright (C) 1997-2001 Gerd Knorr <kraxel@bytesex.org>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.SH MISC
+Eres el visitante 4711 de esta página.
+.SH TRADUCCIÓN
+Página traducida al español por Ricardo Villalba <rvm@escomposlinux.org>

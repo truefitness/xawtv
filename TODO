@@ -1,0 +1,26 @@
+
+TODO list isn't exactly right for this.  It is more a collection of
+ideas I'm thinking about.  It *might* mean I have plans to implement
+this in near future.
+
+
+general
+=======
+
+ * volume= option for .xawtv (not trivial - to make this a useful feature
+   it should be a station-specific offset to the overall volume.  Try to
+   get this right for every soundcard / high + low volume / ... ).
+ * mono/stereo config file options.
+ * hotkeys/remote commands for mono/stereo/...
+ * two (more?) channel lists: "all" & "frequently used".
+ * record subtitles (QuickTime text track?).
+
+
+avi
+===
+
+ * grayscale avi recording (anybody knows how to do this?  256 color
+   with a gray palette?)
+ * OpenDML index support
+ * record even/odd fields separately instead of writing interlaced
+   frames.

@@ -1,0 +1,70 @@
+.TH rootv 1 "(c) 2000-2002 Gerd Knorr"
+.SH NAME
+rootv - display TV using the Xvideo extension
+.SH SYNOPSIS
+.B rootv [ options ]
+.SH DESCRIPTION
+.B rootv
+puts a video to some window.  By default it creates its own window,
+but you can also ask it to use the root window (thus the name) or any
+other window.
+.B rootv
+needs the Xvideo extension.
+.P
+.B rootv
+itself provides no way to control video/audio/tuner.  You can use
+v4lctl to do this.
+.SH OPTIONS
+.B rootv
+knows a number of command line options to modify the behaviour.
+.TP
+.B -help
+Print a short description of all command line options.
+.TP
+.B -verbose
+Be verbose.  That will dump some debug messages to stderr.
+.TP
+.B -root
+Put the video onto the root window instead of creating a new window.
+.TP
+.B -id <win>
+Put the video into the window <win> instead of creating a new window.
+.TP
+.B -station <st>
+Tune station <st>.  This just calls v4lctl, which in turn will look up
+the station in your ~/.xawtv config file.
+.TP
+.B -no-mute
+Don't toggle mute.  By default rootv will unmute the TV card when it
+starts and mute it on exit.  It does this using the XV_MUTE attribute
+(if available).
+.TP
+.B -port <n>
+Use Xvideo port <n>.  Try the -verbose switch if you want to know
+which ones are available.
+.TP
+.B -bg
+Fork into background.
+.TP
+.B -wm
+Print WindowMaker menu (set stations using v4lctl).
+.SH SEE ALSO
+xawtv(1), fbtv(1), v4lctl(1)
+.SH AUTHOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+Copyright (C) 2000-2002 Gerd Knorr <kraxel@bytesex.org>
+.P
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.P
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.P
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.

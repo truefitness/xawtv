@@ -1,0 +1,253 @@
+.TH xawtv 1 "(c) 1997-2001 Gerd Knorr"
+.SH NAME
+xawtv - a X11 program for watching TV
+.SH SYNOPSIS
+.B xawtv [ options ] [ station name ]
+.SH DESCRIPTION
+.B xawtv
+is a X11 application for watching TV with your unix box. It uses the
+Athena widgets.
+.SH OPTIONS
+All command line options also have a Resource, so you can put them
+into your .Xdefaults file too.
+.TP
+\fB-h\fP, \fB-help\fP
+Print a short description of all command line options.
+.TP
+\fB-hwscan\fP
+Print a list of available devices.
+.TP
+\fB-f\fP, \fB-fullscreen\fP
+startup in fullscreen mode.
+.br
+Resource: xawtv.fullscreen (bool).
+.TP
+\fB-n\fP, \fB-noconf\fP
+don't read the config file ($HOME/.xawtv).
+.br
+Resource: xawtv.readconfig (bool).
+.TP
+\fB-o\fP, \fB-outfile\fP base
+set basestring for the snapshot output files.  The filename will be
+"base-timestamp-nr.ext".
+.br
+Resource: xawtv.basename (string).
+.TP
+\fB-c\fP, \fB-device\fP device
+set video4linux device (default is /dev/video0).  This option also
+disables Xvideo support.
+.br
+Resource: xawtv.device (string).
+.TP
+\fB-D\fP, \fB-driver\fP name
+set video4linux driver (default is "libv4l").  This option also
+disables Xvideo support.
+.br
+Resource: xawtv.driver (string).
+.TP
+\fB-C\fP, \fB-dspdev\fP device
+set audio device (default is /dev/dsp).
+.br
+Resource: xawtv.dspdev (string).
+.TP
+\fB-vbidev\fP device
+set vbi device (default is /dev/vbi0).
+.br
+Resource: xawtv.vbidev (string).
+.TP
+\fB-c\fP, \fB-xvport\fP number
+set Xvideo port (defaults to the first usable if Xvideo is available).
+This option also enables Xvideo support.
+.br
+Resource: xawtv.xvport (int).
+.TP
+\fB-joydev\fP device
+joystick device to use for controlling xawtv.
+.br
+Resource: xawtv.joydev (string).
+.TP
+\fB-v\fP, \fB-debug\fP level
+Be verbose,
+.B level
+may be 0 (default), 1 or 2.  It exists just for debugging and
+trouble-shooting.
+.br
+Resource: xawtv.debug (int).
+.TP
+\fB-remote\fP
+X11 display is remote.  This basically disables overlay mode, you
+might need this if xawtv fails to autodetect a remote X11 display.
+.br
+Resource: xawtv.remote (bool).
+.TP
+\fB-b\fP, \fB-bpp\fP n
+force xawtv into
+.B n
+bpp color depth.  Works for switching between 15/16 and 24/32 bpp.
+This gets just passed through to v4l-conf(8).
+.br
+Resource: xawtv.bpp (int).
+.TP
+\fB-shift\fP n
+Shift the video display by
+.B n
+bytes.  Try this if your video display isn't within the xawtv window,
+some older matrox cards show this problem.  This gets passed through
+to v4l-conf(8) too.
+.br
+Resource: xawtv.shift (int).
+.TP
+\fB-fb\fP
+Use the framebuffer device to determine the video framebuffer address
+(instead of the DGA extension).  Yet another pass through argument.
+.br
+Resource: xawtv.fbdev (bool).
+.TP
+\fB-xv/-noxv \fP
+enable/disable the usage of the Xvideo extension altogether,
+i.e. -noxv has the same effect as both -noxv-video and -noxv-image
+switches (see below).
+.br
+Resource: xawtv.xv (bool).
+.TP
+\fB-xv-video/-noxv-video \fP
+enable/disable the usage of the Xvideo extension for video overlay
+(i.e. XvPutVideo).  overlay mode uses this.  default is on.
+.br
+Resource: xawtv.xvVideo (bool).
+.TP
+\fB-xv-image/-noxv-image \fP
+enable/disable the usage of the Xvideo extension for image scaling
+(i.e. XvPutImage).  grabdisplay mode uses this.  default is on.
+.br
+Resource: xawtv.xvImage (bool).
+.TP
+\fB-vm/-novm\fP
+enable/disable the usage of the VidMode extension, default is off.
+If there is a fullscreen video mode configured in the config file,
+the vidmode extension will be enabled automatically.
+.br
+Resource: xawtv.vidmode (bool).
+.TP
+\fB-dga/-nodga\fP
+enable/disable the usage of the DGA extension, default is on.
+.br
+Resource: xawtv.dga (bool).
+.TP
+\fB-parallel\fP n
+use n compression threads (default: one).
+.br
+Resource: xawtv.parallel (int).
+.P
+The usual toolkit options like \fB-geometry\fP are supported too.
+.SH SUPPORTED HARDWARE / INTERFACES
+.TP
+.B v4l2
+video4linux two - modern standard linux video capture API
+.TP
+.B libv4l
+work through the libv4l library, which provides an additional thin layer
+on top of video4linux2 devices for support of more wide range
+of devices' pixel formats (often required for webcams etc.)
+It is default for Xawtv on Linux systems.
+.TP
+.B bktr
+FreeBSD / OpenBSD driver for bt848/878 grabber cards.
+.TP
+.B Xvideo
+X11 Extension for video devices.  Note that the Xvideo extension does
+support overlay only, you can't capture images/movies if the Xvideo
+extension is used.  On the other hand this is the only way to scaled
+video overlay (i.e. fullscreen without black borders @ 1024x748) if
+both hardware and xfree86 driver support it.  See README.xfree4 for
+more details and hints on how to setup Xvideo.
+.SH GETTING STARTED
+Just start xawtv.  Then verify the settings in the options menu (right
+mouse button) and adjust the settings (TV norm, Video source, frequency
+table).  With the cursor keys you can control the tuner and look for
+TV Stations.  Other useful hotkeys are listed below.
+.P
+The hotkey 'E' will show the channel editor where you can create/edit
+entries your TV stations.  Don't forget to click on "save" to write a
+config file.  You can also create/edit a config file with any text
+editor, see xawtvrc(5) for a description of the config file syntax.
+There are a number of config options which can only be set by editing
+the config file.
+.P
+You can also check out scantv.  That's a command line tool which
+will perform a channel scan and write out a xawtv config file with
+all channels it has found.
+.SS Mouse functions
+The left mouse button will popup a menu with all TV stations found in
+the config file. The middle button switches to the next station. The
+right button brings up a window with a lot of options and control
+functions.
+.SS Keyboard Shortcuts
+.nf
+V            \fIV\fPideo (Capture) on/off
+A            \fIA\fPudio on/off
+F            \fIF\fPullscreen on/off
+G            \fIG\fPrab picture (full size, ppm)
+J            Grab picture (full size, \fIj\fPpeg)
+Ctrl+G       \fIG\fPrab picture (window size, ppm)
+Ctrl+J       Grab picture (window size, \fIj\fPpeg)
+O            Popup \fIO\fPptions Window
+C            Popup \fIC\fPhannels Window
+E            Popup Channel \fIE\fPditor
+R            Popup AVI \fIR\fPecording Window
+Z            Channel Hopper (\fIz\fPapping, tune in every
+	     station a few seconds)
+Ctrl+Z       Fast Channel Hopping (grab the images for the
+	     Channel Buttons)
+
+up/down      tune up/down one channel
+left/right   fine tuning
+pgup/pgdown  station up/down (the ones you have in the config file)
+space        next station (same as pgup)
+backspace    previously tuned station
+Ctrl+up      scan for next station
+F5-F12       adjust bright/hue/contrast/color
+
+ESC,Q        \fIQ\fPuit
+
++/-          Volume up/down (keypad)
+Enter        mute (keypad)
+.fi
+.SH BUGS
+.B Bug reports with images attached go to /dev/null unseen.
+.P
+xawtv depends on a correct driver configuration.  If you can't tune TV
+stations even if the settings in the options window are correct it is
+very likely a driver issue.
+.P
+The mono/stereo display is \fBnot\fP reliable due to v4l API
+restrictions.  The API can not report back the current audio mode, but
+a list of the currently available modes.  xawtv just does a guess
+based on that, assuming the driver uses the best available mode.
+Depending on your hardware this might not be true. If in doubt
+whenever stereo \fBreally\fP works, please tune in MTV and listen,
+don't trust what xawtv says.
+.SH SEE ALSO
+xawtvrc(5), fbtv(1), v4l-conf(8), scantv(1)
+.br
+http://bytesex.org/xawtv/ (homepage)
+.SH AUTHOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+Copyright (C) 1997-2001 Gerd Knorr <kraxel@bytesex.org>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.SH MISC
+You are the 4711th visitor of this page.

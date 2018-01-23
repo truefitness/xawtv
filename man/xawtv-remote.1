@@ -1,0 +1,182 @@
+.TH xawtv-remote 1 "(c) 1997-99 Gerd Knorr"
+.SH NAME
+xawtv-remote, v4lctl -- control video4linux devices
+.SH SYNOPSIS
+.B xawtv-remote [ options ] command
+.br
+.B v4lctl [ options ] command
+.SH DESCRIPTION
+.B xawtv-remote
+and
+.B v4lctl
+can be used to control a video4linux driven TV card.
+.B xawtv-remote
+passes the command to a already running xawtv or motv
+instance using X11 properties.
+.B v4lctl
+sets the parameters directly.
+.SH OPTIONS
+.B xawtv-remote
+knows the following options:
+.TP
+.B -h
+print a short help text
+.TP
+.B -d dpy
+Set the X11 display
+.TP
+.B -i id
+Set the Window ID.
+.P
+.B v4lctl
+understands these options:
+.TP
+.B -h
+print a short help text
+.TP
+.B -c device
+Set video4linux device.
+.TP
+.B -D driver
+Set video4linux driver.
+.TP
+.B -v n
+Set debug level to \fBn\fP, where n = [0..2]
+.SH COMMANDS
+Both tools basically use the same set of commands.  Some of them are
+useful for xawtv-remote only (fullscreen for example).
+.TP
+.B setstation [ <name> | <nr> | next | prev | back ]
+Set the TV station.  This selects on of the TV stations which are
+configured in the .xawtv config file.  The argument can be the station
+name or a number (the first one listed in the config file is 0, ...).
+next/prev jumps to the next/previous station in the list, back to the
+previously selected one.
+.TP
+.B setchannel [ <name> | next | prev ]
+Tune in some channel.
+.TP
+.B setfreqtab <table>
+Set the frequency table.  See the menu in xawtv for a list of valid
+choices.
+.TP
+.B setnorm <norm>
+Set the TV norm (NTSC/PAL/SECAM).
+.TP
+.B setinput [ <input> | next ]
+Set the video input (Television/Composite1/...)
+.TP
+.B capture [ on | off | overlay | grabdisplay ]
+Set capture mode.
+.TP
+.B volume mute on | off
+mute / unmute audio.
+.TP
+.B volume <arg>
+.TP
+.B color <arg>
+.TP
+.B hue <arg>
+.TP
+.B bright <arg>
+.TP
+.B contrast <arg>
+Set the parameter to the specified value.  <arg> can be one of the
+following: A percent value ("70%" for example).  Some absolute value
+("32768"), the valid range is hardware specific.  Relative values can
+be specified too by prefixing with "+=" or "-=" ("+=10%" or "-=2000").
+The keywords "inc" and "dec" are accepted to and will increase and
+decrease the given value in small steps.
+.TP
+.B setattr <name> <value>
+Set set the value of some attribute (color, contrast, ... can be set
+this way too).
+.TP
+.B show [ <name> ]
+Show the value current of some attribute.
+.TP
+.B list
+List all available attributes with all properties (default value,
+range, ...)
+.TP
+.B snap [ jpeg | ppm ] [ full | win | widthxheight ] <filename>
+Capture one image.
+.TP
+.B webcam <filename>
+Capture one image.  Does basically the same as "snap jpeg win
+<filename>".  Works also while avi recording is active.  It writes
+to a temporary file and renames it when done, so there is never
+a invalid file.
+.TP
+.B movie driver [ files | raw | avi | qt ]
+.TP
+.B movie video [ ppm | pgm | jpeg | rgb | gray | 422 | 422p | rgb15 | rgb24 | mjpeg | jpeg | raw | mjpa | png ]
+.TP
+.B movie fps <frames per second>
+.TP
+.B movie audio [ mono8 | mono16 | stereo ]
+.TP
+.B movie rate <sample rate>
+.TP
+.B movie fvideo <filename>
+.TP
+.B movie faudio <filename>
+.TP
+.B movie start
+.TP
+.B movie stop
+control xawtv's movie recorder.
+.TP
+.B fullscreen
+Toggle fullscreen mode.
+.TP
+.B showtime
+Display time (same what the 'D' key does in xawtv).
+.TP
+.B msg text
+Display text on the on-screen display (window title / upper left corner in
+fullscreen mode).
+.TP
+.B vtx line1 line2 [ ... ]
+Display subtitles.  It pops up a small window at the bottom of the screen.
+It is intended to be used as an interface for displaying subtitles (often on
+videotext page 150 in Europe, that's why the name) by external programs.
+.br
+Every command line argument is one line, zero lines removes the window.
+You can colorize the text with the control sequence "ESC foreground
+background".  foreground/background has the range 0-7 (ansi term colors).
+Example: "\\03347 hello world " is blue on white.  "\\033" must be a real
+escape character, the string doesn't work.  With the bash you'll get it
+with ^V ESC.  vtx does also understand the ANSI tty escape sequences for
+color.
+.TP
+.B quit
+quit xawtv
+.TP
+.B keypad n
+enter digit 'n'.  That's the two-digit channel selection, entering two
+digits within 5 seconds switches to the selected station.  Useful for
+lirc.
+.TP
+.B vdr command
+send "command" to vdr (via connect on localhost:2001).
+.SH SEE ALSO
+xawtv(1), motv(1), xawtvrc(5)
+.SH AUTHOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+Copyright (C) 1997-2001 Gerd Knorr <kraxel@bytesex.org>
+.P
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.P
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.P
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.

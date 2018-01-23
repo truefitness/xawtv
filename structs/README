@@ -1,0 +1,12 @@
+
+some infrastructure to dump the content of structures for info/debugging
+
+struct-dump.[ch]	the actual code
+struct-<name>.[ch]	descriptions for structs of <name> API
+struct2desc		quick&dirty perl script to build initial
+			description data files.
+
+used by:
+	console/v4l-info
+	libng/plugins/<various>
+

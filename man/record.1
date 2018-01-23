@@ -1,0 +1,75 @@
+.TH record 1 "(c) Gerd Knorr"
+.SH NAME
+record - records *.wav files
+.SH SYNOPSIS
+.B record [ options ]
+.SH DESCRIPTION
+.B record
+records *.wav files in CD quality (i.e. 44100 Hz, 16bit, stereo).
+It has a input level meter, which might be useful for sound trouble
+shooting (check if the mixer settings ok for recording from the
+TV card etc.)
+.SH OPTIONS
+.TP
+.B -h
+display help text
+.TP
+.B -o file
+basename for the output file(s), a number and the .wav
+extension are added by record.  Default is "record".
+.TP
+.B -i dev
+mixer control.  This should be the one where you can adjust the record
+level for your audio source.  Default is "line".  "mic" and "igain"
+are good candidates too.  Best way to figure is to start your favorite
+mixer tool and check out which one works ...
+.TP
+.B -m dev
+set mixer device.  Default is "/dev/mixer".
+.TP
+.B -d dev
+set audio device.  Default is "/dev/dsp".
+.TP
+.B -r rate
+set sample rate.  Default is 44100.
+.TP
+.B -p sec
+peak seconds (number of seconds which should be scanned for the volume
+maximum).  This affects both peak level display and level triggered
+recording (see below).  Default is 1.5 seconds.
+.P
+record can also be used non-interactive:
+.TP
+.B -c
+enable console (non-interactive) mode.
+.TP
+.B -v
+be verbose (console mode only).
+.TP
+.B -t mm:ss
+Limit the record time (console mode only).  By default record records
+until stopped by a signal (by typing ^C for example).
+.TP
+.B -s size
+Limit the file size (console mode only).  record will continue with
+a new file once the limit is reached.
+.TP
+.B -n num
+Limit the file count (console mode only).  record will stop recording
+after num files.
+.TP
+.B -l
+Enable level triggered recording (console mode only) with the default
+trigger level (1000).
+.TP
+.B -L level
+Enable level triggered recording with the specified trigger level.
+.P
+If level triggered recording is active, record will start and stop
+recording depending on the signal strength.  Recording will be started
+if the signal strength is above the trigger level (1000/32768 =>
+around 3%).  Recording will be stopped if the signal is below the
+trigger level for some time (1.5 seconds by default, the -p switch
+changes this).
+.SH AUTHOR
+Gerd Knorr <kraxel@bytesex.org>

@@ -1,0 +1,91 @@
+.TH v4l-conf 8 "(c) 1997-99 Gerd Knorr"
+.SH NAME
+v4l-conf -  configure a video4linux driver
+.SH SYNOPSIS
+.B v4l-conf [ options ]
+.SH DESCRIPTION
+.B v4l-conf
+is a small helper tool.  It figures out the video mode and framebuffer
+base address of the graphics board and configures a video4linux driver
+like bttv.  This is needed for drivers which can DMA the video over PCI
+directly into the video memory.
+.P
+Usually it is not required to use v4l-conf manually, xawtv(1) and
+fbtv(1) run it automatically at startup.  It might be useful for
+trouble-shooting.
+.B v4l-conf
+must be installed suid-root.
+.P
+.B v4l-conf
+knows three ways to get the informations:
+.TP 3
+ *
+Query the X-Server using the XF86 DGA extension.  This is the default
+if the DISPLAY environment variable is set.
+.TP 3
+ * 
+Query the framebuffer driver.  This is the default if DISPLAY is not
+set.
+.TP 3
+ *
+Query the console driver.  This is used on mklinux only.
+.SH OPTIONS
+.TP 4
+\fB-h\fP
+Print a short description of all command line options.
+.TP 4
+\fB-q\fP
+Be quiet.
+.TP 4
+\fB-d\fP dpy
+Use the X11 display \fBdpy\fP to get the parameters.
+.TP 4
+\fB-f\fP
+Use the framebuffer driver to get the parameters.
+.TP 4
+\fB-c\fP device
+Set the video4linux device.
+.TP 4
+\fB-b\fP n
+enforce
+.B n
+bpp color depth.  Works for switching between 15/16 and 24/32 bpp.
+.TP 4
+\fB-s\fP n
+Shift the video display by
+.B n
+bytes.
+.TP 4
+\fB-a\fP adr
+Set framebuffer address to \fBadr\fP.  The value should be specified
+in hex.  This option is allowed for root only.  You can't overwrite the
+autodetected value, this switch is only useful if autodetect doesn't
+work because the X-Server lacks DGA support.  You can put this into
+/etc/conf.modules, as "post-install bttv ..." for example.
+.TP 4
+\fB-p\fP pitch
+Set framebuffer pitch to \fBpitch\fP bytes.  The value should be specified
+in decimal. Allowed for root only.
+.SH BUGS
+Hope I haven't any security flaws in there.  If you find one, drop me a
+note.  Mails with patches are preferred :-)
+.SH SEE ALSO
+xawtv(1), fbtv(1)
+.SH AUTHOR
+Gerd Knorr <kraxel@goldbach.in-berlin.de>
+.SH COPYRIGHT
+Copyright (C) 1997-99 Gerd Knorr <kraxel@goldbach.in-berlin.de>
+.P
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.P
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.P
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.

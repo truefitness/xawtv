@@ -1,0 +1,37 @@
+.TH rootv 1 "(c) 2000 Gerd Knorr"
+.SH NOMBRE
+rootv - muestra TV/video como fondo de la ventana raíz
+.SH SINOPSIS
+.B rootv [ -stop | -wm ]
+.SH DESCRIPCIÓN
+.B rootv
+pone video en la ventana raíz (fondo) de su pantalla.  Requiere la
+extensión Xvideo.  Si se arranca con -stop se parará el video.
+.P
+rootv por si mismo no provee de ningún control sobre el
+video/audio/sintonizador.  Se puede usar v4lctl para esta función.
+Puede poner, por ejemplo, llamadas a v4lctl dentro de los menús
+de su window manager.  "rootv -wm" creará un menú para el WindowMaker
+con todos los canales del fichero de configuración ~/.xawtv.
+.SH VEA TAMBIÉN
+xawtv(1), fbtv(1), v4lctl(1)
+.SH AUTOR
+Gerd Knorr <kraxel@goldbach.in-berlin.de>
+.SH COPYRIGHT
+Copyright (C) 2000 Gerd Knorr <kraxel@goldbach.in-berlin.de>
+.P
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.P
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.P
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.SH TRADUCCIÓN
+Página traducida al español por Ricardo Villalba <rvm@escomposlinux.org>

@@ -1,0 +1,98 @@
+
+XFree86 4.x tips & tricks
+=========================
+
+
+DGA problems
+------------
+
+Release 4.0 has DGA turned off by default.  This is true for the first
+release only, with current versions this shouldn't be a problem unless
+you have some old config file still in use.
+
+You'll have turn on DGA in XF86Config, otherwise v4l-conf will not
+work correctly (Modules section, extmod options).  It should work for
+most cards this way, althrouth some drivers don't handle DGA correctly
+in 4.0 (that's why it is off...)
+
+If DGA doesn't work for you, you have to configure bttv by hand (or
+use Xvideo, see below).  v4l-conf has the "-a" switch for this.
+
+
+using Xvideo
+------------
+
+XFree86 4.0 comes with a new X11 extention for video support.  The
+X-Server will handle the grabber board then, not xawtv.  This has the
+advantage that the X-Server knows about the video.  Window moves can
+be handled without redraw problems.  The refresh triggered by xawtv
+to fix it isn't required any more.  It is possible to use the video
+scalers of modern graphics boards (see below).
+
+To use Xvideo you have to load the video4linux module into the X-Server.
+Just adding 'Load "v4l"' to the Modules section of XF86Config will do.
+You have to make sure xawtv is compiled on a box with with XFree86 4.0
+installed.  xawtv needs the new client libraries for Xvideo support.
+
+
+using hardware scaling
+----------------------
+
+Starting with XFree86 4.0.1 the Xvideo extention supports hardware-scaled
+video, i.e. the video isn't written directly to the visible area of the
+video memory.  Instead the bt848 hardware writes yuv data to offscreen
+memory.  The graphic card's video scaler does color space conversion and
+video scaling.  This way fullscreen video works in 1024x768 (and greater)
+without a black border because we are not limited to the maximum size
+supported by the bt848 hardware any more.
+
+As this is very new stuff not all drivers support video scaling yet.
+It basically requires the overlay functions available to the
+applications via xvideo port to be exported using a X-Server internal
+interface too, so other X-Server modules are able to use them.
+
+The mga driver was the first one which supported this (matrox
+G200+G400).  XFree86 4.1 adds a few more ones, a quick grep of the
+source tree returns this list: ct, i810, mga, nv, savage, smi,
+trident.  For ati you might want to have a look at
+http://www.linuxvideo.org/gatos/.
+
+Detailed Status:
+ * mga: works, I use that myself.  On multihead cards the second head
+   is not accelerated, that means hw scaling via Xvideo works on the
+   first head only.
+ * i810: works, according to the drivers author which asked me some
+   questions about it and finally got it going.
+ * tdfx: current CVS version works, next release (4.1.1) will have it.
+ * nvidia: free nv driver not working correctly (4.1).  nvidia's
+   binary-only works starting with release 1512.
+ * others: don't know, reports welcome.
+
+You also need a bttv version newer than 0.7.16 (the 2.2.x kernel version
+is /way/ to old, kernel 2.4.x is fine).  If both bttv driver and xfree86
+gfx driver support it, xfree86's video4linux driver will use hardware
+scaling automagically.
+
+
+drawbacks
+---------
+
+capturing images/video doesn't work if xawtv runs using the Xvideo
+extention.  With the '-noxv' switch Xvideo can be disabled.
+
+
+multiheaded setups
+------------------
+
+"regular" multihead with two screens works just fine.  The one only thing
+you have to take care off is that you can't use the -display option to
+start xawtv on the second head if you are *not* using Xvideo.  Use
+"DISPLAY=:0.1 xawtv" instead.  Otherwise v4l-conf will use the wrong
+screen to configure the driver.
+
+Xvideo + xinerama works just fine starting with XFree86 4.1, older
+versions show video on the first physical screen only (the one listed
+first in your ServerLayout section).  Without Xvideo you'll also see
+the video on the first head only.
+
+  Gerd

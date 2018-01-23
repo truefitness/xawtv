@@ -1,0 +1,31 @@
+[A]
+freq = 53750
+
+[B]
+freq = 62250
+
+[C]
+freq = 82250
+
+[D]
+freq = 175250
+
+[E]
+freq = 183750
+
+[F]
+freq = 192250
+
+[G]
+freq = 201250
+
+[H]
+freq = 210250
+
+[H1]
+freq = 217250
+
+[H2]
+freq = 224250
+
+#include "uhf.list"

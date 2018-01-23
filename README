@@ -1,0 +1,281 @@
+
+Documentation overview
+======================
+
+README		[this file] gives a overview over the package.
+		Build instructions, short overview over every
+		program, some maybe useful URL's.
+
+man pages	For most programs a manual page is available.
+
+README.xfree4	Some notes about XFree86 4.x and the Xvideo
+		extention.
+
+README.recording If you want record videos, have a look at this
+		file.  It also has some notes about how to process /
+		playback the files recorded by xawtv/streamer.
+
+README.network	How to stream video/audio over the net. Pointers to
+		other software for the most part.
+
+README.lirc	Some hints how make lirc work with xawtv.
+
+README.bttv	Some hints to get bttv going, also lists some
+		known problems.
+
+UPDATE_TO_v3.0	Some hints for upgrading from 2.x to 3.x (config
+		file syntax changes, ...)
+
+
+before sending me email...
+==========================
+
+IMPORTANT:  Don't send me mails with images attached unless I ask you
+to do so.  Mails with images attached will go to /dev/null unseen, you
+will never ever see an answer for these.
+
+If you have problems after upgrading, please check the ChangeLog for
+hints first.  Looking into the ChangeLog is a good idea in general,
+because it is updated for every release, the other files are updated
+less frequently and might be a bit outdated.
+
+For problem/bug reports:
+
+ * emails with questions answered in the documentation will go to
+   /dev/null.
+ * emails which don't have any useful informations (like "xawtv
+   doesn't work, please help me") will go to /dev/null.
+
+"useful information" includes at least:
+ - xawtv version
+ - kernel version
+ - which driver (+ version if you know)
+ - which hardware (although I probably can help with bttv
+   driver problems only).
+ - which TV norms are used in your country.
+ - if xawtv prints errors, include these too (cut+paste)
+ - don't forget a description of your problem :-)
+
+If you are using bttv as driver:
+ - the insmod arguments for the modules
+ - the kernel messages printed by bttv while loading.
+
+If you are _really_sure_ some information isn't important for your
+problem, you can skip it.  But if in doubt, better include it...
+
+
+For patches/changes:
+
+ * Please add a comment on what is changed and why you changed it.
+ * Please send unified diffs ("diff -u") against the latest version.
+ * Please don't reformat my source code.
+ * Complete patches have better chances to go in.  Quick+dirty hacks
+   which need cleanups and lack documentation updates are less likely
+   to go in simply because I need more time to deal with them.
+
+
+compile & install
+=================
+
+The commands
+
+	$ ./configure [ options ]
+	$ make
+
+should compile xawtv, v4l-conf, fbtv and a few other utilities.  You can
+also simply type "make" if you don't want to pass any options to
+configure.
+
+If it fails, check that all required packages are installed.  Note that
+the *-devel packages are also required to compile stuff, i.e. you need
+both libjpeg and libjpeg-devel for example.
+
+You can install the programs (as root) with:
+
+	# make install
+
+If you want build RPMs:  No problem, just run
+
+	$ rpm -ta xawtv-3.xx.tar.gz
+
+and install them the usual way with "rpm -i".
+
+
+usage
+=====
+
+bttv
+----
+
+bttv isn't bundled with xawtv any more.  You can the latest version
+from http://bytesex.org/bttv/.  If you are using kernel 2.4.x, it is
+very unlikely that you need an update, the bttv driver in 2.4.x is
+updated in regular intervals.
+
+
+v4l-conf
+--------
+
+v4l-conf is a small tool which tells video4linux about the current
+video mode (size and color depth).  This requires root privileges,
+because it is easy to crash the box by passing bogus values there.
+It requires the X-Server with DGA support up and running or a
+framebuffer device.  It is a temporary hack, this problem will be
+solved in a better way with a X11 extention.  See README.xfree4
+for details.
+
+Try "v4l-conf -h" for a short description.  It is installed suid-root,
+and xawtv runs it at startup.  Should work out-of-the-box without
+extra configuration.  Normally you shouldn't need to worry about it,
+but for debugging it is handy do run it from the shell and check the
+output.
+
+
+xawtv
+-----
+
+There is a man page now, read it.  Don't expect you can use xawtv
+without reading the documentation at least once.  You are lost if you
+don't know the keyboard shortcuts,  xawtv isn't a mouse-only program.
+
+xawtv will not work without the app-defaults.  If you want to try
+xawtv without installing it, use this...
+
+	$ XUSERFILESEARCHPATH=./%N.ad
+	$ export XUSERFILESEARCHPATH
+	$ ./xawtv
+
+...to make sure xawtv finds the application defaults (the Xawtv.ad
+file).  If v4l-conf isn't installed too, you have to run it once
+(as root) before starting xawtv.
+
+
+motv
+----
+
+That's basically xawtv with better (IMO), motif-based GUI.  Feature set
+is very close to xawtv, they share a lot of code (basically everything
+but the athena/motif GUI code).
+
+motv uses Motif 2.x features (utm, render tables).  This means you
+need openmotif, lesstif does *not* work.
+
+
+xawtv-remote
+------------
+
+remote control for xawtv.  Works with motv too.  Takes commands for
+xawtv as command line arguments.  Check 'xawtv-remote -h' for details.
+A man-page exists too.
+
+ObSecurity:  This uses X Properties, everyone who is allowed to connect
+to your X11 Display can control xawtv.
+
+There is a GUI (Qt) version at:
+http://www.ben2.ucla.edu/~wtho/xawtv-qremote/xawtv-qremote-0.01.tar.gz
+
+
+fbtv
+----
+
+TV program for the linux console.  Runs on top of a framebuffer
+device.  Check out man-page and source code for details.
+
+
+ttv
+---
+
+aa-lib based TV app which renders the TV image on any text terminal.
+
+
+scantv
+------
+
+scans for tv stations and writes a initial config file for xawtv and
+motv.
+
+
+v4lctl
+------
+
+This tool allows to control a v4l device from the command line.
+Also can capture images.  Check the man-page for details.
+
+
+streamer
+--------
+
+Command line tool for streaming capture, including audio.  Single
+frames work too.  Try the '-h' switch for a description.  A (short)
+man page is available too.
+
+
+pia
+---
+
+simple movie player, should play every movie file (mov+avi) recorded
+by streamer, xawtv and motv.
+
+
+radio
+-----
+
+You have to load the driver using "insmod bttv radio=1" for radio
+support.  The MAKEDEV script should create the required /dev/radio*
+devices.
+
+radio is a console application (curses).  up/down tune, 'q' quits,
+the function keys recall the programmed stations.  radio reads the
+kradio config file.  You can't configure anything with radio, you'll
+have to use kradio or vi for this.  The config file format is
+documented in the man page.
+
+kradio (my KDE radio app) isn't included any more, it is available as
+separate tarball now.
+
+
+videotext / teletext
+--------------------
+
+alevt is _the_ videotext application for bttv.  URL below.
+
+A http server for videotext called 'alevtd' is in the vbistuff
+subdirectory.  Recent xawtv version also come with mtt, which is a
+interactive videotext application for X11 (Motif) and console.
+
+
+webcam
+------
+
+This is a webcam tool.  Captures a image, annotates with a text +
+current time and uploads it to the webserver using ftp in an endless
+loop.  Needs the ftp utility.  Should survive dropped ftp-connections
+(webserver reboot) without problems.  It has a man-page...
+
+
+perl
+----
+
+Hint for all perl users/hackers:  There is a Video::Capture::V4l module
+available at CPAN.  It can do capture, vbi decoding, and it comes with a
+nifty tool to do a channel scan (decodes the station ID from vbi).
+
+
+resources
+=========
+
+http://bytesex.org/xawtv/				- xawtv	[me]
+http://bytesex.org/bttv/				- bttv	[me]
+http://lecker.essen.de/~froese/				- alevt	[Edgar]
+http://bttv-v4l2.sourceforge.net/			- bttv2 [Justin]
+http://roadrunner.swansea.uk.linux.org/v4l.shtml	- v4l	[Alan]
+http://www.thedirks.org/v4l2/				- v4l2	[Bill]
+http://www.tk.uni-linz.ac.at/~simon/private/i2c/	- i2c	[Simon]
+http://www-mice.cs.ucl.ac.uk/multimedia/software/vic/	- vic
+
+Have fun!
+
+  Gerd
+
+--
+Gerd Knorr <kraxel@bytesex.org>

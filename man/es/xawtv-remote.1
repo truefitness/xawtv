@@ -1,0 +1,182 @@
+.TH xawtv-remote 1 "(c) 1997-99 Gerd Knorr"
+.SH NOMBRE
+xawtv-remote, v4lctl -- control de dispositivos video4linux
+.SH SINOPSIS
+.B xawtv-remote [ opciones ] comando
+.br
+.B v4lctl [ opciones ] comando
+.SH DESCRIPCIÓN
+.B xawtv-remote
+y
+.B v4lctl
+se pueden usar para controlar una tarjeta de televisión bajo video4linux.
+.B xawtv-remote
+le pasa el comando a una instancia en ejecución de xawtv o motv por
+medio de propiedades X11.
+.B v4lctl
+establece los parámetros directamente.
+.SH OPCIONES
+.B xawtv-remote
+conoce las siguientes opciones:
+.TP
+.B -h
+muestra un breve mensaje de ayuda
+.TP
+.B -d dpy
+Establece el display X11
+.TP
+.B -i id
+Establece el identificador (ID) de ventana.
+.P
+.B v4lctl
+entiende estas opciones:
+.TP
+.B -h
+muestra un breve mensaje de ayuda
+.TP
+.B -c device
+Establece el dispositivo video4linux.
+.TP
+.B -v n
+Establece el nivel \fBn\fP de mensajes de salida, donde n = [0..2]
+.SH COMANDOS
+Las dos herramientas usan básicamente el mismo juego de comandos.
+Algunos son sólamente útiles para el xawtv-remote (pantalla completa,
+por ejemplo).
+.TP
+.B setstation [ <nombre> | <nr> | next | prev | back ]
+Establece el canal de TV.  La selección se realiza con las cadenas
+configuradas en el fichero de configuración .xawtv.  El argumento puede
+ser el nombre de la cadena o un número (el primero listado en el
+fichero de configuración es el 0, ...).
+next/prev salta a la cadena siguiente o previa de la lista de cadenas,
+y back a la seleccionada previamente.
+.TP
+.B setchannel [ <nombre> | next | prev ]
+Sintoniza un canal.
+.TP
+.B setfreqtab <tabla>
+Establece la tabla de frecuencias. En el menú del xawtv hay una lista
+de las opciones válidas.
+.TP
+.B setnorm <norma>
+Establece la norma de TV (NTSC/PAL/SECAM).
+.TP
+.B setinput [ <entrada> | next ]
+Establece la entrada de video (Television/Composite1/...)
+.TP
+.B capture [ on | off | overlay | grabdisplay ]
+Establece el modo de captura.
+.TP
+.B volume <arg>
+.TP
+.B color <arg>
+.TP
+.B hue <arg>
+.TP
+.B bright <arg>
+.TP
+.B contrast <arg>
+Establece el parámetro al valor especificado.  <arg> debe ser algo
+de lo siguiente: Un valor en tanto por ciento ("70%" por ejemplo).
+Valores absolutos ("32768"), el rango válido es específico del hardware.
+Los valores relativos se pueden especificar precediendo el número
+con "+=" o "-=" ("+=10%" o "-=2000").
+También se aceptan las palabras "inc" y "dec" que incrementarán y
+disminuirán el valor en pequeños pasos.
+.TP
+.B setattr <nombre> <valor>
+El valor de algún atributo (color, contraste, ...) también se
+puede especificar de esta manera.
+.TP
+.B show [ <nombre> ]
+Muestra el valor actual de algún atributo.
+.TP
+.B list
+Lista todos los atributos válidos con todas sus propiedades (valor por
+defecto, rango, ...)
+.TP
+.B snap [ jpeg | ppm ] [ full | win | widthxheight ] <fichero>
+Captura una imagen.
+.TP
+.B webcam <fichero>
+Captura una imagen.  Básicamente hace lo mismo que "snap jpeg win
+<fichero>".  También funciona cuando la grabación avi está activa.
+Escribe en un fichero temporal y lo renombra cuando ha realizado
+la acción, por lo tanto no habrá nunca un fichero inválido.
+.TP
+.B movie driver [ files | raw | avi | qt ]
+.TP
+.B movie video [ ppm | pgm | jpeg | rgb | gray | 422 | 422p | rgb15 | rgb24 | mjpeg | jpeg | raw | mjpa | png ]
+.TP
+.B movie fps <imágenes por segundo>
+.TP
+.B movie audio [ mono8 | mono16 | stereo ]
+.TP
+.B movie rate <tasa de muestreo>
+.TP
+.B movie fvideo <fichero>
+.TP
+.B movie faudio <fichero>
+.TP
+.B movie start
+.TP
+.B movie stop
+controla la grabación de películas del xawtv.
+.TP
+.B fullscreen
+Selecciona el modo a pantalla completa.
+.TP
+.B showtime
+Muestra la hora (lo mismo que hace la tecla 'D' en xawtv).
+.TP
+.B msg texto
+Muestra el texto en el display on-screen (título de la ventana /
+esquina superior izquierda a pantalla completa).
+.TP
+.B vtx linea1 linea2 [ ... ]
+Muestra subtítulos.  Saca una pequeña ventana en la parte inferior de
+la pantalla.
+Está pensado para actuar como interfaz para mostrar subtítulos (con
+frecuencia en la página 150 del teletexto en europa, de ahí el
+nombre) de programas externos. Nota: en españa se suele usar la
+página 888 para los subtítulos.
+.br
+Cada línea de comandos del argumento es una línea, cero líneas
+quita la ventana.
+Se puede dar color al texto con la secuencia de control "ESC tinta
+fondo".  Tanto tinta como fondo tienen un rango de 0 a 7 (colores ansi term).
+Ejemplo: "\\03347 hola mundo" está en azúl sobre fondo blanco.
+"\\033" debe ser un carácter de escape real, no vale con una cadena.
+Con bash lo puedes obtener con ^V ESC.  vtx también entiende
+secuencias de escape ANSI tty para el color.
+.TP
+.B quit
+cierra el xawtv
+.TP
+.B keypad n
+entra el dígito 'n'.  Eso es la selección de canales mediante dos dígitos,
+entrando dos dígitos en 5 segundos cambia a la cadena seleccionada.
+Útil para el lirc.
+.SH VEA TAMBIÉN
+xawtv(1), motv(1), xawtvrc(5)
+.SH AUTOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+Copyright (C) 1997-2001 Gerd Knorr <kraxel@goldbach.in-berlin.de>
+.P
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.P
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.P
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.SH TRADUCCIÓN
+Página traducida al español por Ricardo Villalba <rvm@escomposlinux.org>

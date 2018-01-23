@@ -1,0 +1,76 @@
+.TH pia 1 "(c) 2002 Gerd Knorr"
+.SH NAME
+pia - play media files
+.SH SYNOPSIS
+.B pia [ options ] movie
+.SH DESCRIPTION
+.B pia
+is a small X11 tool which plays movie files.
+.SH OPTIONS
+.B pia
+understands the usual toolkit options (-geometry + friends).
+Additional options are:
+.TP
+.B -h
+display help text
+.TP
+.B -v
+be verbose.
+.TP
+.B -debug
+enable debug messages.
+.TP
+.B -dsp <dev>
+Use OSS device <dev> for sound.
+.TP
+.B -noxv
+Disable Xvideo extension.
+.TP
+.B -nogl
+Disable OpenGL.
+.TP
+.B -noaudio
+Don't play sound.
+.TP
+.B -novideo
+Don't play video.
+.TP
+.B -slow n
+Slowdown video playback by factor n.  n=2 doubles playback time, ...
+This also turns off audio playback.
+.SH SUPPORTED MOVIE FORMATS
+Main purpose of this utility is to playback movie files recorded by
+xawtv, motv and streamer.  It should be able to playback every AVI or
+QuickTime movie written by one of the mentioned utilities.  Feel free
+to submit a bug report if this doesn't work for some file.
+.SS QuickTime
+.B pia
+uses libquicktime to decode quicktime movies, thus it should be able
+to decode and playback all movies with codecs supported by
+libquicktime.
+.SS AVI
+AVI support is very limited.  Video: uncompressed RGB data (15 and 24
+bpp) and mjpeg is supported.  Audio: only uncompressed PCM data works.
+.SS WAV
+WAV files are playable too, with the same limitation like AVI audio:
+only uncompressed PCM data.
+.SH AUTHOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+2002 Gerd Knorr
+.P
+Copyright (C) 2002 Gerd Knorr <kraxel@bytesex.org>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.

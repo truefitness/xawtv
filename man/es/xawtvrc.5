@@ -1,0 +1,297 @@
+.TH xawtvrc 5
+.SH NOMBRE
+xawtvrc -- fichero de configuración de programas de TV
+.SH SINOPSIS
+/etc/X11/xawtvrc
+.br
+$HOME/.xawtv
+.SH DESCRIPCIÓN
+.B xawtvrc
+es el fichero de configuración que originalmente usaba sólamente el xawtv
+(de ahí el nombre xawtvrc).  Ahora hay otros programas y utilidades de TV
+que lo leen también para obtener información de configuración.
+.P
+Estos programas usan tanto un fichero global (/etc/X11/xawtvrc) como
+uno personal ($HOME/.xawtv). Las opciones establecidas en el fichero
+personal tendrán preferencias sobre las globales.
+.SS Programas
+Los siguientes programas usan estos ficheros de configuración:
+.TP
+.B xawtv
+El programa de TV clásico de X11.
+.TP
+.B motv
+Un mejorado GUI, basado en motif del xawtv ...
+.TP
+.B fbtv
+El programa para ver la tele en linux para la consola con framebuffer.
+.TP
+.B ttv
+Aplicación basada en aalib para ver la tele en cualquier terminal.
+.TP
+.B v4lctl
+Herramienta de línea de comandos para controlar dispositivos video4linux.
+.SS Crear el fichero de configuración
+Tanto
+.B xawtv
+como
+.B motv
+disponen de funciones para editar los canales y guardar la configuración.
+Pero la función para grabarla \fBno\fP conservará los comentarios
+que hubiera en el fichero de configuración ...
+.P
+También puede usar su editor de textos favorito y modificar el fichero
+de configuración directamente.
+.P
+También es posible usar la utilidad de línea de comandos
+.B scantv
+para crear un fichero de configuración inicial.  scantv escaneará
+automáticamente todos los canales en busca de cadenas con emisión y
+escribirá las que encuentre en el fichero de configuración.
+.SH SINTAXIS
+.B xawtvrc
+usa una sintaxis similar a la de smb.conf: las secciones empiezan con
+[nombre], seguida de líneas con parejas opción = valor.
+.P
+Hay cuatro secciones especiales: [global], [launch], [eventmap] y
+[defaults].  Todas las demás secciones describen una cadena de TV cada una.
+.SS Opciones de cadenas de TV.
+Las siguientes opciones son válidas para cadenas de TV y la sección
+[defaults].  Las opciones de la sección [defaults] se usan -- como su
+nombre sugiere -- como valores por defecto para todoslos demás canales.
+Puede poner todo lo que es común para todos los canales (como la
+norma de TV que se usa en su país) en la sección [defaults], de modo que
+ya no deberá especificarla para cada canal.
+.P
+Con una sección [defaults] razonable, sólo necesitará especificar
+el canal para cada cadena de TV de esta manera:
+
+.nf
+[TVE]
+channel = 27
+.fi
+
+El resto de opciones son:
+.TP
+.B fine = n
+ajuste fino (lo mismo que las teclas cursor izq.+cursor der. hacen en el xawtv),
+por defecto: 0
+.TP
+.B norm = pal | ntsc | secam
+la norma de TV, la opción por defecto es pal
+.TP
+.B key = keysym
+Tecla para el canal. Se permiten todas las teclas keysyms de X11.
+Puede preceder una tecla con Modificador+, por ejemplo "Ctrl+F".
+.TP
+.B capture = off | overlay | grabdisplay
+modo de captura: off, overlay (por defecto, tarjeta de TV => video, 0% cpu) o
+grabdisplay (tarjeta de TV => memoria principal => Servidor X => video,
+la proporción de cuadros por segundo depende de la carga y tamaño de la
+imagen).  Por defecto se usa overlay.  Si no es posible usar el modo
+overlay por alguna razón (display remoto, no soportado por el hardware,
+lo que sea) las aplicaciones seleccionarán automáticamente el modo
+grabdisplay.
+.TP
+.B input = Television | Composite1 | Composite2 | SVHS
+fuente de entrada.  Los valores válidos dependen del driver del hardware,
+los valores de arriba son sólo ejemplos.  Puede usar "v4lctl list"
+para obtener una lista con las opciones válidas.
+.TP
+.B color = n
+.TP
+.B bright = n
+.TP
+.B hue = n
+.TP
+.B contrast = n
+El rango válido va de 0 a 65535, siendo 32768 el valor por defecto.
+Añadiendo el símbolo del tanto por ciento cambia el rango de 0 a 100,
+por ejemplo "50%" es lo mismo que "32768".
+.TP
+.B audio = mono | stereo | lang1 | lang2
+Establece el modo de audio para un determinado canal.
+.TP
+.B freq = n
+Especifica la frecuencia para un determinado canal (en MHz, el transportador
+de video).  No debería necesitar esto para un uso normal, todos los
+canales deberían estar listado en la tabla de frecuencia de su zona
+(si no, envíeme un parche).
+A no ser que quizás viva cerca de la frontera y el país vecino use
+un esquema de canales diferente.
+.TP
+.B midi = nota
+Establece el evento midi de <nota> como tecla para el canal.
+.P
+.SS Opciones globales
+Un número de opciones sin relación a los canales van en la sección "[global]":
+.TP
+.B fullscreen = ancho x alto
+especifica el modo de video que se debe usar para el modo de pantalla
+completa.  Sólamente funciona con XFree, y por supuest es necesario
+un modeline válido para este modo en su fichero XF86Config.
+También debe habilitar la extensión VidMode (opción -vm, mire abajo)
+para que funcione.
+.TP
+.B wm-off-by = [+-]x[+-]y
+Algunos gestores de ventanas no manejan correctamente la gravedad estática
+(que yo sepa mwm y kwm).  Esto es algo fastidioso en el modo a
+pantalla completa.  Con esta opción puede corregirlo mediante un
+desplazamiento para mover las ventanas.  Por ejemplo, wm-off-by = -4-24
+soluciona el problema en el kwm (el window manager del KDE1).
+.TP
+.B freqtab =
+selecciona el mapeo de canal a frecuencia. La tabla de
+"Options window->Frequency" (en el xawtv) muestra un menú con todas las
+entradas válidas (y permite cambiar de tabla en tiempo de ejecución).
+.TP
+.B pixsize = ancho x alto
+tamaño de los pixmaps de los canales (dentro de la ventana de canales).
+0x0 deshabilita esta opción.
+.TP
+.B pixcols = n
+número de columnas que se usarán en la ventana de canales. Por defecto: 1.
+.TP
+.B mixer = ctl | device:ctl
+Esta opción permite controlar el volumen por medio del mezclador de la
+tarjeta de sonido.  ctl es el control del mezclador, como por ejemplo
+"vol" para el volumen maestro. "line1" puede ser un buen candidato
+para la tarjeta de TV.  device es el dispositivo mezclador (sino se
+especifica se usará /dev/mixer).  El volumen se controla con las
+teclas del teclado numérico: + sube el volumen, - lo baja, Intro lo
+silencia.
+.TP
+.B jpeg-quality = n
+establece el nivel de calidad para imágenes o cuadros (M)JPEG.
+El rango válido es para n es [0 .. 100] siendo 75 el valor por defecto.
+.TP
+.B keypad-ntsc = on | off
+Configura el modo del teclado numérico.  Por defecto off.
+Cuando se pone a on, los números que se tecleen en el teclado
+numérico serán interpretados como número de canales (así es como
+funciona el NTSC TV).  De otro modo serán interpretados como canales
+programados, es decir, 1 es el primer canal del $HOME/.xawtv, ...
+.TP
+.B keypad-partial = on | off
+Otro modo de configuración del teclado numérico. Por defectos on.
+Cuando se pone a off, teclear un dígito en el teclado numérico no
+cambia el canal si hay canales de dos dígitos que empiezan por ese
+número.
+.TP
+.B osd = on | off
+Habilita o deshabilita los textos en pantalla en el modo
+de pantalla completa.  Por defecto on.
+.TP
+.B ratio = x:y
+Establece un aspect ratio fijo para la imagen de TV. El valor
+por defecto es 4:3.  Use 0:0 si no quiere un aspect ratio fijo.
+.TP
+.B mov-driver = files | raw | avi | mov
+.TP
+.B mov-video = ppm | pgm | jpeg | rgb | gray | 422 | 422p | rgb15 | rgb24 | mjpeg | jpeg | raw | mjpa | png
+.TP
+.B mov-fps = fps
+.TP
+.B mov-audio =  mono8 | mono16 | stereo
+.TP
+.B mov-rate = rate
+Establece los valores para grabaciones. No todas las combinaciones son
+posibles.  "streamer -h" mostrará una lista.
+.TP
+.B midi = puerto
+Puede especificar un puerto ALSA por el cual xawtv recibirá eventos
+midi.  Configurado de este modo, puede programar las teclas de su
+teclado midi como teclas asignadas a canales y usar eventos del
+controlador midi para controlar los ajustes de volumen, brillo, etc.
+Mire la descripción de la sección [eventmap] que hay más abajo para más
+detalles.
+.SS La sección [launch]
+Es posible arrancar otros programas desde el xawtv.  Se configura
+con entradas en la sección "[launch]":
+.TP
+.B label = tecla, línea de comandos
+La tecla especificada ejecutará el programa. También vale llamar
+la acción como "Launch(label)".  Si quiere jugar con las tablas
+de traducción de Xt, siéntase libre de hacerlo.  Pero no se queje
+si rompe algo...
+.SS La sección [eventmap]
+La sección eventmap consiste simplemente en un número de líneas
+"evento = acción".  "acción" puede ser cualquier comando que el xawtv
+entienda (mire la página man del xawtv-remote para una lista).
+"evento" es un evento generado por cualquier dispositivo de entrada
+de los que escucha el xawtv.  Un evento puede tener algún argumento,
+por ejemplo los eventos del midi-ctrl tienen uno.  Si está presente
+el argumento será añadido a la acción.
+.P
+Hay mapeos por defecto para eventos de entrada del lirc y del joystick,
+por tanto no será necesario que cree un eventmap para poder usarlos.
+Pero en caso de que no le guste los valores por defecto puede
+cambiarlos fácilmente.
+.P
+A continuación hay una lista de eventos válidos:
+.TP
+.B lirc-key-<nombre>
+Se ha pulsado la tecla <nombre> en el mando a distancia IR.
+.TP
+.B joy-button-<n>
+Se pulsó el botón <n> del joystick.
+.TP
+.B joy-axis-<left|right|up|down>
+El joystick se ha movido en la dirección especificada.
+.TP
+.B midi-note-<n>
+Se ha recibido un evento de nota <n> (porque se ha pulsado una
+tecla en el teclado midi).
+.TP
+.B midi-ctrl-<n>
+Se ha recibido un mensaje del controlador midi para el control <n>.
+Este evento tiene un argumento (el valor actual del control).
+.TP
+.B kbd-key-<nombre>
+La tecla <nombre> se ha pulsado en el teclado.  Sólamente fbtv
+soporta esta opción.
+.SS Ejemplo de fichero de configuración
+.nf
+# esto es un comentario
+# las línea vacías también se ignoran
+
+[global]
+freqtab = europe-west
+#mixer   = line
+jpeg-quality = 75
+midi = 64:0
+fullscreen = 768x576
+
+# para el /etc/XF86Config
+# Modeline  "pal"  50.00  768 832 856 1000  576 590 595 630  -hsync -vsync
+
+[launch]
+mixer = M, gtkaumix
+AleVT = Ctrl+A, alevt
+
+[eventmap]
+midi-ctrl-7 = volume
+
+[defaults]
+input = television
+norm  = pal
+
+[TVE 1]
+channel=E11
+key=F1
+
+[La 2]
+channel = 43
+key = F2
+
+# las demás cadenas van aquí
+
+[Cámara]
+input = Composite1
+key = K
+.fi
+
+.SH VEA TAMBIÉN
+scantv(1), xawtv(1), motv(1), fbtv(1), ttv(1), v4lctl(1)
+.SH TRADUCCIÓN
+Página traducida al español por Ricardo Villalba <rvm@escomposlinux.org>

@@ -1,0 +1,47 @@
+.TH streamer 1
+.SH NOMBRE
+streamer - graba audio y/o video
+.SH SINOPSIS
+.B streamer [ opciones ]
+.SH DESCRIPCIÓN
+.B streamer
+lee datos de audio y/o de video de /dev/video0 y /dev/dsp, y los escribe
+en el disco.  Se soportan varios formatos de salida.
+Arranque el streamer con la opción '-h' para obtener una lista de
+las opciones y de los formatos de salida soportados.
+.P
+streamer usará la extensión del fichero de salida para averiguar
+el formato a usar.  Sólo son necesarias las opciones -f/-F si la
+extensión permite más de un formato.
+.P
+Puede parar la grabación sin problemas en cualquier momento con Ctrl+C.
+streamer capturará la señal y parará la grabación correctamente
+(por ejemplo, escribe la cabecera del fichero de la película)
+antes de salir.
+.SH EJEMPLOS
+.TP
+.B streamer -o foobar.jpeg
+escribe un fichero jpeg.
+.TP
+.B streamer -o quicktime.mov -f yuv2 -F stereo -r 12 -t 120
+graba una película corta en quicktime (120 imágenes / 12 fps => 10 segundos).
+.SH VEA TAMBIÉN
+xawtv(1), v4lctl(1)
+.SH AUTOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.P
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.P
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.SH TRADUCCIÓN
+Página traducida al español por Ricardo Villalba <rvm@escomposlinux.org>

@@ -1,0 +1,268 @@
+.TH xawtv 1 "(c) 1997-2002 Gerd Knorr"
+.SH NOM
+xawtv - un programme X11 pour regarder la télévision
+.SH SYNOPSIS
+.B xawtv [ options ] [ nom de la station ]
+.SH DESCRIPTION
+.B xawtv
+est une application X11 permettant de regarder la télévision avec votre
+machine unix. Elle utilise les contrôles Athena.
+.SH OPTIONS
+Toutes les options de la ligne de commande correspondent à une ressource,
+vous pouvez donc les mettre aussi dans votre fichier .Xdefaults.
+.TP
+\fB-h\fP, \fB-help\fP
+Affiche une courte description de toutes les options de la ligne de commande.
+.TP
+\fB-hwscan\fP
+Affiche une liste des périphériques disponibles.
+.TP
+\fB-f\fP, \fB-fullscreen\fP
+Démarre en mode plein écran.
+.br
+Ressource: xawtv.fullscreen (booléen).
+.TP
+\fB-n\fP, \fB-noconf\fP
+ne lit pas le fichier de configuration ($HOME/.xawtv).
+.br
+Ressource: xawtv.readconfig (booléen).
+.TP
+\fB-o\fP, \fB-outfile\fP base
+définit le nom de base pour les fichiers de capture d'écran.
+Le nom du fichier sera du type "base-date-numéro.ext".
+.br
+Ressource: xawtv.basename (chaîne).
+.TP
+\fB-c\fP, \fB-périphérique\fP périphérique
+définit le périphérique video4linux (par défaut /dev/video0).
+Cette option désactive aussi Xvideo.
+.br
+Ressource: xawtv.périphérique (chaîne).
+.TP
+\fB-D\fP, \fB-driver\fP nom
+définit le driver video4linux (par défaut "libv4l").
+Cette option désactive aussi Xvideo.
+.br
+Ressource: xawtv.driver (chaîne).
+.TP
+\fB-C\fP, \fB-dspdev\fP périphérique
+définit le périphérique audio (par défaut /dev/dsp).
+.br
+Ressource: xawtv.dspdev (chaîne).
+.TP
+\fB-vbidev\fP périphérique
+définit le périphérique vbi (par défaut /dev/vbi0).
+.br
+Ressource: xawtv.vbidev (chaîne).
+.TP
+\fB-c\fP, \fB-xvport\fP nombre
+définit le port Xvideo (par défaut le premier utilisable si Xvideo est
+disponible). Cette option active aussi Xvideo.
+.br
+Ressource: xawtv.xvport (int).
+.TP
+\fB-joydev\fP périphérique
+périphérique manette de jeu à utiliser pour contrôler xawtv.
+.br
+Ressource: xawtv.joydev (chaîne).
+.TP
+\fB-v\fP, \fB-debug\fP niveau
+Etre plus explicite, le
+.B niveau
+peut être 0 (par défaut), 1 ou 2. Cela n'existe que pour le débogage ou
+pour l'analyse de problèmes.
+.br
+Ressource: xawtv.debug (int).
+.TP
+\fB-remote\fP
+L'affichage X11 est distant. Ceci désactive en fait le mode overlay,
+vous pouvez en avoir besoin si xawtv n'arrive pas à détecter automatiquement
+un affichage X11 distant.
+.br
+Ressource: xawtv.remote (booléen).
+.TP
+\fB-b\fP, \fB-bpp\fP n
+force xawtv à basculer dans la profondeur de couleur
+.B n.
+Permet de basculer entre 15/16 et 24/32 bpp.
+Ce paramètre est seulement renvoyé à v4l-conf(1).
+.br
+Ressource: xawtv.bpp (int).
+.TP
+\fB-shift\fP n
+Décale l'affichage video de
+.B n
+octets. Essayez ceci si l'image video n'est pas dans la fenêtre de xawtv,
+quelques cartes matrox anciennes sont affectées de ce problème.
+Ce paramètre aussi est seulement renvoyé à v4l-conf(1).
+.br
+Ressource: xawtv.shift (int).
+.TP
+\fB-fb\fP
+Utilise le périphérique framebuffer pour déterminer l'adresse du framebuffer
+(plutôt que l'extension DGA). Encore un argument renvoyé.
+.br
+Ressource: xawtv.fbdev (booléen).
+.TP
+\fB-xv/-noxv \fP
+Active/Désactive l'utilisation de l'extension Xvideo globalement,
+cad. que -noxv équivaut aux options -noxv-video et -noxv-image combinées.
+(voir ci-dessous).
+.br
+Ressource: xawtv.xv (booléen).
+.TP
+\fB-xv-video/-noxv-video \fP
+Active/Désactive l'utilisation de l'extension Xvideo pour l'overlay
+(ex. XvPutVideo).  Le mode overlay utilise ceci. Est activé par défault.
+.br
+Ressource: xawtv.xvVideo (booléen).
+.TP
+\fB-xv-image/-noxv-image \fP
+Active/Désactive l'utilisation de l'extension Xvideo pour la mise à
+l'échelle de l'image (ex. XvPutImage). Le mode grabdisplay utilise ceci.
+Est activé par défault.
+.br
+Ressource: xawtv.xvImage (booléen).
+.TP
+\fB-vm/-novm\fP
+Active/Désactive l'utilisation de l'extension VidMode, est désactivé par
+défaut. S'il y a un mode plein écran défini dans le fichier de configuration,
+l'extension VidMode est activée automatiquement.
+.br
+Ressource: xawtv.vidmode (booléen).
+.TP
+\fB-dga/-nodga\fP
+Active/Désactive l'utilisation de l'extension DGA, activée par défaut.
+.br
+Ressource: xawtv.dga (booléen).
+.TP
+\fB-parallel\fP n
+utilise n instances (threads) de compression (par défaut~: un).
+.br
+Ressource: xawtv.parallel (int).
+.P
+L'options habituelles de l'environnement comme \fB-geometry\fP
+sont aussi supportées.
+.SH MATÉRIEL SUPPORTÉ / INTERFACES
+.TP
+.B v4l2
+video4linux deux - modernes de capture vidéo standard linux API.
+.TP
+.B libv4l
+travail grâce à la bibliothèque libv4l, qui fournit une couche mince
+supplémentaire sur le dessus de video4linux2 les appareils d'appui d'une large
+gamme de formats plus périphériques "pixel (souvent nécessaire
+pour les webcams, etc).
+Il est l'interface par défaut sur les systèmes Linux.
+.TP
+.B bktr
+Pilote pour FreeBSD / OpenBSD des cartes d'acquisition bt848/878.
+.TP
+.B Xvideo
+Extention X11 pour les périphériques video. Notez que l'extention Xvideo
+ne supporte que le mode overlay, vous ne pouvez pas enregistrer des images
+ou des videos quand l'extension est utilisée. Dans un autre sens c'est le
+seul moyen d'obtenir une mise à l'échelle de la video (ex. plein écran
+sans bordures en 1024x768) si à la fois le matériel et le pilote de xfree86
+le permettent. Lire README.xfree4 pour plus de détails et de conseils sur
+comment régler Xvideo.
+.SH PREMIÈRE UTILISATION
+Démarrez seulement xawtv. Vérifiez alors les réglages dans le menu des
+options (bouton droit de la souris) et ajustez les réglages (norme TV,
+source video, table de fréquences). Avec les touches flèches vous pouvez
+contrôler le syntoniseur et rechercher des émetteurs TV. Les autres
+touches très utiles sont listées ci-dessous.
+.P
+La touche 'E' affiche l'éditeur des chaînes où vous pouvez créer/changer
+vos pré-sélections pour les émetteurs TV. N'oubliez pas de cliquer sur
+"save" pour écrire un fichier de configuration. Vous pouvez aussi
+créer/changer un fichier de configuration avec n'importe quel éditeur de
+texte, lisez xawtvrc(5) pour une description de la syntaxe du fichier de
+configuration. Il y a certaines options que ne peuvent être changées qu'en
+éditant le fichier de configuration.
+.P
+Vous pouvez aussi essayer scantv. c'est un outil en ligne de commande qui
+recherche les émetteurs et écrit un fichier de configuration de xawtv avec
+toutes les chaînes qu'il a trouvé.
+.SS Utilisation de la souris
+Le bouton gauche de la souris fait apparaître un menu avec toutes les
+chaînes trouvées dans el fichier de configuration. Le bouton du milieu
+passe à la chaîne suivante. Le bouton droit fait apparaître un menu avec
+beaucoup de réglages et de contrôles.
+.SS Raccourcis clavier
+.nf
+V             \fIV\fPideo (Capture) active/inactive
+A             \fIA\fPudio Son actif/inactif
+F             Plein Ecran actif/inactif
+G             Sauver image (Taille Maximum, ppm)
+J             Sauver image (Taille Maximum, \fIj\fPpeg)
+Ctrl+G        Sauver image (Taille de la fenêtre, ppm)
+Ctrl+J        Sauver image (Taille de la fenêtre, \fIj\fPpeg)
+O             Affiche le menu d'\fIO\fPptions
+C             Affiche le menu des \fIC\fPhaînes
+E             Affiche l'\fIé\fPditeur des chaînes
+R             Affiche la fenêtre d'en\fIr\fPegistrement AVI
+Z             \fIZ\fPappette (\fIz\fPappe, cad. change de chaîne
+              après quelques secondes).
+Ctrl+Z        Zappette rapide (prend des images de chaque chaîne
+              pour les vignettes de la fenêtre des chaînes.
+
+haut/bas      syntonise la fréquence suivante/précédente
+gauche/droite syntonisation affinée
+pgup/pgdown   chaîne suivante/précédente dans le fichier de configuration
+espace        chaîne suivante (comme pgup)
+backspace     chaîne précédente
+Ctrl+haut     cherche l'émetteur suivant
+F5-F12        réglage luminosité/hue/contraste/couleur
+
+ESC,Q        \fIQ\fPuitte
+
++/-          Augmenter diminuer le volume sonore (pavé numérique)
+Entrée       Silence (pavé numérique)
+.fi
+.SH BOGUES
+.B Les rapports de bogues avec une image attachée vont dans /dev/null
+sans être regardés.
+.P
+xawtv a besoin d'un pilote correctement configuré. Si vous ne pouvez pas
+syntoniser des émetteurs alors que les réglages dans la fenêtre des options
+sont corrects c'est certainement un problème de pilote.
+.P
+L'affichage mono/stereo n'est \fBpas\fP fiable de par les limitations de
+l'API v4l. L'API ne peut pas renvoyer le mode audio en cours, seulement
+une liste des modes disponibles. Xawtv essaye seulement de deviner, partant
+du principe que le pilote utilise le meilleur mode disponible. Suivant
+votre matériel ceci peut être faux. Si vous n'êtes pas sûr du fait que la
+stereo fonctionne \fBréèllement\fP, veuillez syntoniser une chaîne musicale
+et écoutez, ne faites pas confiance à ce que xawtv dit.
+.SH VOIR AUSSI
+xawtvrc(5), fbtv(1), v4l-conf(1), scantv(1)
+.br
+http://bytesex.org/xawtv/ (homepage)
+.SH AUTEUR
+Gerd Knorr <kraxel@bytesex.org>
+.SH TRADUCTION
+José Jorge <jose.jorge@oreka.com>
+.SH COPYRIGHT
+Copyright (C) 1997-2002 Gerd Knorr <kraxel@bytesex.org>
+
+Permission est donnée à tout individu ou institution d'utiliser, copier,
+ou redistribuer ce logiciel dès lors que tous les fichiers d'origine
+sont inclus, que ce n'est pas vendu pour des bénéfices, et que cette
+notice sur le copyright est incluse.
+
+Ce programme est un logiciel libre; vous pouvez le redistribuer et/ou
+le modifier sous les termes de la licence GNU GPL telle que publiée
+par la Free Software Foundation; soit la version 2, soit (à votre convenance)
+toute version ultérieure.
+
+Ce programme est distribué dans l'espoir qu'il soit utile, mais
+SANS AUCUNE GARANTIE; même sans la garantie implicite de UTILISABILITE
+ou d'ADAPTATION A UN USAGE PRECIS. Lisez la licence GNU GPL pour plus
+de détails.
+
+Vous devriez avoir reçu une copie de la licence GNU GPL avec ce programme;
+si ce n'est pas le cas, écrivez à Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.SH DIVERS
+Vous êtes le 4711ème visiteur de cette page.

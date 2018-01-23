@@ -1,0 +1,369 @@
+
+! ----------------------------------------------------------------------------
+! fonts
+
+*renderTable:
+*renderTable.fontType: FONT_IS_FONTSET
+*renderTable.fontName: \
+ -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso10646-1, \
+ -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso8859-* \
+ -*-*-*-*--13-*-*-*-*-*-*-*,*
+
+MoTV.onscreen.label.renderTable:
+MoTV.onscreen.label.renderTable.fontType: FONT_IS_FONTSET
+MoTV.onscreen.label.renderTable.fontName: \
+ -misc-fixed-medium-r-normal--20-*-*-*-*-*-iso10646-1, \
+ -misc-fixed-medium-r-normal--20-*-*-*-*-*-iso8859-* \
+ -*-*-*-*--20-*-*-*-*-*-*-*,*
+
+MoTV.vtx.label.renderTable:
+MoTV.vtx.label.renderTable.fontType: FONT_IS_FONTSET
+MoTV.vtx.label.renderTable.fontName: \
+ -misc-fixed-medium-r-normal--20-*-*-*-*-*-iso10646-1, \
+ -misc-fixed-medium-r-normal--20-*-*-*-*-*-iso8859-* \
+ -*-*-*-*--20-*-*-*-*-*-*-*,*
+
+
+! ----------------------------------------------------------------------------
+! main window
+
+MoTV.geometry:			320x240+50+50
+MoTV.winGravity:		Static
+
+!  This is commented out to avoid warnings
+!  (seems not working now, as of 20110216)
+!MoTV.translations:		#override			\n\
+!	<PropertyNotify>:	Remote()
+
+MoTV.tv.traversalOn:		false
+MoTV.tv.highlightThickness:	0
+MoTV.tv.background:		black
+MoTV.tv.translations:		#replace			\n\
+	<Btn2Down>:		Ipc(drag)			\n\
+	<Btn3Up>:		Popup(control)			\n\
+	~Alt ~Ctrl <Key>C:	Popup(control)			\n\
+	Ctrl <Key>C:		Ipc(clipboard)			\n\
+	Alt <Key>C:		Ipc(clipboard)			\n\
+	<Key>R:			Popup(streamer)			\n\
+	<Key>S:			Popup(scale)			\n\
+	<Key>L:			Popup(levels)			\n\
+	<Key>T:			StayOnTop()			\n\
+	<Key>H:			man(motv)			\n\
+	<Key>F1:		man(motv)			\n\
+	\
+	<Key>Q:			CloseMain()			\n\
+	<Key>KP_Add:		Command(volume,inc)		\n\
+	<Key>KP_Subtract:	Command(volume,dec)		\n\
+	<Key>KP_Enter:		Command(volume,mute)		\n\
+	<Key>A:			Command(volume,mute)		\n\
+	<Key>F:			Command(fullscreen)		\n\
+	Ctrl<Key>Z:		Zap(fast)			\n\
+	<Key>Z:			Zap()				\n\
+	Ctrl<Key>G:		Command(snap,ppm,win)		\n\
+	Ctrl<Key>J:		Command(snap,jpeg,win)		\n\
+	<Key>G:			Command(snap,ppm,full)		\n\
+	<Key>J:			Command(snap,jpeg,full)		\n\
+	Ctrl<Key>Up:		Scan()				\n\
+	~Ctrl<Key>Up:		Command(setchannel,next)	\n\
+	<Key>Down:		Command(setchannel,prev)	\n\
+	<Key>Right:		Command(setchannel,fine_up)	\n\
+	<Key>Left:		Command(setchannel,fine_down)	\n\
+	<Key>Page_Up:		Command(setstation,next)	\n\
+	<Key>Page_Down:		Command(setstation,prev)	\n\
+	<Key>BackSpace:		Command(setstation,back)	\n\
+	<Btn4Up>:		Command(setstation,next)	\n\
+	<Btn5Up>:		Command(setstation,prev)	\n\
+	<Key>V:			Command(capture,toggle)		\n\
+	<Key>space:		Command(setstation,next)	\n\
+	\
+	<Key>XF86AudioRaiseVolume: Command(volume,inc)		\n\
+	<Key>XF86AudioLowerVolume: Command(volume,dec)		\n\
+	<Key>XF86AudioMute:	Command(volume,mute)		\n\
+	<Key>XF86AudioNext:	Command(setstation,next)	\n\
+	<Key>XF86AudioPrev:	Command(setstation,prev)	\n\
+	<Key>XF86AudioPlay:	Command(capture,on)		\n\
+	<Key>XF86AudioStop:	Command(capture,off)		\n\
+	\
+	<Key>KP_0:		Command(keypad,0)		\n\
+	<Key>KP_1:		Command(keypad,1)		\n\
+	<Key>KP_2:		Command(keypad,2)		\n\
+	<Key>KP_3:		Command(keypad,3)		\n\
+	<Key>KP_4:		Command(keypad,4)		\n\
+	<Key>KP_5:		Command(keypad,5)		\n\
+	<Key>KP_6:		Command(keypad,6)		\n\
+	<Key>KP_7:		Command(keypad,7)		\n\
+	<Key>KP_8:		Command(keypad,8)		\n\
+	<Key>KP_9:		Command(keypad,9)		\n\
+	\
+	<Key>osfHelp:		man(motv)			\n\
+	<Key>osfActivate:	Command(volume,mute)		\n\
+	Ctrl<Key>osfUp:		Scan()				\n\
+	~Ctrl<Key>osfUp:	Command(setchannel,next)	\n\
+	<Key>osfDown:		Command(setchannel,prev)	\n\
+	<Key>osfRight:		Command(setchannel,fine_up)	\n\
+	<Key>osfLeft:		Command(setchannel,fine_down)	\n\
+	<Key>osfPageUp:		Command(setstation,next)	\n\
+	<Key>osfPageDown:	Command(setstation,prev)	\n\
+	<Key>osfBackSpace:	Command(setstation,back)
+
+
+MoTV.tv*stationsM.menuPost:	<Btn1>
+
+MoTV.about_box_popup.deleteResponse:	DESTROY
+MoTV.errbox_popup.deleteResponse:	UNMAP
+
+MoTV.tv*stationsM.packing:		PACK_COLUMN
+control*menubar*stationsM.packing:	PACK_COLUMN
+
+
+! ----------------------------------------------------------------------------
+! control window
+
+control.title:				MoTV
+control.iconName:			MoTV
+control.iconPixmap:			TVimg
+control.iconMask:			TVmask
+control*highlightThickness:		0
+control*XmPushButton.highlightThickness: 1
+control.XmDialogShell*highlightThickness: 1
+
+control.toolTipEnable:			1
+control.toolTipPostDelay:		3000
+control.toolTipPostDuration:		8000
+control*TipLabel.foreground:		black
+control*TipLabel.background:		lightyellow
+control*TipShell.borderWidth:		1
+control*TipShell.borderColor:		black
+control*tool.orientation:		HORIZONTAL
+control*tool.?.shadowThickness:		1
+control*tool.?.labelType:		PIXMAP
+control*tool.XmSeparator.orientation:	VERTICAL
+control*tool.XmSeparator.width:		12
+control*tool.XmSeparator.margin:	3
+control*tool.prev.labelPixmap:		prev
+control*tool.next.labelPixmap:		next
+control*tool.snap.labelPixmap:		snap
+control*tool.movie.labelPixmap:		movie
+control*tool.mute.labelPixmap:		mute
+control*tool.exit.labelPixmap:		exit
+
+control*menubar*XmMenuShell.XmRowColumn.tearOffModel:	TEAR_OFF_ENABLED
+!control*box.XmPushButton*menu.tearOffModel:	TEAR_OFF_DISABLED
+
+control.form.view.scrollingPolicy:	AUTOMATIC
+!control.form.view.scrollBarDisplayPolicy: STATIC
+control.form.view.scrollBarPlacement:	BOTTOM_RIGHT
+control.form.view.scrolledWindowChildType: SCROLL_VERT
+control.form.view.box.resizeWidth:	false
+control.form.view.box.packing:		PACK_TIGHT
+control.form.view.box.orientation:	HORIZONTAL
+control.form.view.box.entryAlignment:	ALIGNMENT_CENTER
+
+control.form.?.leftAttachment:		ATTACH_FORM
+control.form.?.rightAttachment:		ATTACH_FORM
+control.form.tool.topAttachment:	ATTACH_WIDGET
+control.form.tool.topWidget:		menubar
+control.form.view.topAttachment:	ATTACH_WIDGET
+control.form.view.topWidget:		tool
+control.form.view.bottomAttachment:	ATTACH_WIDGET
+control.form.view.bottomWidget:		status
+control.form.status.bottomAttachment:	ATTACH_FORM
+control.form.status.orientation:	HORIZONTAL
+control.form.status.marginWidth:	0
+control.form.status.marginHeight:	0
+control.form.status.spacing:		0
+!control.form.status.adjustLast:		True
+control.form.status.f.shadowType:	SHADOW_IN
+control.form.status.f.shadowThickness:	1
+control.form.status.f.?.marginLeft:	3
+control.form.status.f.?.marginRight:	3
+control.form.status.f.?.labelString:
+
+
+! ----------------------------------------------------------------------------
+! channel scan
+
+*chscan_popup.deleteResponse:		DESTROY
+*chscan_popup*dialogStyle:		DIALOG_PRIMARY_APPLICATION_MODAL
+*chscan_popup*okLabelString:		Start
+*chscan_popup*channel.editable:		False
+*chscan_popup*channel.slidingMode:	THERMOMETER
+*chscan_popup*channel.orientation:	HORIZONTAL
+*chscan_popup*channel.titleString:	-
+*chscan_popup*channel.sliderVisual:	SHADOWED_BACKGROUND
+
+
+! ----------------------------------------------------------------------------
+! channel properties
+
+*prop_popup.deleteResponse:		UNMAP
+*prop_popup*rc.key.editable:		false
+*prop_popup*rc.channel.visibleItemCount: 16
+*prop_popup*rc.channel.comboBoxType:	DROP_DOWN_LIST
+*prop_popup*rc.channel.positionMode:	ONE_BASED
+*prop_popup*rc.keyL.marginTop:		10
+*prop_popup*rc.groupL.marginTop:	10
+*prop_popup*rc.channelL.marginTop:	10
+*prop_popup*rc.XmLabel.alignment:	ALIGNMENT_BEGINNING
+
+*prop_popup*no_name_popup.deleteResponse: DESTROY
+
+
+! ----------------------------------------------------------------------------
+! preferences
+
+*pref_popup.deleteResponse:		UNMAP
+*pref_popup*fsL.frameChildType:		FRAME_TITLE_CHILD
+*pref_popup*optL.frameChildType:	FRAME_TITLE_CHILD
+*pref_popup*mixL.frameChildType:	FRAME_TITLE_CHILD
+*pref_popup*jpeg.orientation:		HORIZONTAL
+*pref_popup*jpeg.quality.columns:	3
+
+
+! ----------------------------------------------------------------------------
+! scale controls
+
+scale.form.shadowThickness:		0
+scale*XmScale.orientation:		HORIZONTAL
+scale*XmScale.showValue:		true
+scale*XmScale.highlightOnEnter:		true
+scale*XmScale.highlightThickness:	1
+scale*XmScale.topAttachment:		ATTACH_WIDGET
+scale*XmScale.leftAttachment:		ATTACH_FORM
+scale*XmScale.rightAttachment:		ATTACH_FORM
+scale*XmScale.topOffset:		5
+scale*XmScale.BottomOffset:		5
+scale*XmScale.leftOffset:		10
+scale*XmScale.rightOffset:		10
+scale*XmScale.width:			160
+
+
+! ----------------------------------------------------------------------------
+! filter property controls
+
+filter*label.frameChildType:		FRAME_TITLE_CHILD
+filter*XmScale.showValue:		true
+filter*XmScale.highlightOnEnter:	true
+filter*XmScale.highlightThickness:	1
+filter*XmScale.orientation:		HORIZONTAL
+
+
+! ----------------------------------------------------------------------------
+! levels window (sound level monitor)
+
+levels*highlightThickness:		1
+levels*XmScale.editable:		False
+levels*XmScale.slidingMode:		THERMOMETER
+levels*XmScale.orientation:		HORIZONTAL
+levels*XmScale.sliderVisual:		SHADOWED_BACKGROUND
+levels*XmScale.minimum:			0
+levels*XmScale.maximum:			128
+levels*XmScale.width:			256
+
+
+! ----------------------------------------------------------------------------
+! streamer window
+
+streamer.title:				record a movie
+streamer*XmComboBox.comboBoxType:	DROP_DOWN_COMBO_BOX
+streamer*XmComboBox.width:		100
+streamer*XmLabel.alignment:		ALIGNMENT_BEGINNING
+
+streamer*highlightThickness:		1
+!streamer*navigationType:		STICKY_TAB_GROUP
+
+streamer*form.?.leftAttachment:			ATTACH_FORM
+streamer*form.?.rightAttachment:		ATTACH_FORM
+streamer*form.?.topAttachment:			ATTACH_WIDGET
+streamer*form.?.topOffset:			10
+streamer*form.?.leftOffset:			10
+streamer*form.?.rightOffset:			10
+streamer*form.XmFrame.marginWidth:		5
+streamer*form.XmFrame.marginHeight:		5
+
+streamer*XmFrame.XmRowColumn.orientation:	HORIZONTAL
+streamer*XmFrame.fbox.orientation:		VERTICAL
+streamer*XmFrame.fbox.spacing:			0
+streamer*XmFrame.fbox.marginWidth:		0
+streamer*XmFrame.fbox.marginHeight:		0
+streamer*XmFrame.fbox.?.orientation:		HORIZONTAL
+
+streamer*form.buttons.marginWidth:		0
+streamer*form.buttons.packing:			PACK_COLUMN
+streamer*form.buttons.orientation:		HORIZONTAL
+streamer*form.buttons.entryAlignment:		ALIGNMENT_CENTER
+streamer*form.buttons.bottomAttachment:		ATTACH_FORM
+
+streamer*driverL.frameChildType:	FRAME_TITLE_CHILD
+streamer*videoL.frameChildType:		FRAME_TITLE_CHILD
+streamer*audioL.frameChildType:		FRAME_TITLE_CHILD
+streamer*fileL.frameChildType:		FRAME_TITLE_CHILD
+
+streamer*videoF.topWidget:		driverF
+streamer*audioF.topWidget:		videoF
+streamer*fileF.topWidget:		audioF
+streamer*status.topWidget:		fileF
+streamer*buttons.topWidget:		status
+streamer*buttons.bottomOffset:		10
+
+streamer*rate.itemCount:		6
+streamer*rate.visibleItemCount:		6
+streamer*rate.items:			8000,11025,22050,32000,44100,48000
+streamer*rate.selectedItem:		44100
+streamer*fps.itemCount:			11
+streamer*fps.visibleItemCount:		11
+streamer*fps.items:			3,5,8,10,12,15,18,20,24,25,30
+streamer*fps.selectedItem:		12
+
+streamer*fvideo.translations:		#override\
+	Ctrl<Key>Tab:			Complete()
+streamer*faudio.translations:		#override\
+	Ctrl<Key>Tab:			Complete()
+
+! debug
+streamer.form.*.borderWidth:		0
+!streamer.form.*.borderColor:		darkred
+!streamer*form.XmFrame.background:	yellow
+
+
+! ----------------------------------------------------------------------------
+! man page renderer
+
+MoTV.man_popup.deleteResponse:			DESTROY
+MoTV.man_popup*view.width:			500
+MoTV.man_popup*view.height:			600
+MoTV.man_popup*view.scrollingPolicy:		AUTOMATIC
+MoTV.man_popup*view.scrollBarPlacement:		BOTTOM_RIGHT
+
+MoTV.man_popup*label.alignment:			ALIGNMENT_BEGINNING
+MoTV.man_popup*label.marginWidth:		5
+MoTV.man_popup*label.marginHeight:		5
+MoTV.man_popup*label.renderTable: bold,underline
+MoTV.man_popup*label.renderTable.fontType: FONT_IS_FONTSET
+MoTV.man_popup*label.renderTable.fontName: \
+ -misc-fixed-medium-r-normal--13-*-*-*-*-*-iso10646-1, \
+ -misc-fixed-medium-r-normal--13-*-*-*-*-*-iso8859-* \
+ -*-*-*-*--13-*-*-*-*-*-*-*,*
+MoTV.man_popup*label.renderTable.bold.fontType: FONT_IS_FONTSET
+MoTV.man_popup*label.renderTable.bold.fontName: \
+ -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso10646-1, \
+ -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso8859-* \
+ -*-*-*-*--13-*-*-*-*-*-*-*,*
+MoTV.man_popup*label.renderTable.underline.underlineType: SINGLE_LINE
+
+
+! ----------------------------------------------------------------------------
+! Onscreen window
+
+MoTV.onscreen.allowShellResize:		true
+MoTV.onscreen*background:		black
+MoTV.onscreen*borderColor:		black
+MoTV.onscreen*foreground:		lightgreen
+MoTV.onscreen*highlightThickness:	0
+
+MoTV.vtx.allowShellResize:		true
+MoTV.vtx*borderColor:			black
+MoTV.vtx*background:			black
+MoTV.vtx*foreground:			white
+MoTV.vtx*highlightThickness:		0
+

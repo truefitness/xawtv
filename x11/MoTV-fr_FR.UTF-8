@@ -1,0 +1,260 @@
+
+! ----------------------------------------------------------------------------
+! some standard motif stuff [i18n]
+
+!*.cancelLabelString:				Annuler
+!*.applyLabelString:				Appliquer
+!*.XmFileSelectionBox.dirListLabelString:	Dossiers
+!*.XmFileSelectionBox.fileListLabelString:	Fichiers
+!*.XmFileSelectionBox.selectionLabelString:	Sélection
+
+
+! ----------------------------------------------------------------------------
+! strings [i18n]
+
+MoTV.about_box_popup.title:		A propos de motv
+MoTV*about_box_popup*messageString:	\
+	motv -  application TV en Motif	\n\
+	\n\
+	(c) 2002 Gerd Knorr <kraxel@bytesex.org>
+
+MoTV.errbox_popup.title:		Erreurs
+
+control*menubar*fileM.tearOffTitle:	Fichier
+control*menubar*editM.tearOffTitle:	Edition
+control*menubar*toolsM.tearOffTitle:	Outils
+control*menubar*tuneM.tearOffTitle:	Contrôle du syntoniseur
+control*menubar*grabM.tearOffTitle:	Capturer image
+control*menubar*ratioM.tearOffTitle:	Proportions image
+control*menubar*launchM.tearOffTitle:	Lancer
+control*menubar*subM.tearOffTitle:	Soustitres
+control*menubar*stationsM.tearOffTitle:	Emetteurs TV
+control*menubar*optionsM.tearOffTitle:	Options
+control*menubar*helpM.tearOffTitle:	Aide
+control*menubar*captureM.tearOffTitle:	Capture
+control*menubar*freqM.tearOffTitle:	Table de fréquences
+control*menubar*inputM.tearOffTitle:	Entrée
+control*menubar*normM.tearOffTitle:	Norme TV
+
+control*menubar.file.labelString:	Fichier
+control*menubar.file.mnemonic:		F
+control*menubar.edit.labelString:	Edition
+control*menubar.edit.mnemonic:		E
+control*menubar.tools.labelString:	Outils
+control*menubar.tools.mnemonic:		T
+control*menubar*tune.labelString:	Syntoniseur
+control*menubar*grab.labelString:	Capturer image
+control*menubar*ratio.labelString:	Proportions image
+control*menubar*launch.labelString:	Lancer
+control*menubar*sub.labelString:	Soustitres
+control*menubar.stations.labelString:	Chaînes
+control*menubar.stations.mnemonic:	C
+control*menubar.options.labelString:	Options
+control*menubar.options.mnemonic:	O
+control*menubar.filter.labelString:	Filtre
+control*menubar.filter.mnemonic:	F
+control*menubar.help.labelString:	Aide
+control*menubar.help.mnemonic:		A
+
+! file menu
+control*menubar*rec.labelString:	Enregistrer film ...
+control*menubar*rec.mnemonic:		R
+control*menubar*rec.acceleratorText:	R
+control*menubar*rec.accelerator:	<Key>R
+control*menubar*quit.labelString:	Quitte
+control*menubar*quit.mnemonic:		Q
+control*menubar*quit.acceleratorText:	Q
+control*menubar*quit.accelerator:	<Key>Q
+
+! edit menu
+control*menubar*copy.labelString:	Copier
+control*menubar*copy.mnemonic:		C
+control*menubar*copy.acceleratorText:	Ctrl+C
+control*menubar*copy.accelerator:	Ctrl<Key>C
+
+! tools menu
+control*menubar*mute.labelString:	Couper le son
+control*menubar*mute.mnemonic:		a
+control*menubar*mute.acceleratorText:	A
+control*menubar*mute.accelerator:	<Key>A
+control*menubar*full.labelString:	Plein Ecran
+control*menubar*full.mnemonic:		F
+control*menubar*full.acceleratorText:	F
+control*menubar*full.accelerator:	<Key>F
+control*menubar*ontop.labelString:	Toujours visible
+control*menubar*ontop.mnemonic:		T
+control*menubar*ontop.acceleratorText:	T
+control*menubar*ontop.accelerator:	<Key>T
+control*menubar*levels.labelString:	Moniteur du niveau d'enregistrement ...
+control*menubar*levels.mnemonic:	l
+control*menubar*levels.acceleratorText:	L
+control*menubar*levels.accelerator:	<Key>L
+control*menubar*st_up.labelString:	Emetteur suivant
+control*menubar*st_up.acceleratorText:	page suivante
+control*menubar*st_dn.labelString:	Emetteur précédent
+control*menubar*st_dn.acceleratorText:	page précédente
+
+control*menubar*ch_up.labelString:	Fréquence suivante
+control*menubar*ch_up.acceleratorText:	haut
+control*menubar*ch_dn.labelString:	Fréquence précédente
+control*menubar*ch_dn.acceleratorText:	bas
+control*menubar*fi_up.labelString:	Syntonisation fine +
+control*menubar*fi_up.acceleratorText:	droite
+control*menubar*fi_dn.labelString:	Syntonisation fine -
+control*menubar*fi_dn.acceleratorText:	gauche
+
+control*menubar*ppm_f.labelString:	PPM, taille maximum
+control*menubar*ppm_f.acceleratorText:	G
+control*menubar*ppm_f.accelerator:	~Ctrl<Key>G
+control*menubar*ppm_w.labelString:	PPM, taille de la fenêtre
+control*menubar*ppm_w.acceleratorText:	Ctrl+G
+control*menubar*ppm_w.accelerator:	Ctrl<Key>G
+control*menubar*jpg_f.labelString:	JPEG, taille maximum
+control*menubar*jpg_f.mnemonic:		J
+control*menubar*jpg_f.acceleratorText:	J
+control*menubar*jpg_f.accelerator:	~Ctrl<Key>J
+control*menubar*jpg_w.labelString:	JPEG, taille de la fenêtre
+control*menubar*jpg_w.acceleratorText:	Ctrl+J
+control*menubar*jpg_w.accelerator:	Ctrl<Key>J
+
+control*menubar*r_no.labelString:	pas de proportion
+control*menubar*r_no.mnemonic:		n
+control*menubar*r_43.labelString:	4:3
+control*menubar*r_43.mnemonic:		4
+
+control*menubar*s_off.labelString:	désactiver
+control*menubar*s_150.labelString:	page 150
+control*menubar*s_150.mnemonic:		1
+control*menubar*s_333.labelString:	page 333
+control*menubar*s_333.mnemonic:		3
+control*menubar*s_777.labelString:	page 777
+control*menubar*s_777.mnemonic:		7
+control*menubar*s_801.labelString:	page 801
+control*menubar*s_801.mnemonic:		0
+control*menubar*s_888.labelString:	page 888
+control*menubar*s_888.mnemonic:		8
+
+! options menu
+control*menubar*add.labelString:	Ajouter émetteur ...
+control*menubar*add.mnemonic:		A
+control*menubar*scan.labelString:	Rechercher émetteur ...
+control*menubar*pref.labelString:	Preférences ...
+control*menubar*pref.mnemonic:		P
+control*menubar*save.labelString:	Sauver configuration
+control*menubar*save.mnemonic:		S
+
+control*menubar*capture.labelString:	Capturer
+control*menubar*capture.mnemonic:	C
+control*menubar*freq.labelString:	Table de fréquences
+control*menubar*freq.mnemonic:		F
+control*menubar*scale.labelString:	Echèlle ...
+control*menubar*scale.mnemonic:		S
+control*menubar*scale.acceleratorText:	S
+control*menubar*scale.accelerator:	<Key>S
+
+control*menubar*input.labelString:	Entrée
+control*menubar*input.mnemonic:		I
+control*menubar*norm.labelString:	Norme TV
+control*menubar*norm.mnemonic:		N
+
+! filter menu
+control*menubar*fnone.labelString:	Pas de filtre
+control*menubar*fnone.mnemonic:		N
+
+! help menu
+control*menubar*man.labelString:	Afficher la page de man
+control*menubar*man.mnemonic:		m
+control*menubar*about.labelString:	A propos ...
+control*menubar*about.mnemonic:		A
+
+! tooltips (needs openmotif 2.2)
+control*tool.prev.toolTipString:	Emetteur précédent
+control*tool.next.toolTipString:	Emetteur suivant
+control*tool.snap.toolTipString:	Capture une image
+control*tool.movie.toolTipString:	Enregistre un film
+control*tool.mute.toolTipString:	Coupe le son
+control*tool.exit.toolTipString:	Quitte
+
+control*box.XmPushButton*menu.del.labelString:	Supprimer
+control*box.XmPushButton*menu.edit.labelString:	Editer ...
+
+! channel scan
+*chscan_popup.title:		Rechercher un émetteur
+*chscan_popup*okLabelString:	Commencer
+*chscan_popup*hints.labelString:	\
+	Vous pouvez me faire rechercher tous\n\
+	les émetteurs disponibles ici. Ceci\n\
+	va créer une nouvelle liste d'émetteurs\n\
+	à partir de zéro, votre liste actuelle\n\
+	sera perdue.\n\
+	\n\
+	Assurez-vous d'avoir choisi la bonne\n\
+	norme TV et la table de fréquences\n\
+	d'abord (c'est aussi dans le menu des\n\
+	options), sinon la recherche ne\n\
+	trouvera aucun émetteur...\n\
+	\n
+
+! channel properties
+*prop_popup.title:			Editer émetteur
+*prop_popup*rc.nameL.labelString:	Nom de l'émetteur
+*prop_popup*rc.keyL.labelString:	Raccourci clavier
+*prop_popup*rc.groupL.labelString:	[en] Group
+*prop_popup*rc.channelL.labelString:	Emetteur
+*prop_popup*rc.buttons.ok.labelString:	OK
+*prop_popup*rc.buttons.cancel.labelString: Annuler
+*prop_popup*no_name_popup.title:	Erreur
+*prop_popup*no_name_popup*messageString: \
+	Vous devez donner un nom à l'émetteur
+
+! preferences
+*pref_popup.title:			Preférences
+*pref_popup*okLabelString:		Sauver
+*pref_popup*fsL.labelString:		Plein écran
+*pref_popup*fsT.labelString:		Permettre le changement de résolution
+*pref_popup*fsO.labelString:		Résolution:
+*pref_popup*mixL.labelString:		Volume (redémarrer motv pour appliquer)
+*pref_popup*mixT.labelString:		Utilise le périphérique de mixage pour régler le volume
+*pref_popup*mix1O.labelString:		périphérique de mixage:
+*pref_popup*mix2O.labelString:		entrée de mixage:
+*pref_popup*optL.labelString:		Options
+*pref_popup*osd.labelString:		Utiliser la surimpression en mode plein écran
+*pref_popup*keypad-ntsc.labelString:	pavé numérique : mode ntsc
+*pref_popup*keypad-partial.labelString:	\
+	pavé numérique : permettre partition (bascule sur la première touche)
+*pref_popup*jpeg.label.labelString:	Qualité JPEG :
+
+scale.title:				Contrôles d'échelle
+scale*volume.titleString:		Volume
+scale*bright.titleString:		Luminosité
+scale*hue.titleString:			Hue
+scale*color.titleString:		Saturation
+scale*contrast.titleString:		Contraste
+
+levels.title:				Moniteur
+levels*enable.labelstring:		activer
+
+streamer.title:				enregistrer un film
+streamer*driverL.labelString:		Format de sortie
+streamer*driver.labelString:		Pilote :
+streamer*videoL.labelString:		Options video
+streamer*video.labelString:		Format :
+streamer*fpsL.labelString:		ips :
+streamer*audioL.labelString:		Options audio
+streamer*audio.labelString:		Format :
+streamer*rateL.labelString:		Echantillonage :
+streamer*fileL.labelString:		Noms des fichiers
+streamer*fvideoL.labelString:		Video :
+streamer*faudioL.labelString:		Audio :
+streamer*status.labelString:		corrigez-moi
+
+streamer*files.labelString:		Naviguer ...
+streamer*buttons.rec.labelString:	Enregistrer
+streamer*buttons.stop.labelString:	Arrêter
+streamer*buttons.play.labelString:	Lire
+streamer*buttons.cancel.labelString:	Fermer
+
+MoTV.man_popup.title:			Page de manuel
+MoTV.man_popup*okLabelString:		Fermer la fenêtre
+MoTV.man_popup*label.labelString:	attendez svp ...
+

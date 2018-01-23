@@ -1,0 +1,188 @@
+[_IOC_NR(VIDIOC_QUERYCAP)] = {
+	.name = "VIDIOC_QUERYCAP",
+	.desc = desc_v4l2_capability,
+},
+[_IOC_NR(VIDIOC_ENUM_FMT)] = {
+	.name = "VIDIOC_ENUM_FMT",
+	.desc = desc_v4l2_fmtdesc,
+},
+[_IOC_NR(VIDIOC_G_FMT)] = {
+	.name = "VIDIOC_G_FMT",
+	.desc = desc_v4l2_format,
+},
+[_IOC_NR(VIDIOC_S_FMT)] = {
+	.name = "VIDIOC_S_FMT",
+	.desc = desc_v4l2_format,
+},
+[_IOC_NR(VIDIOC_G_COMP)] = {
+	.name = "VIDIOC_G_COMP",
+	.desc = desc_v4l2_compression,
+},
+[_IOC_NR(VIDIOC_S_COMP)] = {
+	.name = "VIDIOC_S_COMP",
+	.desc = desc_v4l2_compression,
+},
+[_IOC_NR(VIDIOC_REQBUFS)] = {
+	.name = "VIDIOC_REQBUFS",
+	.desc = desc_v4l2_requestbuffers,
+},
+[_IOC_NR(VIDIOC_QUERYBUF)] = {
+	.name = "VIDIOC_QUERYBUF",
+	.desc = desc_v4l2_buffer,
+},
+[_IOC_NR(VIDIOC_G_FBUF)] = {
+	.name = "VIDIOC_G_FBUF",
+	.desc = desc_v4l2_framebuffer,
+},
+[_IOC_NR(VIDIOC_S_FBUF)] = {
+	.name = "VIDIOC_S_FBUF",
+	.desc = desc_v4l2_framebuffer,
+},
+[_IOC_NR(VIDIOC_OVERLAY)] = {
+	.name = "VIDIOC_OVERLAY",
+	.desc = int,
+},
+[_IOC_NR(VIDIOC_QBUF)] = {
+	.name = "VIDIOC_QBUF",
+	.desc = desc_v4l2_buffer,
+},
+[_IOC_NR(VIDIOC_DQBUF)] = {
+	.name = "VIDIOC_DQBUF",
+	.desc = desc_v4l2_buffer,
+},
+[_IOC_NR(VIDIOC_STREAMON)] = {
+	.name = "VIDIOC_STREAMON",
+	.desc = int,
+},
+[_IOC_NR(VIDIOC_STREAMOFF)] = {
+	.name = "VIDIOC_STREAMOFF",
+	.desc = int,
+},
+[_IOC_NR(VIDIOC_G_PARM)] = {
+	.name = "VIDIOC_G_PARM",
+	.desc = desc_v4l2_streamparm,
+},
+[_IOC_NR(VIDIOC_S_PARM)] = {
+	.name = "VIDIOC_S_PARM",
+	.desc = desc_v4l2_streamparm,
+},
+[_IOC_NR(VIDIOC_G_STD)] = {
+	.name = "VIDIOC_G_STD",
+	.desc = v4l2_std_id,
+},
+[_IOC_NR(VIDIOC_S_STD)] = {
+	.name = "VIDIOC_S_STD",
+	.desc = v4l2_std_id,
+},
+[_IOC_NR(VIDIOC_ENUMSTD)] = {
+	.name = "VIDIOC_ENUMSTD",
+	.desc = desc_v4l2_standard,
+},
+[_IOC_NR(VIDIOC_ENUMINPUT)] = {
+	.name = "VIDIOC_ENUMINPUT",
+	.desc = desc_v4l2_input,
+},
+[_IOC_NR(VIDIOC_G_CTRL)] = {
+	.name = "VIDIOC_G_CTRL",
+	.desc = desc_v4l2_control,
+},
+[_IOC_NR(VIDIOC_S_CTRL)] = {
+	.name = "VIDIOC_S_CTRL",
+	.desc = desc_v4l2_control,
+},
+[_IOC_NR(VIDIOC_G_TUNER)] = {
+	.name = "VIDIOC_G_TUNER",
+	.desc = desc_v4l2_tuner,
+},
+[_IOC_NR(VIDIOC_S_TUNER)] = {
+	.name = "VIDIOC_S_TUNER",
+	.desc = desc_v4l2_tuner,
+},
+[_IOC_NR(VIDIOC_G_AUDIO)] = {
+	.name = "VIDIOC_G_AUDIO",
+	.desc = desc_v4l2_audio,
+},
+[_IOC_NR(VIDIOC_S_AUDIO)] = {
+	.name = "VIDIOC_S_AUDIO",
+	.desc = desc_v4l2_audio,
+},
+[_IOC_NR(VIDIOC_QUERYCTRL)] = {
+	.name = "VIDIOC_QUERYCTRL",
+	.desc = desc_v4l2_queryctrl,
+},
+[_IOC_NR(VIDIOC_QUERYMENU)] = {
+	.name = "VIDIOC_QUERYMENU",
+	.desc = desc_v4l2_querymenu,
+},
+[_IOC_NR(VIDIOC_G_INPUT)] = {
+	.name = "VIDIOC_G_INPUT",
+	.desc = int,
+},
+[_IOC_NR(VIDIOC_S_INPUT)] = {
+	.name = "VIDIOC_S_INPUT",
+	.desc = int,
+},
+[_IOC_NR(VIDIOC_G_OUTPUT)] = {
+	.name = "VIDIOC_G_OUTPUT",
+	.desc = int,
+},
+[_IOC_NR(VIDIOC_S_OUTPUT)] = {
+	.name = "VIDIOC_S_OUTPUT",
+	.desc = int,
+},
+[_IOC_NR(VIDIOC_ENUMOUTPUT)] = {
+	.name = "VIDIOC_ENUMOUTPUT",
+	.desc = desc_v4l2_output,
+},
+[_IOC_NR(VIDIOC_G_AUDOUT)] = {
+	.name = "VIDIOC_G_AUDOUT",
+	.desc = desc_v4l2_audioout,
+},
+[_IOC_NR(VIDIOC_S_AUDOUT)] = {
+	.name = "VIDIOC_S_AUDOUT",
+	.desc = desc_v4l2_audioout,
+},
+[_IOC_NR(VIDIOC_G_MODULATOR)] = {
+	.name = "VIDIOC_G_MODULATOR",
+	.desc = desc_v4l2_modulator,
+},
+[_IOC_NR(VIDIOC_S_MODULATOR)] = {
+	.name = "VIDIOC_S_MODULATOR",
+	.desc = desc_v4l2_modulator,
+},
+[_IOC_NR(VIDIOC_G_FREQUENCY)] = {
+	.name = "VIDIOC_G_FREQUENCY",
+	.desc = desc_v4l2_frequency,
+},
+[_IOC_NR(VIDIOC_S_FREQUENCY)] = {
+	.name = "VIDIOC_S_FREQUENCY",
+	.desc = desc_v4l2_frequency,
+},
+[_IOC_NR(VIDIOC_CROPCAP)] = {
+	.name = "VIDIOC_CROPCAP",
+	.desc = desc_v4l2_cropcap,
+},
+[_IOC_NR(VIDIOC_G_CROP)] = {
+	.name = "VIDIOC_G_CROP",
+	.desc = desc_v4l2_crop,
+},
+[_IOC_NR(VIDIOC_S_CROP)] = {
+	.name = "VIDIOC_S_CROP",
+	.desc = desc_v4l2_crop,
+},
+[_IOC_NR(VIDIOC_G_JPEGCOMP)] = {
+	.name = "VIDIOC_G_JPEGCOMP",
+	.desc = desc_v4l2_jpegcompression,
+},
+[_IOC_NR(VIDIOC_S_JPEGCOMP)] = {
+	.name = "VIDIOC_S_JPEGCOMP",
+	.desc = desc_v4l2_jpegcompression,
+},
+[_IOC_NR(VIDIOC_QUERYSTD)] = {
+	.name = "VIDIOC_QUERYSTD",
+	.desc = v4l2_std_id,
+},
+[_IOC_NR(VIDIOC_TRY_FMT)] = {
+	.name = "VIDIOC_TRY_FMT",
+	.desc = desc_v4l2_format,
+},

@@ -1,0 +1,517 @@
+
+! ----------------------------------------------------------------------------
+! Strings
+
+Xawtv*international:		true
+Xawtv*fontSet:			\
+ -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso10646-1, \
+ -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso8859-* \
+ -*-*-*-*--13-*-*-*-*-*-*-*,*
+
+TopLevelShell*international:	true
+TopLevelShell*fontSet:		\
+ -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso10646-1, \
+ -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso8859-* \
+ -*-*-*-*--13-*-*-*-*-*-*-*,*
+
+*popup_help.title:		Welcome to xawtv!
+xawtv.tv.help: \
+\n\
+Copyright (c) 1997-2001 Gerd Knorr <kraxel@bytesex.org>\n\
+\n\
+If nothing else works, read the manual.  xawtv has a fine\n\
+manual page, check it out.  Some text files with additional\n\
+documentation and hints for trouble shooting come with the\n\
+source code.  If you have installed a binary package, these\n\
+files should be somewhere in /usr/share/doc.\n\
+\n\
+Here is the most important for a quick start:\n\
+\n\
+The right mouse button (or the 'O' key) pops up a window,\n\
+where you can adjust all important settings.  Becauce you\n\
+probably don't want to do this every time you start xawtv,\n\
+stick your settings into the config file ($HOME/.xawtv).\n\
+\n\
+Tuning works with the cursor keys.  Of cource you can put\n\
+the TV-Stations into the config file too.  You can either\n\
+use your favorite text editor or xawtv's new channel editor.\n\
+\n\
+Once you have created a config file, this message will no\n\
+longer pop up automatically at startup.  You can get it\n\
+with the 'H' key then.\n\
+\n\
+Hit Return to start watching TV...\n\
+\n
+
+Options*mute.label:		Audio (un)mute                  A
+Options*fs.label:		Full Screen on/off              F
+Options*grabppm.label:		Grab Image (ppm)                G
+Options*grabjpeg.label:		Grab Image (jpeg)               J
+Options*recavi.label:		Record Movie (avi)              R
+Options*chanwin.label:		Channel Window                  C
+Options*confwin.label:		Channel Editor                  E
+Options*launchwin.label:	Launcher Window                 L
+Options*zap.label:		Channel Hopping                 Z
+Options*top.label:		Stay On Top                     T
+
+Options*cap.label:		Capture            >
+Options*norm.label:		TV norm            >
+Options*input.label:		Video source       >
+Options*freq.label:		Frequency table    >
+Options*audio.label:		Audio              >
+Options*quit.label:		Quit                            Q
+
+!Options*auto.label:		autodetect
+!Options*mono.label:		mono
+!Options*stereo.label:		stereo
+Options*lang1.label:		Language 1
+Options*lang2.label:		Language 2
+
+Options*bright.l.label:		Bright
+Options*hue.l.label:		Hue
+Options*contrast.l.label:	Contrast
+Options*color.l.label:		Color
+Options*volume.l.label:		Volume
+
+Config*lchannel.label:		Channel
+Config*lname.label:		Station ID
+Config*lkey.label:		Hotkey
+Config*add.label:		Add
+Config*delete.label:		Delete
+Config*modify.label:		Update
+Config*save.label:		Save
+Config*close.label:		Close
+
+Streamer.title:			record a movie
+Streamer*vlabel.label:		movie/images filename
+Streamer*alabel.label:		*.wav filename
+Streamer*streamer.label:	start/stop recording
+Streamer*xanim.label:		playback (start pia)
+
+
+! ----------------------------------------------------------------------------
+! general settings
+
+Xawtv*beNiceToColormap:			false
+Xawtv*highlightThickness:		0
+
+Xawtv*foreground:			black
+Xawtv*background:			lightgray
+Xawtv*justify:				left
+
+Xawtv*menu.translations:		#override	\n\
+	<Motion>:	Autoscroll() highlight()
+
+TopLevelShell*beNiceToColormap:		false
+TopLevelShell*highlightThickness:	0
+
+TopLevelShell*foreground:		black
+TopLevelShell*background:		lightgray
+TopLevelShell*justify:			left
+
+TopLevelShell*menu.translations:	#override	\n\
+	<Motion>:	highlight()
+
+
+! ----------------------------------------------------------------------------
+! TV Window
+
+xawtv.tv.width:			384
+xawtv.tv.height:		288
+xawtv.tv.background:		green
+xawtv.winGravity:		Static
+xawtv.translations:		#override			\n\
+	<PropertyNotify>:	Remote()			\n\
+	<Message>WM_PROTOCOLS:	CloseMain()
+
+xawtv.tv.background:		black
+xawtv.tv.translations:		#override			\n\
+	<Key>C:			Popup(channels)			\n\
+	<Key>O:			Popup(options)			\n\
+	<Key>H:			Help()				\n\
+	<Key>E:			Popup(config)			\n\
+	<Key>T:			StayOnTop()			\n\
+	<Key>R:			Popup(streamer)			\n\
+	<Key>L:			Popup(launcher)			\n\
+	<Key>space:		Command(setstation,next)	\n\
+	<Btn1Up>:		Channel()			\n\
+	<Btn2Up>:		Command(setstation,next)	\n\
+	<Btn3Up>:		Popup(options)			\n\
+	<Key>Escape:		CloseMain()			\n\
+	\
+	<Key>Q:			CloseMain()			\n\
+	<Key>KP_Add:		Command(volume,inc)		\n\
+	<Key>KP_Subtract:	Command(volume,dec)		\n\
+	<Key>KP_Enter:		Mute()				\n\
+	<Key>A:			Mute()				\n\
+	<Key>F:			Command(fullscreen)		\n\
+	Ctrl<Key>Z:		Zap(fast)			\n\
+	<Key>Z:			Zap()				\n\
+	Ctrl<Key>G:		Command(snap,ppm,win)		\n\
+	Ctrl<Key>J:		Command(snap,jpeg,win)		\n\
+	<Key>G:			Command(snap,ppm,full)		\n\
+	<Key>J:			Command(snap,jpeg,full)		\n\
+	Ctrl<Key>Up:		Scan()				\n\
+	~Ctrl<Key>Up:		Command(setchannel,next)	\n\
+	<Key>Down:		Command(setchannel,prev)	\n\
+	<Key>Right:		Command(setchannel,fine_up)	\n\
+	<Key>Left:		Command(setchannel,fine_down)	\n\
+	<Key>question:		Command(setstation,query)	\n\
+	<Key>Page_Up:		Command(setstation,next)	\n\
+	<Key>Page_Down:		Command(setstation,prev)	\n\
+	<Key>BackSpace:		Command(setstation,back)	\n\
+	<Btn4Up>:		Command(setstation,next)	\n\
+	<Btn5Up>:		Command(setstation,prev)	\n\
+	<Key>V:			Command(capture,toggle)		\n\
+	<Key>D:			Command(showtime)		\n\
+	\
+	<Key>XF86AudioRaiseVolume: Command(volume,inc)		\n\
+	<Key>XF86AudioLowerVolume: Command(volume,dec)		\n\
+	<Key>XF86AudioMute:	Mute()				\n\
+	<Key>XF86AudioNext:	Command(setstation,next)	\n\
+	<Key>XF86AudioPrev:	Command(setstation,prev)	\n\
+	<Key>XF86AudioPlay:	Command(capture,on)		\n\
+	<Key>XF86AudioStop:	Command(capture,off)		\n\
+	\
+	<Key>F5:		Command(bright,dec)		\n\
+	<Key>F6:		Command(bright,inc)		\n\
+	<Key>F7:		Command(hue,dec)		\n\
+	<Key>F8:		Command(hue,inc)		\n\
+	<Key>F9:		Command(contrast,dec)		\n\
+	<Key>F10:		Command(contrast,inc)		\n\
+	<Key>F11:		Command(color,dec)		\n\
+	<Key>F12:		Command(color,inc)		\n\
+	\
+	<Key>KP_0:		Command(keypad,0)		\n\
+	<Key>KP_1:		Command(keypad,1)		\n\
+	<Key>KP_2:		Command(keypad,2)		\n\
+	<Key>KP_3:		Command(keypad,3)		\n\
+	<Key>KP_4:		Command(keypad,4)		\n\
+	<Key>KP_5:		Command(keypad,5)		\n\
+	<Key>KP_6:		Command(keypad,6)		\n\
+	<Key>KP_7:		Command(keypad,7)		\n\
+	<Key>KP_8:		Command(keypad,8)		\n\
+	<Key>KP_9:		Command(keypad,9)
+
+! ----------------------------------------------------------------------------
+! Options window
+
+Options.paned.internalBorderWidth:	0
+Options.paned*Scrollbar.orientation:	horizontal
+Options.paned*Scrollbar.length:		150
+Options.paned*Scrollbar.width:		150
+Options.paned*Scrollbar.minimumThumb:	3
+Options.paned*Scrollbar.displayList:		\
+	fg gray50; lines +0,-1,+0,+0,-1,+0;	\
+	fg white; lines +1,-1,-1,-1,-1,+1;
+
+Options.paned.translations:	#override\n\
+	<Key>Escape:		Popup(options)			\n\
+	\
+	<Key>Q:			CloseMain()			\n\
+	<Key>KP_Add:		Command(volume,inc)		\n\
+	<Key>KP_Subtract:	Command(volume,dec)		\n\
+	<Key>KP_Enter:		Mute()				\n\
+	<Key>A:			Mute()				\n\
+	<Key>F:			Command(fullscreen)		\n\
+	Ctrl<Key>Z:		Zap(fast)			\n\
+	<Key>Z:			Zap()				\n\
+	Ctrl<Key>G:		Command(snap,ppm,win)		\n\
+	Ctrl<Key>J:		Command(snap,jpeg,win)		\n\
+	<Key>G:			Command(snap,ppm,full)		\n\
+	<Key>J:			Command(snap,jpeg,full)		\n\
+	Ctrl<Key>Up:		Scan()				\n\
+	<Key>Up:		Command(setchannel,next)	\n\
+	<Key>Down:		Command(setchannel,prev)	\n\
+	<Key>Right:		Command(setchannel,fine_up)	\n\
+	<Key>Left:		Command(setchannel,fine_down)	\n\
+	<Key>Page_Up:		Command(setstation,next)	\n\
+	<Key>Page_Down:		Command(setstation,prev)	\n\
+	<Key>BackSpace:		Command(setstation,back)	\n\
+	<Btn4Up>:		Command(setstation,next)	\n\
+	<Btn5Up>:		Command(setstation,prev)	\n\
+	<Key>V:			Command(capture,toggle)		\n\
+	\
+	<Key>XF86AudioRaiseVolume: Command(volume,inc)		\n\
+	<Key>XF86AudioLowerVolume: Command(volume,dec)		\n\
+	<Key>XF86AudioMute:	Mute()				\n\
+	<Key>XF86AudioNext:	Command(setstation,next)	\n\
+	<Key>XF86AudioPrev:	Command(setstation,prev)	\n\
+	<Key>XF86AudioPlay:	Command(capture,on)		\n\
+	<Key>XF86AudioStop:	Command(capture,off)
+
+Options*Command.testcolor:	red
+Options*Command.translations:	#override			\n\
+	<EnterWindow>:	set-values(true,displayList,		\
+		"fg white; lines +0,-1,+0,+0,-1,+0; 		\
+		 fg gray50; lines +1,-1,-1,-1,-1,+1; ")		\n\
+	<LeaveWindow>:	set-values(true,displayList,"")
+
+! ----------------------------------------------------------------------------
+! Streamer frontend window
+
+Streamer*Label.width:		360
+Streamer*Label.resize:		false
+Streamer*Label.borderWidth:	0
+Streamer*Text.width:		360
+Streamer*Text*background:	white
+Streamer*Text*Scrollbar.background: lightgray
+Streamer*Text*autoFill:		false
+Streamer*Text*editType:		edit
+!Streamer*Text*type:		string
+Streamer*Text*useStringInPlace:	false
+Streamer*status.foreground:	darkred
+
+Streamer*driver.vertDistance:	10
+Streamer*vlabel.vertDistance:	15
+Streamer*vname.vertDistance:	0
+Streamer*alabel.vertDistance:	15
+Streamer*aname.vertDistance:	0
+Streamer*audio.vertDistance:	5
+Streamer*rate.vertDistance:	0
+Streamer*video.vertDistance:	5
+Streamer*fps.vertDistance:	0
+Streamer*size.vertDistance:	0
+Streamer*status.vertDistance:	5
+Streamer*streamer.vertDistance:	5
+Streamer*xanim.vertDistance:	5
+
+Streamer*vname.translations:	#override			\n\
+	<Key>Tab:		Complete()			\n\
+	<EnterWindow>:		set-values(1,background,lightyellow) \n\
+	<LeaveWindow>:		set-values(1,background,white)
+Streamer*aname.translations:	#override			\n\
+	<Key>Tab:		Complete()			\n\
+	<EnterWindow>:		set-values(1,background,lightyellow) \n\
+	<LeaveWindow>:		set-values(1,background,white)
+
+Streamer*Command.width:		360
+Streamer*Command.resize:	false
+Streamer*Command.justify:	left
+Streamer*Command.borderWidth:	0
+Streamer*Command.translations:	#override			\n\
+	<EnterWindow>:	set-values(true,displayList,		\
+		"fg white; lines +0,-1,+0,+0,-1,+0; 		\
+		 fg gray50; lines +1,-1,-1,-1,-1,+1; ")		\n\
+	<LeaveWindow>:	set-values(true,displayList,"")
+
+Streamer*streamer.borderWidth:	0
+Streamer*streamer.justify:	center
+Streamer*streamer.translations:	#override			\n\
+	<EnterWindow>:		set-values(1,background,white)	\n\
+	<LeaveWindow>:		set-values(1,background,lightgray)
+Streamer*streamer.displayList:			\
+	fg white; lines +0,-1,+0,+0,-1,+0;	\
+	fg gray50; lines +1,-1,-1,-1,-1,+1;
+
+Streamer*xanim.borderWidth:	0
+Streamer*xanim.justify:		center
+Streamer*xanim.translations:	#override			\n\
+	<EnterWindow>:		set-values(1,background,white)	\n\
+	<LeaveWindow>:		set-values(1,background,lightgray)
+Streamer*xanim.displayList:			\
+	fg white; lines +0,-1,+0,+0,-1,+0;	\
+	fg gray50; lines +1,-1,-1,-1,-1,+1;
+
+Streamer.form.translations:	#override\n\
+	<Key>Escape:		Popup(streamer)
+
+! ----------------------------------------------------------------------------
+! Channel window
+
+Channels.viewport.useRight:				true
+Channels.viewport.channelbox.hSpace:			0
+Channels.viewport.channelbox.vSpace:			0
+Channels.viewport.channelbox.background:		black
+Channels.viewport.channelbox.Command.justify:		center
+Channels.viewport.channelbox.Command.foreground:	yellow
+Channels.viewport.channelbox.Command.background:	black
+
+Channels.viewport.translations:	#override\n\
+	<Key>Escape:		Popup(channels)			\n\
+								\
+	<Key>Q:			CloseMain()			\n\
+	<Key>KP_Add:		Command(volume,inc)		\n\
+	<Key>KP_Subtract:	Command(volume,dec)		\n\
+	<Key>KP_Enter:		Mute()				\n\
+	<Key>A:			Mute()				\n\
+	<Key>F:			Command(fullscreen)		\n\
+	Ctrl<Key>Z:		Zap(fast)			\n\
+	<Key>Z:			Zap()				\n\
+	Ctrl<Key>G:		Command(snap,ppm,win)		\n\
+	Ctrl<Key>J:		Command(snap,jpeg,win)		\n\
+	<Key>G:			Command(snap,ppm,full)		\n\
+	<Key>J:			Command(snap,jpeg,full)		\n\
+	Ctrl<Key>Up:		Scan()				\n\
+	<Key>Up:		Command(setchannel,next)	\n\
+	<Key>Down:		Command(setchannel,prev)	\n\
+	<Key>Right:		Command(setchannel,fine_up)	\n\
+	<Key>Left:		Command(setchannel,fine_down)	\n\
+	<Key>Page_Up:		Command(setstation,next)	\n\
+	<Key>Page_Down:		Command(setstation,prev)	\n\
+	<Key>BackSpace:		Command(setstation,back)	\n\
+	<Btn4Up>:		Command(setstation,next)	\n\
+	<Btn5Up>:		Command(setstation,prev)	\n\
+	<Key>V:			Command(capture,toggle)		\n\
+	\
+	<Key>XF86AudioRaiseVolume: Command(volume,inc)		\n\
+	<Key>XF86AudioLowerVolume: Command(volume,dec)		\n\
+	<Key>XF86AudioMute:	Mute()				\n\
+	<Key>XF86AudioNext:	Command(setstation,next)	\n\
+	<Key>XF86AudioPrev:	Command(setstation,prev)	\n\
+	<Key>XF86AudioPlay:	Command(capture,on)		\n\
+	<Key>XF86AudioStop:	Command(capture,off)
+
+! ----------------------------------------------------------------------------
+! onscreen + vtx window
+
+xawtv.onscreen.allowShellResize:	true
+xawtv.onscreen.label.resize:		true
+
+xawtv.onscreen*background:		black
+xawtv.onscreen*borderColor:		black
+xawtv.onscreen*foreground:		lightgreen
+xawtv.onscreen.label.justify:		left
+xawtv.onscreen.label.fontSet:		\
+ -misc-fixed-medium-r-normal--20-*-*-*-*-*-iso10646-1, \
+ -misc-fixed-medium-r-normal--20-*-*-*-*-*-iso8859-* \
+ -*-*-*-*--20-*-*-*-*-*-*-*,*
+
+xawtv.vtx.allowShellResize:		true
+xawtv.vtx.label.resize:			true
+
+xawtv.vtx*background:			black
+xawtv.vtx*borderColor:			black
+xawtv.vtx*foreground:			lightgreen
+xawtv.vtx.label.justify:		center
+
+
+! ----------------------------------------------------------------------------
+! Config window
+
+Config.translations:		#override			\n\
+	<Message>WM_PROTOCOLS:	Popup(config)
+
+Config*Label.width:		120
+Config*Label.resize:		false
+Config*Label.borderWidth:	0
+Config*Command.width:		120
+Config*Command.justify:		center
+Config*Text*width:		120
+!Config*Text*resize:		false
+Config*Text*autoFill:		false
+Config*Text*editType:		edit
+!Config*Text*type:		string
+Config*Text*useStringInPlace:	false
+Config*Text*background:		white
+
+Config*channel.borderWidth:	1
+Config*channel.background:	white
+Config*lname.vertDistance:	15
+Config*lkey.vertDistance:	15
+Config*key.borderWidth:		1
+Config*key.background:		white
+Config*add.vertDistance:	15
+
+Config*viewport.width:		120
+Config*viewport.height:		300
+Config*viewport.allowVert:	true
+Config*viewport.allowHoriz:	false
+Config*viewport.resize:		false
+
+Config*list.defaultColumns:	1
+Config*list.forceColumns:	true
+Config*list.background:		white
+
+Config.form.translations:	#override			\n\
+	<Key>Escape:		Popup(config)
+
+Config*modify.accelerators:	#override			\n\
+	<Key>Return:		set()notify()unset()		\n\
+
+Config*Command.borderWidth:	0
+Config*Command.translations:	#override			\n\
+	<EnterWindow>:		set-values(1,background,white)	\n\
+	<LeaveWindow>:		set-values(1,background,lightgray)
+Config*Command.displayList:			\
+	fg white; lines +0,-1,+0,+0,-1,+0;	\
+	fg gray50; lines +1,-1,-1,-1,-1,+1;
+
+Config*channel.translations:	#override			\n\
+	Ctrl<Key>Up:		Scan()				\n\
+	<Key>Up:		Command(setchannel,next)	\n\
+	<Key>Down:		Command(setchannel,prev)	\n\
+	<Key>Right:		Command(setchannel,fine_up)	\n\
+	<Key>Left:		Command(setchannel,fine_down)	\n\
+	<EnterWindow>:		set-values(1,background,lightyellow) \n\
+	<LeaveWindow>:		set-values(1,background,white)
+Config*name.translations:	#override			\n\
+	<EnterWindow>:		set-values(1,background,lightyellow) \n\
+	<LeaveWindow>:		set-values(1,background,white)
+Config*key.translations:	#override			\n\
+	<EnterWindow>:		set-values(1,background,lightyellow) \n\
+	<LeaveWindow>:		set-values(1,background,white)
+Config*list.translations:	#override			\n\
+	<EnterWindow>:		set-values(1,background,lightyellow) \n\
+	<LeaveWindow>:		set-values(1,background,white)	\n\
+	<Key>Up:		Command(setstation,prev)	\n\
+	<Key>Down:		Command(setstation,next)
+
+
+!--------------------------------------------------------------------------
+! Launcher
+
+Launcher.paned.internalBorderWidth: 0
+Launcher.paned.translations:	#override			\n\
+	<Key>Escape:		Popup(launcher)
+
+Launcher*Command.translations:	#override			\n\
+	<EnterWindow>:	set-values(true,displayList,		\
+		"fg white; lines +0,-1,+0,+0,-1,+0; 		\
+		 fg gray50; lines +1,-1,-1,-1,-1,+1; ")		\n\
+	<LeaveWindow>:	set-values(true,displayList,"")
+
+
+!--------------------------------------------------------------------------
+! help window
+
+Xawtv*popup_help.help.ok.justify:	center
+
+*popup_help.help.ok.borderWidth:	0
+*popup_help.help.ok.width:		100
+*popup_help.help.ok.label:		OK
+*popup_help.help.ok.accelerators:	#override		\n\
+	<Key>Q:			set()notify()unset()		\n\
+	<Key>Return:		set()notify()unset()		\n\
+	<Key>Escape:		set()notify()unset()
+*popup_help.help.ok.translations:	#override		\n\
+	<EnterWindow>:		set-values(1,background,white)	\n\
+	<LeaveWindow>:		set-values(1,background,lightgray)
+*popup_help.help.ok.displayList:		\
+	fg white; lines +0,-1,+0,+0,-1,+0;	\
+	fg gray50; lines +1,-1,-1,-1,-1,+1;
+
+
+! ----------------------------------------------------------------------------
+! File dialog
+
+Xawtv*Dialog.value.background:	white
+Xawtv*Dialog.Command.justify:	center
+Xawtv*Dialog.Command.width:	100
+Xawtv*Dialog.label.justify:	left
+
+*Dialog.ok.label:		OK
+*Dialog.cancel.label:		Cancel
+
+!*Dialog.label.width:		300
+*Dialog.value.width:		300
+*Dialog*resizable:		True
+*Dialog.Command.translations:	#override			\n\
+	<EnterWindow>:		set-values(1,background,white)	\n\
+	<LeaveWindow>:		set-values(1,background,lightgray)
+*Dialog.ok.accelerators:	#override \n\
+	<Key>Return: set()notify()unset()
+*Dialog.cancel.accelerators:	#override \n\
+	<Key>Escape: set()notify()unset()
+*Dialog.value.translations:	#override \n\
+	<Key>Tab: Complete()

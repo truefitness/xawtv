@@ -1,0 +1,297 @@
+.TH xawtvrc 5
+.SH NAME
+xawtvrc -- TV apps config file
+.SH SYNOPSIS
+/etc/X11/xawtvrc
+.br
+$HOME/.xawtv
+.SH DESCRIPTION
+.B xawtvrc
+is the config file originally used by xawtv only (that's why the name
+xawtvrc).  These days a number of other TV applications / utilities
+read it too to get configuration information from it.
+.P
+Both a  global (/etc/X11/xawtvrc)  and personal ($HOME/.xawtv)  config
+file  are used by the applications.   Settings  in the personal config
+file will overwrite the global ones.
+.SS Applications
+The following applications use these config files:
+.TP
+.B xawtv
+The classic X11 TV application.
+.TP
+.B motv
+A better, motif-based GUI for xawtv ...
+.TP
+.B fbtv
+TV application for the linux framebuffer console.
+.TP
+.B ttv
+aalib-based TV application for any terminal.
+.TP
+.B v4lctl
+command line tool to control video4linux devices.
+.SS Create a config file
+.B xawtv
+and
+.B motv
+both provide some functions to edit the channels and save the
+configuration.  The save function will \fBnot\fP preserve any comments
+you might have put into the config file throught ...
+.P
+You can also use your favorite text editor and modify the config file
+directly.
+.P
+You can use the command line utility
+.B scantv
+to create a initial config file.  scantv will automatically scan all
+channels for TV stations and write the ones it has found to the config
+file.
+.SH SYNTAX
+.B xawtvrc
+uses the same syntax like smb.conf: sections starting with [name],
+followed by lines with option = value pairs.
+.P
+There are four special sections: [global], [launch], [eventmap] and
+[defaults].  All other sections describe a TV station each.
+.SS TV station options.
+The following options are allowed for TV stations and the [defaults]
+section.  The options from the [defaults] sections are used -- as the
+name suggests -- as defaults for all other channels.  You can put
+everything which is common for all TV stations (like the TV norm which
+is used in your country) into the [defaults] section, so you don't have
+to specify it for every single channel.
+.P
+With a reasonable [defaults] section you usually only need to specify
+the channel for each TV station, like this:
+
+.nf
+[ORB]
+channel = 27
+.fi
+
+The other options are:
+.TP
+.B fine = n
+finetuning (what left+right keys do within xawtv), default: 0
+.TP
+.B norm = pal | ntsc | secam
+which TV norm, default is pal
+.TP
+.B key = keysym
+Hotkey for the channel. All X11 keysyms allowed here. You can prefix
+a keysym with Modifier+, "Ctrl+F" for example.
+.TP
+.B capture = off | overlay | grabdisplay
+capture mode: off, overlay (default, TV card => video, 0% cpu) or
+grabdisplay (TV card => main memory => X-Server => video, frame rate
+depends on load and picture size).  Default is overlay.  If it is not
+possible to use overlay for some reason (remote display, not supported
+by the hardware, whatever) the applications will automatically fallback
+to grabdisplay.
+.TP
+.B input = Television | Composite1 | Composite2 | SVHS
+input source.  The valid choices depend on the hardware driver, the
+values above are just examples.  You can use "v4lctl list" to get a
+list of valid choices.
+.TP
+.B color = n
+.TP
+.B bright = n
+.TP
+.B hue = n
+.TP
+.B contrast = n
+Valid range is 0-65535, default is 32768.  Adding a percent symbol
+changes the range to 0-100, i.e. "50%" has the same effect like
+"32768".
+.TP
+.B audio = mono | stereo | lang1 | lang2
+Set the audio mode for the given channel.
+.TP
+.B freq = n
+Specify the frequency for the given station (MHz, video carrier).  You
+shouldn't need this for normal operation, all your channels should be
+listed in the frequency table for your area (if not, mail me a patch).
+Maybe unless you live near the border and the foreign country uses
+another channel scheme.
+.TP
+.B midi = note
+Use midi noteon event for <note> as hotkey for the channel.
+.TP
+.B group = name
+Put the channel into the group <name>.  motv uses that to create
+submenus per channel group.
+.P
+.SS Global options
+A number of not channel-related settings go to the "[global]" section:
+.TP
+.B fullscreen = width x height
+specify which video mode should be used for full-screen.  Works with
+XFree only, and of course you need a valid modeline for this mode in
+your XF86Config file.  You also have to enable the VidMode extension
+(option -vm, see above) to make this work.
+.TP
+.B wm-off-by = [+-]x[+-]y
+Some WM's handle static gravity incorrectly (I know mwm and
+kwm).  This is somewhat boring with fullscreen mode.  With this
+option you can correct this with a displacement for moving
+windows.  For example, wm-off-by = -4-24 does the trick for kwm (the
+KDE1 window manager).
+.TP
+.B freqtab = 
+select a channel-to-freqency mapping.  Options window->Frequency table
+(in xawtv) brings up a menu with all valid entries (and allows
+table-switching at runtime).
+.TP
+.B pixsize = width x height
+size of the channel pixmaps (within Channels window).  0x0 disables this
+feature.
+.TP
+.B pixcols = n
+number of columns the channel window should use.  Defaults to 1.
+.TP
+.B mixer = ctl | device:ctl
+This allows volume control using the sound card mixer.  ctl is the
+mixer control, i.e. "vol" for the master volume. "line1" is a good
+candidate for the TV card.  device is the mixer device (defaults to
+/dev/mixer in unspecified).  Volume-control works with the keypad: +
+is up, - is down, Enter is mute.
+.TP
+.B jpeg-quality = n
+set the quality for (M)JPEG images/frames.  As usual the valid range
+for n is [0 .. 100] with 75 as default.
+.TP
+.B keypad-ntsc = on | off
+Configure keypad mode.  Default is off.  When set to on, numbers typed
+on the keypad are interpreted as channel numbers (this is like NTSC TV
+sets work).  Otherwise they are interpreted as programmed station,
+i.e. 1 is the first station from $HOME/.xawtv, ...
+.TP
+.B keypad-partial = on | off
+Another configuration of keypad mode.  Default is on.  When set to off,
+typing one digit on the keypad doesn't change the station number when
+there are two-digit station numbers starting with that digit.
+.TP
+.B osd = on | off
+Enable/disable the onscreen display in fullscreen mode.  Default is
+on.
+.TP
+.B osd-position = x , y
+Position the onscreen display, in pixels.  Default is 30,20.
+.TP
+.B use-wm-fullscreen = on | off
+Enter fullscreen mode by asking the window manager to handle that via
+_NET_WM_STATE_FULLSCREEN (if supported by the wm).  Default is on.
+.TP
+.B ratio = x:y
+Set a fixed aspect ratio for the TV image.  Default is 4:3.  Use 0:0
+if you don't want a fixed aspect ratio.
+.TP
+.B mov-driver = files | raw | avi | mov
+.TP
+.B mov-video = ppm | pgm | jpeg | rgb | gray | 422 | 422p | rgb15 | rgb24 | mjpeg | jpeg | raw | mjpa | png
+.TP
+.B mov-fps = fps
+.TP
+.B mov-audio =  mono8 | mono16 | stereo
+.TP
+.B mov-rate = rate
+Set defaults for movie recording.  Not all possible combinations are
+valid choices.  "streamer -h" will print a nice list.
+.TP
+.B midi = port
+You can specify a ALSA port where xawtv should receive midi events
+from.  If configured this way, you can program your midi keyboard keys
+as station hotkeys and use midi controller events to control settings
+like volume, bright etc.  Check the [eventmap] description below for
+details.
+.TP
+.B filter = name
+Enable the specified filter.
+.SS The [launch] section
+You can start other programs from within xawtv.  This is configured
+with entries in the "[launch]" section:
+.TP
+.B label = key, command line
+The specified hotkey will run the configured program.  Calling the
+Action "Launch(label)" works too.  If you want to play with the Xt
+translation tables, feel free to do so.  But don't complain if you
+broke something while doing so...
+.SS The [eventmap] section
+The eventmap simply has a number of "event = action" lines.  "action"
+can be any command which xawtv understands (check the xawtv-remote man
+page for a list).  "event" is some event generated by any input device
+xawtv listens to.  An event might have some argument, the midi-ctrl
+events for example have one.  If present the argument is appended to
+the action.
+.P
+There are default mappings for lirc and joystick input events, so you
+don't have to create an eventmap to use them.  But if you don't like
+the defaults you can change them easily.
+.P
+Here is a list of valid events:
+.TP
+.B lirc-key-<name>
+The key <name> was pressed on the IR remote control.
+.TP
+.B joy-button-<n>
+Joystick button <n> was pressed.
+.TP
+.B joy-axis-<left|right|up|down>
+Joystick was moved into the given direction.
+.TP
+.B midi-note-<n>
+noteon event for note <n> was received (i.e. you probably pressed some
+key on the midi keyboard).
+.TP
+.B midi-ctrl-<n>
+midi controller message for control <n> was received.  This event has
+an argument (the current value of the control).
+.TP
+.B kbd-key-<name>
+Key <name> was pressed on the keyboard.
+.SS sample config file
+.nf
+# this is a comment
+# empty lines are ignored too
+
+[global]
+freqtab = europe-west
+#mixer   = line
+jpeg-quality = 75
+midi = 64:0
+fullscreen = 768x576
+
+# for /etc/XF86Config
+# Modeline  "pal"  50.00  768 832 856 1000  576 590 595 630  -hsync -vsync
+
+[launch]
+mixer = M, gtkaumix
+AleVT = Ctrl+A, alevt
+
+[eventmap]
+midi-ctrl-7 = volume
+kbd-key-h = msg "hello world"
+
+[defaults]
+input = television
+norm  = pal
+
+[ZDF]
+channel=33
+key=F1
+
+[ORB]
+channel = 27
+key = F2
+
+# more stations follow here
+
+[Camera]
+input = Composite1
+key = K
+.fi
+
+.SH SEE ALSO
+scantv(1), xawtv(1), motv(1), fbtv(1), ttv(1), v4lctl(1)

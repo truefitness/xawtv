@@ -1,0 +1,93 @@
+.TH alevtd 1 "(c) 2000 Gerd Knorr"
+.SH NAME
+alevtd - webserver for videotext pages
+.SH SYNOPSIS
+.B alevtd [ options ]
+.SH DESCRIPTION
+.B alevtd
+is http daemon which serves videotext pages as HTML.  Tune in some
+station with a utility like v4lctl or some TV application.  Then
+start it and point your browser to http://localhost:5654/
+.P
+Pages may be requested either in HTML format
+(http://localhost:5654/<page>/ or
+http://localhost:5654/<page>/<subpage>.html) or in ASCII text format
+(http://localhost:5654/<page>/<subpage>.txt).  Subpage "00" can be
+used for pages without subpages.
+.SH OPTIONS
+.TP
+.B -h
+print a short \fBh\fPelp text and the default values for all options.
+.TP
+.B -v dev
+set \fBv\fPbi device (default: /dev/vbi0).
+.TP
+.B -d
+enable \fBd\fPebug output.
+.TP
+.B -s
+Write a start/stop notice and serious errors to the \fBs\fPyslog.
+Specify this option twice to get a verbose log (additional log
+events like dropped connections).
+.TP
+.B -t sec
+set network \fBt\fPimeout to >sec< seconds.
+.TP
+.B -c n
+set the number of allowed parallel \fBc\fPonnections to >n<.  This is
+a per-thread limit.
+.TP
+.B -p port
+listen on \fBp\fPort >port< for incoming connections.  Default 5654.
+.TP
+.B -n hostname
+set the host\fBn\fPame which the server should use (required
+for redirects).
+.TP
+.B -i ip
+bind to \fBI\fPP-address >ip<.
+.TP
+.B -l log
+\fBl\fPog all requests to the logfile >log< (common log format).
+Using "-" as filename makes alevtd print the access log to stdout,
+which is only useful together with the -F switch (see below).
+.TP
+.B -L log
+same as above, but additional flush every line.  Useful if you
+want monitor the logfile with tail -f.
+.TP
+.B -u user
+set \fBu\fPid to >user< (after binding to the tcp port).  This
+option is allowed for root only.
+.TP
+.B -g group
+set \fBg\fPid to >group< (after binding to the tcp port).  This
+option is allowed for root only.
+.TP
+.B -F
+don't run as daemon.  alevtd will not fork into background, not detach
+from terminal and report errors to stderr.
+.TP
+.B -r
+poll tv frequency, clear vtx page cache if a frequency change was
+detected.
+.SH SEE ALSO
+alevt(1), xawtv(1), v4lctl(1)
+.SH AUTHOR
+Gerd Knorr <kraxel@goldbach.in-berlin.de>
+.SH COPYRIGHT
+Copyright (C) 2000 Gerd Knorr <kraxel@goldbach.in-berlin.de>
+.P
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.P
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.P
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.

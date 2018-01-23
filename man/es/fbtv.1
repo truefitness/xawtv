@@ -1,0 +1,160 @@
+.TH fbtv 1 "(c) 1998 Gerd Knorr"
+.SH NOMBRE
+fbtv - un programa para ver la tele en la consola
+.SH SINOPSIS
+.B fbtv [ opciones ] [ nombre cadena ]
+.SH DESCRIPCIÓN
+.B fbtv
+es un programa para ver la tele en su equipo linux.  Se ejecuta sobre
+el dispositivo del framebuffer gráfico (/dev/fb0).  Necesitará un
+kernel 2.1.x para poder usarlo.
+.B fbtv
+comparte el fichero de configuración ($HOME/.xawtv) con el programa
+.B xawtv.
+Mire la página del xawtv(1) para más detalles sobre el formato del
+fichero de configuración.
+.SH OPCIONES
+.TP
+.B -o base
+establece la cadena base para los ficheros de capturas. El nombre del
+fichero será "base-fecha-nr.ext".
+.TP
+.B -v
+Mostrar más información.
+.TP
+.B -c dispositivo
+dispositivo video4linux (por defecto /dev/video0).
+.TP
+.B -D driver
+driver video4linux (por defecto "libv4l").
+.TP
+.B -d dispositivo
+dispositivo framebuffer (por defecto $FRAMEBUFFER; o /dev/fb0 si
+esa variable de entorno no está establecida)
+.TP
+.B -g
+imagen en escala de grises (sólo funciona en modo de 256 colores)
+.TP
+.B -s anchoxalto
+muestra la imagen de TV de tamaño
+.B ancho
+x
+.B alto
+en la esquina superior derecha.
+.TP
+.B -f fuente
+fuente para el texto. Por defecto buscará lat1-16.psf en
+/usr/lib/kbd/consolefonts y /usr/share/consolefonts.  Si tiene un
+servidor de fuentes X11 local ejecutándose (o la variable de entorno
+FONTSERVER apuntando a algún servidor en funcionamiento),
+puede dar aquí una especificación de fuentes X11.
+.TP
+.B -m modo
+modo de video para la televisión.  fbtv buscará el modo en /etc/fb.modes.
+.TP
+.B -j joydev
+dispositivo de joystick para controlar a fbtv.
+.TP
+.B -k
+mantiene la captura al cambiar de consola.  Puede ser útil junto
+con la opción -s, tendrá la imagen de video mientras trabaja en otra
+consola. Esto es más o menos un truco feo.  Sólo funciona si todas
+las consolas tienen el mismo modo de video y fbcon no usa "panning"
+para acelerar el scroll.  También es útil para una configuración
+multi-pantalla.
+.TP
+.B -q
+modo silencioso.  No reserva espacio para la línea de estado en la
+parte superior, no muestra los mensajes de estado ni el reloj.
+Se puede cambiar esta opción en tiempo de ejecución ('F').
+.TP
+.B -M
+EXPERIMENTAL: Activa el modo de escalado (escribe yuv en la memoria
+fuera de la pantalla y le permite a la tarjeta gráfica escalar el video).
+Hardware soportado:
+Matrox G200/G400 (con matroxfb) y ATI Mach64 VT/GT (con atyfb,
+sólo a 16bpp).  Necesita al menos bttv-0.7.16 y kernel 2.3.50.
+.SH MODO DE USO
+fbtv funciona más o menos como el xawtv desde el punto de vista del usuario.
+Habrá notado que el xawtv tiene un montón de atajos de teclado.
+También funcionan en fbtv (si son de utilidad).  Aquí va la lista:
+
+.nf
+G            Capturar (\fBG\fPrab) imagen (tamaño completo, ppm)
+J            Capturar imagen (tamaño completo, \fBj\fPpeg)
+F            Pantalla completa.  Selecciona modo silencioso (ver arriba).
+
+arr./abaj.   sintoniza el anterior/siguiente canal
+izq./der.    ajuste fino
+repag/avpag  anterior/siguiente cadena
+
+ESC,Q        \fBQ\fPuitar
+X            \fBQ\fPuitar, pero dejando el sonido activado.
+
++/-          Subir o bajar volumen
+Intro        silencio
+.fi
+
+Las teclas asignadas a canales, definidas en $HOME/.xawtv funcionan
+también, con una excepción: las teclas modificadoras (algo como
+"key = Ctrl+F1") no funcionan.
+
+.SH TV A PANTALLA COMPLETA
+Algunos truquillos de Dag Bakke <dag.bakke@riksnett.no>:
+.P
+Las tarjetas BT8xx pueden producir imágenes de hasta 768x576 pixels.
+Para que el fbtv pueda hacer uso de todo el tamaño del monitor
+y obtener la mejor calidad de imagen, necesita crear una
+consola framebuffer de 768x576 pixels. Se puede conseguir esto con
+la utilidad fbset(1), que está disponible en varios sitios.
+Mire en: http://www.cs.kuleuven.ac.be/~geert/bin/
+.P
+O, puede dejar a fbtv que realice los cambios de modo con la opción -m.
+Esto requiere de una pequeña base de datos con los modos de video
+disponibles. El fichero que contiene los modos de video es
+normalmente /etc/fb.modes. Por ejemplo, la siguiente entrada produce
+un modo 768x576x32bpp, con 75Hz de refresco en una Matrox G200.
+
+.nf
+mode "tv"
+    # D: 49.188 MHz, H: 46.580 kHz, V: 75.008 Hz
+    geometry 768 576 768 576 32
+    timings 20330 128 32 32 8 128 5
+endmode
+.fi
+
+El comando "fbtv -q -mtv" da por tanto una imagen clara de TV (bueno,
+dependiendo de la señal recibida, claro) en toda la pantalla. Ponga el
+alias 'tv' a este comando, y ya está.
+.P
+.B ¡OJO!
+Por favor tenga en cuenta que su monitor puede soportar, o puede que no, esa
+resolución "personalizada". Y que un mal uso de la mencionada utilidad
+fbset puede tostar su monitor. Es mucho más fácil sacar humo de un
+componente electrónico, que meterlo dentro.
+.P
+Se puede conseguir una base de datos de modos estándar VESA en:
+ftp://platan.vc.cvut.cz/pub/linux/matrox-latest/fb.modes.vesa60.gz
+
+.SH VEA TAMBIÉN
+xawtv(1)
+.SH AUTOR
+Gerd Knorr <kraxel@goldbach.in-berlin.de>
+.SH COPYRIGHT
+Copyright (C) 1997,98 Gerd Knorr <kraxel@goldbach.in-berlin.de>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.SH TRADUCCIÓN
+Página traducida al español por Ricardo Villalba <rvm@escomposlinux.org>

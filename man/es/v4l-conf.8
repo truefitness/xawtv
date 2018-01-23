@@ -1,0 +1,93 @@
+.TH v4l-conf 8 "(c) 1997-99 Gerd Knorr"
+.SH NOMBRE
+v4l-conf -  configura un driver video4linux
+.SH SINOPSIS
+.B v4l-conf [ opciones ]
+.SH DESCRIPCIÓN
+.B v4l-conf
+es una pequeña herramienta auxiliar.  Trata de averiguar el modo del
+video y la dirección base del framebuffer de la tarjeta gráfica
+y configura un driver video4linux como el bttv.
+Esto es necesario para drivers que pueden enviar el video por DMA
+a través de PCI directamente a la memoria de video.
+.P
+Normalmente no es necesario usar v4l-conf manualmente, xawtv(1) y
+fbtv(1) lo ejecutan automáticamente al inicio.  Puede ser útil en
+caso de problemas en la ejecución de esos programas.
+Se debe instalar
+.B v4l-conf
+como suid-root.
+.P
+.B v4l-conf
+tiene tres maneras para obtener la información:
+.TP 3
+ *
+Pregunta al servidor X usando la extensión DGA de XF86.  Esto es lo
+que hace por defecto si la variable de entorno DISPLAY está establecida.
+.TP 3
+ *
+Pregunta al driver framebuffer. Esto es lo que hace por defecto si DISPLAY
+no está establecida.
+.TP 3
+ *
+Pregunta al driver de la consola.  Se usa sólamente en mklinux.
+.SH OPCIONES
+.TP 4
+\fB-h\fP
+Muestra una breve descripción de todas las opciones.
+.TP 4
+\fB-q\fP
+Estar callado.
+.TP 4
+\fB-d\fP dpy
+Usa el display X11 \fBdpy\fP para obtener los parámetros.
+.TP 4
+\fB-f\fP
+Usa el driver framebuffer para obtener los parámetros.
+.TP 4
+\fB-c\fP dispositivo
+Establece el dispositivo de video4linux.
+.TP 4
+\fB-b\fP n
+fuerza una profundidad de color de
+.B n
+bpp.  Funciona para cambiar entre 15/16 y 24/32 bpp.
+.TP 4
+\fB-s\fP n
+Desplaza la imagen de video
+.B n
+bytes.
+.TP 4
+\fB-a\fP adr
+Establece la dirección del framebuffer a \fBadr\fP.  El valor
+hay que especificarlo en hexadecimal.  Sólo se le permite esta
+opción a root.  No se puede sobreescribir el valor detectado
+automáticamente, esta opción sólo es válida si la autodetección no
+funciona debido a que el servidor X no tiene soporte DGA.
+Puede poner esto en el fichero /etc/conf.modules, como "post-install bttv ..."
+por ejemplo.
+.SH BUGS
+Espero no haber dejado ninguna fisura de seguridad. Si encuentra alguna
+envíeme una nota.  Prefiero correos que incluyan parches :-)
+.SH VEA TAMBIÉN
+xawtv(1), fbtv(1)
+.SH AUTOR
+Gerd Knorr <kraxel@goldbach.in-berlin.de>
+.SH COPYRIGHT
+Copyright (C) 1997-99 Gerd Knorr <kraxel@goldbach.in-berlin.de>
+.P
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.P
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.P
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.SH TRADUCCIÓN
+Página traducida al español por Ricardo Villalba <rvm@escomposlinux.org>

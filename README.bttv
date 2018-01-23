@@ -1,0 +1,101 @@
+
+Some hints to get the bttv driver up and running
+================================================
+
+general hints
+-------------
+
+(1) Make sure if your board is recognized correctly. The bttv driver
+    should print a line like this one (Use the 'dmesg' command to see
+    the kernel messages):
+
+	bttv0: model: BT848(Hauppauge old)
+
+    If your card isn't autodetected correctly, you have to specify the
+    board type as insmod argument (card=n).  You might also have to
+    specify tuner=x and pll=x.
+    Check the driver documentation for details and a list of supported
+    cards.  The standard kernel has the bttv documentation in the
+    Documentation/video4linux/bttv directory.
+
+(2) If you are using a vanilla 2.2.x kernel kernel, it is worth trying
+    to upgrade as the very first step.  Either download and build bttv
+    0.7.x for your 2.2.x kernel, or upgrade to 2.4.x which includes
+    the 0.7.x driver already.
+    bttv 0.7.x knows a lot more cards than the 2.2.x kernel driver, the
+    autodetect is much improved and a number of known problems is
+    fixed.
+
+(3) If you have problems with xawtv, you should open a xterm (or
+    whatever your favorite terminal app is) and start xawtv from
+    there. This way you'll see any error messages xawtv might print on
+    stderr which should help to find the source of the problems.
+
+(4) If something broke after an update, have a look at the changelog.
+    It might be mentioned there.
+
+
+common problems
+---------------
+
+?: I have a black screen in overlay mode
+!: The driver was not initialized correctly, v4l-conf (or the
+   X-Server) has to configure the bttv driver with the current video
+   mode and framebuffer address first.  Check if v4l-conf is installed
+   suid root, it needs root priviliges to do this.  You can also start
+   v4l-conf from a terminal and check the messages it prints.
+
+?: I have a blue screen.
+!: Good, the overlay is working.  A blue screen is what you get if the
+   grabber chip has no input signal.  You are probably using the wrong
+   video source, pick another.  Also happens sometimes if the tuner
+   type is wrong, check the driver configuration.
+
+?: I have a noisy screen and/or can't tune (some) stations.
+!: Most likely the tuner types is wrong, check the driver configuration.
+   It's no problem to do trial-and-error here.
+
+?: The video is outside the window and spread in thin lines over the
+   screen.
+!: xawtv / v4l-conf didn't autodetect the color depth for your screen
+   correctly.  You can fix that with xawtv's -bpp switch.
+
+?: Only the left part of the window is updated, the right one is updated
+   never / sometimes / only if the window is small.
+!: Your graphics card and/or motherboard can't deal with the data rate
+   going over the PCI bus, leading to canceled PCI transfers.  Reduce
+   the color depth, with 16 bpp instead of 32 bpp should work much
+   better.
+
+?: I get no sound.
+!: (a) If your TV-Card is connected to the sound card's line in with a
+       short cable: Make sure the sound driver is loaded, sound cards
+       are usually quiet until initialized by the driver.  Also check
+       the mixer settings.
+   (b) Double-check the card type is correct (see above).
+   (c) If there is still no go, have a look at the Sound-FAQ in the
+       bttv documentation.
+
+
+hardware specific problems
+--------------------------
+
+ * bttv + DRI seem not to play nicely together with some cards (ATI
+   Rage128).  The linux box just freezes.  Don't know why.  Suspect
+   it's either a hardware problem or a bug somewhere in DRI (either
+   kernel or xfree86).  The only workaround I know of is to turn off
+   DRI.
+
+ * Some motherboard chipsets have PCI bugs, especially with PCI-PCI
+   transfers which are used for video overlay.  The bt848/878 chips
+   have some bug compatibility options, which can be enabled to
+   workaround these problems.  Have a look at the triton1 and vsfx
+   insmod options.  For some known-buggy chipsets these are enabled
+   automagically.
+
+ * Sometimes IRQ sharing causes trouble.  It works most of the time,
+   but in combination with some hardware and/or drivers it doesn't work.
+   Especially graphic cards are known to cause trouble due to the lack
+   of a IRQ handler.  Try disabling the VGA IRQ in the BIOS.  Try moving
+   cards to another PCI slot.  Your motherboard manual should tell you
+   which PCI slots share IRQ's.

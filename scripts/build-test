@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# signal when done
+function beep { echo -en "\007"; }
+trap beep EXIT
+
+
+##########################################################################
+# xawtv
+
+# cleanup first
+make distclean
+
+# make sure autoconf stuff is up-to-date
+autoconf							|| exit 1
+autoheader							|| exit 1
+rm -rf autom4te.cache
+
+set -x
+
+# normal
+./configure && make -j2						|| exit 1
+make distclean
+
+# parallel builds
+./configure && nice make -j					|| exit 1
+make distclean
+
+# no lirc
+./configure --disable-lirc && make				|| exit 1
+make distclean
+
+# no xfree extentions
+./configure --disable-xfree-ext && make				|| exit 1
+make distclean
+
+# no xvideo extention
+./configure --disable-xvideo && make				|| exit 1
+make distclean
+
+# no aalib
+./configure --disable-aa && make				|| exit 1
+make distclean
+
+# no motif
+./configure --disable-motif && make				|| exit 1
+make distclean
+
+# no alsa
+./configure --disable-alsa && make				|| exit 1
+make distclean
+
+# no zvbi
+./configure --disable-zvbi && make				|| exit 1
+make distclean
+
+# no opengl
+./configure --disable-gl && make				|| exit 1
+make distclean
+
+# no xft
+./configure --disable-xft && make				|| exit 1
+make distclean
+
+# no X11
+./configure --without-x && make					|| exit 1
+make distclean
+
+# library link order
+#CFLAGS="-static" ./configure && make 				|| exit 1
+#make distclean
+
+set +x
+
+
+##########################################################################
+# done
+
+echo
+echo "*** cool, compile test passed ***"
+echo
+exit 0

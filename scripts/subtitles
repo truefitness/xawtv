@@ -1,0 +1,90 @@
+#! /bin/bash
+#
+# display teletext subtitles (PAL) in xawtv
+# required: alevt-cap, xawtv-remote
+#
+
+# config
+cc_tty=0
+charset="latin-1"
+device="/dev/vbi0"
+
+##########################################################################
+# helpers
+
+function usage() {
+cat <<EOF
+This script displays teletext subtitles within xawtv.
+It needs the alevt-cap and xawtv-remote utilities.
+
+usage: `basename $0` [ options ] <pagenr>
+   <pagenr> is the teletext page which is used for the
+   subtitles. In germany it is usually page 150.
+
+options:
+   -help                this text
+   -tty                 write subtitles also to the tty
+   -charset <charset>   latin-1/2 (default: $charset)
+   -vbi <dev>           vbi device (default: $device)
+EOF
+}
+
+##########################################################################
+# parse args
+
+done=0
+while test "$done" = "0"; do
+	case "$1" in
+		-h | -help | --help)
+			usage
+			exit 0
+			;;
+		-tty)
+			cc_tty=1
+			shift
+			;;
+		-charset)
+			charset="$2"
+			shift; shift
+			;;
+		-vbi)
+			device="$2"
+			shift; shift
+			;;
+		-*)
+			echo "unknown option: $1, try -h for help"
+			exit 1
+			;;
+		*)
+			page="$1"
+			done=1
+			;;
+	esac
+done
+
+if test "$page" = ""; then
+	usage
+	exit 1
+fi
+
+
+##########################################################################
+# main loop
+
+echo "displaying subtitles, using page $page"
+echo "hit ^C to exit"
+IFS="
+"
+xawtv-remote vtx || exit
+trap "xawtv-remote vtx" EXIT
+while true; do
+	set -- `alevt-cap -finetune auto -format ansi	\
+		-charset $charset -vbi $device		\
+		-name /dev/stdout $page | grep -v "^\[40m[ ]\+\[m$"`
+	shift
+	xawtv-remote vtx $* || exit
+	if test "${cc_tty}" != 0; then
+		while test "$1" != ""; do echo $1; shift; done
+		echo "[0m-- "
+	fi
+done

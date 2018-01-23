@@ -1,0 +1,860 @@
+<!-- X-URL: http://prog.cz/swag/ffe/graph/0048.htm -->
+<!-- Date: Fri, 19 Jan 2001 22:20:19 GMT -->
+<!-- Last-Modified: Mon, 10 Apr 2000 19:26:33 GMT -->
+<BASE HREF="http://prog.cz/swag/ffe/graph/0048.htm">
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN"
+	"http://www.w3.org/TR/REC-html40/frameset.dtd">
+<HTML>
+<HEAD>
+  <script language="JavaScript">
+  <!--
+  if (parent.location == document.location) {
+    window.open ("http://www.prog.cz/rozdel.shtml?"+document.location, "_self");
+    }
+  // --> </script>
+  <META HTTP-EQUIV="Content-type" content="text/html">
+  <META name="Author" content="David Cermak">
+  <META name="Generator" content="EX_SWG 2 HTML">
+  <META name="Keywords" content="">
+  <META name="Resource-type" content="document">
+  <META name="Description" lang="cs" content="Dokumentacni projekt SWAG: Graphics File Formats / ">
+  <META name="Description" lang="en" content="Documentation project SWAG: Graphics File Formats / ">
+  <TITLE>WWW.PROG.CZ - Graphics File Formats / </TITLE>
+</HEAD>
+<body bgcolor=#100010 link=#B0B0FF vlink=#90D0E0 text="white">
+<table borders=0 bgcolor=#303040 width=100%>
+<tr><td align=center>
+<font face="Arial, sans-serif" color=#f0f0d0 size=3><strong>
+<br>Graphics File Formats / <br>
+<div align=right><font size="2"><a href="0048.txt">&gt;&gt;&gt; Download only source &gt;&gt;&gt;</a></font></div>
+</font>
+</td></tr></table>
+<center><table><tr><td>
+<pre>
+Microsoft Windows Bitmap Format
+
+(c) 1993 Microsoft Corporation. All rights reserved.
+
+
+Multimedia Technical Note: JPEG DIB
+Format
+
+Created: May 26, 1993
+
+Goals for this DIB Format Extension
+
+The purpose of this specification is twofold:
+
+1.        To define a standard DIB extension for storing JPEG-encoded
+still images.
+
+2.        To define a standard DIB extension for storing JPEG-encoded
+motion images.
+
+A standard DIB extension is one in which the data format is clearly
+defined so that any codec that claims to understand the standard will
+be able to process the image data correctly. In addition, the image
+data created by any codec must be readable by any other codec. In
+other words, it must conform to the standard.
+
+These standards are extensions to the standard DIB format defined by
+Microsoftr Windows version 3.0 and extended by the technical note
+entitled "DIB Format Extensions."
+
+This standard will provide:
+
+*        Immediate support for partial implementation of the full scope of
+JPEG Baseline Sequential DCT process as defined in ISO 10918 for SOF0
+(marker Code 0xFFC0). The implemented subset of the full scope shall
+maximize cross-platform interchange between the known universe of
+existing JPEG codecs.
+
+*        Provision for transparent (or nearly so) implementation of the
+full scope of JPEG Baseline Sequential DCT process as defined in ISO
+10918 for SOF0 (marker Code 0xFFC0).
+
+*        Provision for subsequent inclusion of additional non-hierarchical
+JPEG processes on a singular and individual basis. The additional
+JPEG processes identified by JPEG Markers SOF1, SOF2, SOF3, SOF9,
+SOF10, and SOF11 shall be capable of being implemented in whole or in
+part by codecs with no constraint on the number or combination of
+processes implemented. Provision for hierarchical processes is deemed
+inappropriate to the DIB context.
+
+*        Maximal conformance to existing implications of the
+BITMAPINFOHEADER structure and its use at application level and
+system level. Adaptive redefinition of the BITMAPINFOHEADER shall
+provide that members of the basic BITMAPINFOHEADER shall be
+identically defined as the preliminary (and primary) members of each
+re-definition of the BITMAPINFOHEADER. As a result, a pointer to a
+re-defined BITMAPINFOHEADER structure shall always be capable of
+being recast as a pointer to the basic BITMAPINFOHEADER from which it
+is derived.
+
+*        Consideration of the usage of the revised BITMAPINFOHEADER within
+enclosing structures of type BITMAPINFO, or analogous substitutes for
+BITMAPINFO.
+
+*        Define JPEG DIBs in a manner "suitable" for AVI incorporation,
+but unconstrained by AVI specific usage. A standalone JPEG DIB image
+file shall not include conventions adopted solely for the convenience
+of AVI file construction. The off-line process of creating AVI files
+should not bring AVI peculiar design requirements into the arena of
+still image files.
+
+It is assumed that the reader is familiar with JPEG as defined in the
+ISO 10918 document. For additional information on JPEG see the ISO
+10918 document.  For additional information about RIFF files, see the
+Microsoft Windows Software Development Kit (SDK) Multimedia
+Programmer's Guide and Multimedia Programmer's Reference.  For
+additional information on installable compressors and decompressors,
+see the "Video Compression/Decompression Drivers" technical note from
+Microsoft.
+
+General Specifications
+
+This specification will define two standards for use in Windows:
+
+1.        JPEG still-image format
+2.        JPEG motion format (a.k.a. motion-JPEG)
+
+Type 1: Still Image JPEG
+
+All JPEG DIB still image formats (e.g., DIB files) shall embed a
+complete "Interchange Format" JPEG data stream as a contiguous whole.
+This provision shall eliminate inadvertent introduction of platform-,
+system-, or application-specific conditions that may cause some
+JPEG-compliant codecs to be incapable of processing the embedded JPEG
+data of a DIB. Provision for indexed access to tables and other data
+within the JPEG portion of a DIB shall be accommodated solely by the
+introduction of new offset and length members in the body of the
+revised BITMAPINFOHEADER structure (none are yet defined). This
+provision permits any application or codec to construct a JPEG DIB
+file simply by prepending the defined structures to JPEG data, then
+perform a single pass through the JPEG data to calculate and set the
+associated offset and length members which correlate to JPEG data
+items.
+
+Type 2: Motion JPEG
+
+Motion JPEG DIBs shall accommodate interchange formats that satisfy
+the "General sequential and progressive syntax" (ISO 10918 Part 1,
+Annex B, Para. B.2). A set of images of this type with compatible
+parameters can be placed in an AVI file to describe a motion
+sequence. Frame headers for these DIBs shall be limited to those
+specified in Para B.2.2 of the cited Annex B. These types are SOF0,
+SOF1, SOF2, SOF3, SOF9, SOF10, and SOF11. Of the types accommodated,
+this specification provides implementation only for the Baseline
+Sequential DCT.
+
+BITMAPINFOHEADER for JPEG
+
+
+
+typedef struct tagEXBMINFOHEADER {
+     BITMAPINFOHEADER     bmi;
+     /* extended BITMAPINFOHEADER fields */
+     DWORD  biExtDataOffset;
+     /* Other stuff will go here */
+
+     /* Format-specific information */
+     /* biExtDataOffset points here */
+} EXBMINFOHEADER;
+
+typedef struct tagJPEGINFOHEADER {
+     /* compress-specific fields */
+     DWORD  JPEGSize;
+     DWORD  JPEGProcess;
+
+     /* Process specific fields */
+     DWORD  JPEGColorSpaceID;
+     DWORD  JPEGBitsPerSample;
+
+     DWORD  JPEGHSubSampling;
+     DWORD  JPEGVSubSampling;
+} JPEGINFOHEADER
+
+Field        Description
+
+Standard BITMAPINFOHEADER fields
+
+
+These fields are valid for all DIBs, regardless of compression format.
+
+
+biSize        Size of entire set of structures for header data. Image offset
+in DIB file or '"packed" DIB is: biSize + biColorUsed*sizeof
+(RGBQUAD)
+
+biWidth        Width of decompressed image in pixels.
+
+biHeight        Height of decompressed image in pixels.
+
+biPlanes        1
+
+biBitCount        24 for RGB or YCbCr, 8 for Y only images (8 bit mono). The
+values and their meanings are as follows.1: The bitmap is monochrome,
+and the color table contains two entries. Each bit in the bitmap
+array represents a pixel. If the bit is clear, the pixel is displayed
+with the color of the first entry in the color table. If the bit is
+set, the pixel has the color of the second entry in the table.4: The
+bitmap has a maximum of 16 colors. Each pixel in the bitmap is
+represented by a four-bit index into the color table. For example,
+the first byte in the (uncompressed) bitmap is 0x1F and the byte
+represents two pixels. The first pixel contains the color in the
+second table entry, and the second pixel contains the color in the
+16th color table entry.8: The bitmap has a maximum of 256 colors.
+Each pixel in the (uncompressed) bitmap is represented by a
+byte-sized index into the color table. For example, if the first byte
+in the (uncompressed) bitmap is 0x1F, then the first pixel has the
+color of the thirty-second table entry.24: The bitmap has a maximum
+of 224 colors. The biClrUsed and biClrImportant fields can optionally
+be used (by setting biClrUsed to non-zero) to store an optimized
+palette for the image.N (for N > 8): The bitmap has a maximum of 2N
+colors. The biClrUsed and biClrImportant fields can optionally be used
+(by setting biClrUsed to non-zero) to store an optimized palette for
+the image.
+
+biCompression        Specifies the type of compression for a compressed
+bitmap. See the technical note entitled "DIB Format Extensions" for a
+complete list. Values and their meanings are as
+follows.mmioFOURCC('J','P','E','G'): Still image JPEG
+DIB.mmioFOURCC('M','J','P','G'): Motion image JPEG DIB.
+
+biSizeImage        Specifies the size of the compressed image data in bytes.
+For JPEG data, this is the length of the data including the EOI
+marker.
+
+biXPelsPerMeter        0. Specifies the horizontal resolution in pixels per
+meter of the target device for the bitmap. An application can use
+this value to select from a resource group that best matches the
+characteristics of the current device.
+
+biYPelsPerMeter        0. Specifies the vertical resolution in pixels per
+meter of the target device for the bitmap.
+
+biClrUsed        0 to 256. Specifies the number of color values in the
+color table actually used by the bitmap. See also the biBitCount
+field description.
+
+biClrImportant        0. Specifies the number of color indexes that are
+considered important for displaying the bitmap. If this value is 0
+and biClrUsed is non-zero, all used colors are important.
+
+
+Extended BITMAPINFOHEADER fields
+
+
+biExtDataOffset        Specifies the offset to the start of the JPEG-specific
+data. This field allows for an expanding BITMAPINFOHEADER structure.
+
+
+JPEG DIB Specific fields
+
+
+	These fields start at the offset specified by biExtDataOffset.
+
+JPEGSize        Size of the JPEG DIB specific fields. This field allows
+for expanding the JPEG DIB specific fields.
+
+JPEGProcess        Specifies the various format types. In this extension,
+only 0 (Baseline DCT sequential) is allowed.
+
+
+Process Specific fields
+
+
+JPEGColorSpaceID        Specifies the color space used for the compressed
+JPEG data.JPEG_Y. The Y only component of YCbCr, as described below.
+Implies 1 component.JPEG_YCbCr. YCbCr as defined by CCIR 601 (256
+levels). The RGB components calculated by linear conversion from YC C
+shall not be gamma corrected (gamma = 1.0). Implies 3 components.
+This is the only option defined for motion JPEG images.JPEG_RGB. 24
+bit RGB. (3 components).
+
+JPEGBitsPerSample        Specifies the number of bits per sample per
+component for the defined color space. For this extension, this value
+will be 8. The subsequent frame header shall have its sample
+precision parameter set to 8.
+
+
+JPEGHSubSampling        Specifies the horizontal sampling factors used for
+the chrominance components of a YCbCr image. Applicable only to
+images with JPEGColorSpaceID == 2 (YCbCr). Specifies the horizontal
+sampling factor for the chrominance components (jointly) with respect
+to the luminance component. Non-zero values must correlate to the
+"Hi" values for both chrominance components in the JPEG frame header
+(see ISO 10918). The values and their meanings are as follows.0:
+Subsampling is not- applicable (JPEGColorSpaceID != 2).1: For every
+luminance sample in the horizontal dimension, the chrominance
+components are sampled in a 1:1 ratio.2: For every luminance sample in
+the horizontal dimension, the chrominance components are sampled in a
+1:2 ratio, with chrominance samples (Cb and Cr separately) sampled at
+half the horizontal spatial resolution as for luminance.4: For every
+luminance sample in the horizontal dimension, the chrominance
+components are sampled in a 1:4 ratio, with chrominance samples (Cb
+and Cr separately) sampled at one-fourth the horizontal spatial
+resolution as for luminance.
+
+JPEGVSubSampling        Applicable only to images with JPEGColorSpaceID =2
+(YCbCr). Specifies the vertical sampling factor for the chrominance
+components (jointly) with respect to the luminance component.
+Non-zero values must correlate to the "Vi" values for both chrominance
+components in the JPEG frame header (see ISO 10918). The values and
+their meanings are as follows.0: Subsampling is not- applicable
+(JPEGColorSpaceID != 2).1: For every luminance sample in the vertical
+dimension, the chrominance components are sampled in a 1:1 ratio.2:
+For every luminance sample in the vertical dimension, the chrominance
+components are sampled in a 1:2 ratio, with chrominance samples (Cb
+and Cr separately) sampled at half the vertical spatial resolution as
+for luminance.4: For every luminance sample in the vertical
+dimension, the chrominance components are sampled in a 1:4 ratio, with
+chrominance samples (Cb and Cr separately) sampled at one-fourth the
+vertical spatial resolution as for luminance.
+
+This specification affirms that the member biSize of structure
+type BITMAPINFOHEADER and all JPEG derivative
+redefinitions of BITMAPINFOHEADER shall be identically
+defined. The member biSize shall always contain the count of
+all bytes within the header information.
+This specification affirms that the structure format and member
+definition shall be correlated uniquely to the value of the
+member biCompression. Further additions to the structure
+definition shall not break any previous definitions, just as this
+definition's use of the predefined fields (biSize especially) does
+not break the BITMAPINFOHEADER definition. By virtue of this
+provision, any application or system function given a pointer to
+a BITMAPINFOHEADER structure (or derivative thereof) shall
+be capable of determining the appropriate "recast" typedef by
+examination of biCompression alone, with biSize serving only
+as a cross-check. biSize can increase (but it should not
+decrease) from the known definition.
+
+This specification affirms that each redefinition of BITMAPINFOHEADER
+for any value of biCompression shall contain the identical initial
+members as defined for BITMAPINFOHEADER under Windows 3.1. This shall
+apply equally to future redefinition of BITMAPINFOHEADER for those
+biCompression values already incorporated (e.g., BI_RGB, BI_RLE8, and
+BI_RLE4).
+
+The offset to the start of the compression specific data is specified
+by the biExtDataOffset field. This is the offset from the beginning
+of the BITMAPINFOHEADER for JPEG structure.
+
+For JPEG DIB compression structure, the second field is always the
+JPEG process used to compress the image. The process-specific fields
+may change depending on the process ID in the JPEGProcess field.
+
+Image Data
+
+Image data should not contain any thumbnail or other optional data as
+this will greatly increase the size of the image data. If thumbnail,
+copyright, creator, etc. information is desired, the appropriate RIFF
+chunks should be used to store this data (see the RDIB definition in
+the RIFF references).  The inclusion of optional data (e.g.,
+comments, application-specific data, etc.) is strongly discouraged as
+this will greatly increase the size of the image data.
+
+Type 1: Still-image JPEG
+
+Complete JPEG interchange format stream from SOI-EOI including all
+tables and compressed data IAW ISO 10918 para 3.9.1"Interchange
+Format". The size of the data shall be defined by the field
+biSizeImage in the BITMAPINFOHEADER for JPEG structure.
+
+Type 2: Motion JPEG
+
+This DIB type contains incomplete JPEG data (abbreviated format per
+ISO 10918) and is not intended for stand-alone single image frame
+disk files. It may be used within RIFF files and other contexts where
+it is appropriate to:
+
+*        Decode an image without supplying the associated JPEG Huffman
+tables. This presumes the codec has been properly pre-initialized
+prior to image decode.
+
+*        Request encoder output of compressed image data absent embedded
+Huffman Tables.
+
+All motion JPEG data will use YCrCb encoding.  In an AVI sequence,
+all JPEG frames will be key frames as this ensures that within the
+AVI and Video for Windows architecture all frames will be directly
+and independently addressable.
+
+For optimal size and speed during playback of an AVI file, the
+Huffman data used by motion JPEG will be fixed and defined by this
+document. This will make the individual frames of every motion
+sequence smaller and more efficient to play back. Also, because all
+sequences of motion images use the same Huffman data and color space,
+it is much more likely that motion data can be directly exchanged
+without re-compression. A definition of the Huffman data will be
+provided in MMREG.H (which is listed at the end of this document) as
+a byte string which can be concatenated onto the start of a motion
+JPEG image to form a valid still JPEG image.
+
+
+
+MJPGDHTSeg = { X'FF', DHT, length, JPEG Huffman table parameters }
+
+Q-table data is present and may vary in every frame of a motion
+sequence to permit control over the bandwidth of sequences that
+contain bursts of frames of varying levels of complexity. The restart
+interval used during the compression process may also vary for every
+frame.
+
+Only the interleaved form of YCrCb images is supported for motion
+JPEG data. This implies that only one SOS segment will be present in
+any particular motion JPEG image.  Following the Tables segment is
+the compressed image data. The data is in JPEG stream syntax and
+includes the SOI, DRI, DQT, SOF0, SOS, and EOI markers. For
+JPEG_YCbCr, JPEG_RGB, and JPEG_Y color space IDs, these markers are
+shown in the typical order with typical values.
+
+As with all DIB files and functions that take "packed" DIBs,
+regardless of compression, the offset to the image data can be
+calculated as follows:
+
+
+
+ImageOffset = biSize + biColorUsed*sizeof (RGBQUAD)
+
+Sample table segment for baseline process:
+
+
+
+X'FF', SOI
+
+  X'FF', DHT, length, Huffman table parameters (only in still JPEG)
+  X'FF', DRI, length, restart interval
+  X'FF', DOT,
+       length                Lq = 67 for JPEG_Y or
+				  132 for JPEG_RGB or JPEG_YCbCr
+       Precision, Table ID,  Pq = 0, Tq = 0
+       DQT data [64]
+       [If 3 Components
+	  Precision, Table ID,    Pq = 0, Tq = 1
+	  DQT data [64]
+       ]
+  X'FF', SOF0, length,
+
+       Sample Precision      P = 8
+       Number of lines       Y = biHeight
+       Sample per line       X = biWidth
+       Number of components  Nc = 1 or 3 (must match information from
+	 JPEGColorSpaceID)
+
+					  YCbCr     RGB
+       1st Component parameters   C1=     1 =Y      4 =R
+       2nd Component parameters   C2=     2 =Cb     5 =G
+       3rd Component parameters   C3=     3 =Cr     6 =B
+       *
+       *]
+  X'FF', SOS, length,
+
+       Number of components  Ns = 1 or 3 (must match information from
+	 JPEGColorSpaceID)
+
+					  YCbCr     RGB
+       1st Component parameters   C1=     1 =Y      4 =R
+       2nd Component parameters   C2=     2 =Cb     5 =G
+       3rd Component parameters   C3=     3 =Cr     6 =B
+       *
+       *
+       *
+
+X'FF', EOI
+
+Note that the order in which the internal JPEG data segments
+shown above can actually occur is not restricted by this
+definition; see ISO 10918 for any ordering restrictions that are
+defined.
+
+JPEG DIB File Format
+
+Support for JPEG under Windows is fast becoming a
+requirement due to the increased number of 16-bit and 24-bit
+adapters on the market. The introduction of JPEG as a
+Windows support file format will allow users to dramatically
+decrease the storage requirement for their 16- and 24-bit
+images.
+Every DIB (including JPEG DIB) file has the following format:
+
+1.        DIB file header
+2.        Bitmap information header
+3.        Optional color table
+4.        Image data
+
+The DIB file header is defined in the DIB documentation. The
+JPEG DIB bitmap information header is defined in this
+document. The (optional) color table must be RGBQUADs and
+is defined in the DIB documentation. The JPEG DIB image
+data is defined in this document.
+
+JPEG AVI File Format
+
+JPEG AVI files use the AVI RIFF form as described in the
+Microsoft Multimedia technical note "AVI Files." The JPEG AVI
+file format has the same mandatory LIST chunks as any other
+AVI files. The following example shows the JPEG AVI RIFF
+form expanded with the chunks needed to complete the LIST
+"hdr1" and LIST "movi" chunks:
+As defined in the AVI file format, key frames have the key
+frame bit set in the index flags. Since all JPEG frames are key
+frames, this flag will always be set for all the frames in a
+motion JPEG AVI file.
+
+
+
+RIFF   ('AVI'
+       LIST    ('hdr1'
+	       'avih'   (<Main AVI header>0
+	       LIST     ('str1'
+			'strh' (<Stream header>)
+			'strf (<Stream format>)
+			'strd (<additional header data>)
+			.
+			.
+			.
+			)
+	       LIST     ('movi'
+			       {
+				  '##dc' <DIB compressed>
+
+				  Byte abJPEGdata[ ]; <JPEG image data>
+			       }
+			       .
+			       .
+			       .
+			       <or>
+			       LIST ('rec'
+				     '##dc' <DIB compressed>
+				     Byte abJPEGdata [ ]; <JPEG image data>
+				    .
+
+				    .
+				    .
+			       )
+			)
+			.
+			.
+			.
+			)
+	       ['idx' <AVI Index>]
+	       )
+       )
+
+The strh chunk contains the stream header chunk that
+describes the type of data the stream contains.
+The strf chunk describes the format of the data in the stream.
+For the JPEG AVI case, the information in this chunk is a
+BMINFOHEADER FOR JPEG.
+The strd chunk contains the FOURCC ID and associated state
+structure containing any specific state data for initializing the
+identified codec.
+All frames in the AVI file are key-frames and have a form
+similar to that defined for JPEG "abbreviated format for
+compressed image data" as specified in ISO 10918 para. B.4.
+
+The LIST "movi" Chunk
+
+Following the header information is a LIST "movi" chunk that
+contains chunks of the actual data in the streams, that is, the
+pictures and sounds themselves. The data chunks can reside
+directly in the LIST "movi" chunk or they might be grouped into
+"rec" chunks, as described in the AVI file format technical
+note. As in any RIFF chunk, a four-character code is used to
+identify the chunk.
+As in the JPEG DIB format, the JPEG stream syntax is used
+for the image data with the following constraints. The JPEG
+marker codes SOI, DRI, DQT, SOF0, SOS, and EOI are
+expected (mandatory) in the image data chunk, and the
+constrained values shown in the example below are mandatory
+for the image data within the AVI stream.
+
+Any parameters in the SOF0 (frame) and SOS (start of scan)
+headers that are duplicated in the BITMAPINFOHEADER for
+JPEG must be the same. This would include Sample
+Precision, subsampling, and number of components (as
+implied by JPEGColorSpaceID). The number of lines and
+samples per lines in the SOF0 segment and the width and
+height defined in the format chunk must match the main AVI
+header width and height values. All of these values are
+expected to remain the same for every image data chunk in the
+AVI sequence.
+
+Within the image data chunk, two JPEG segments beginning
+with the SOI marker and ending with the EOI marker are
+allowed to accommodate field interleaved streams. There is an
+APP0 marker immediately following the SOI marker that
+contains information about the video image. Specifically, this
+allows the identification of the ODD and EVEN fields of an
+image for images stored in field interleaved fashion. This APP0
+marker is expected to have the first 4 bytes following the length
+bytes set to the characters 'A', 'V', 'I', '1'. The next byte
+indicates which field the JPEG data was compressed from and
+has an expected value of one for the first JPEG data segment
+and two for the second segment, indicating the ODD and
+EVEN fields respectively. If the stream is not field interleaved,
+this value will be 0 and there will only be one JPEG segment.
+The remaining seven bytes are expected to be set to 0 and will
+be ignored by the codec.
+
+If a codec cannot handle the interleaved fields, the codec will
+use only the first (ODD) field and will replicate the lines as
+necessary to provide an image that conforms to the image size
+defined in the main AVI header. Conversely, if a capture
+system only accesses a single field of each source frame, only
+a single (ODD) field image may be present in a JPEG stream.
+This implies that the single (ODD) field data should be used as
+the source of both fields by a decompressor that wishes to
+process full interlaced data.
+
+It is an advantage to keep the interlace structure of all the
+frames in a particular motion JPEG AVI file consistent. To this
+end, the following convention can be followed concerning the
+relationship of interlace structure to the biHeight parameter of
+each motion JPEG image, and hence the entire AVI sequence.
+
+biHeight        Interlace structure suggested
+
+
+<= 240        Single JPEG data block describing entire frame.
+> 240        A pair of half-height JPEG data blocks describing ODD
+and EVEN fields of the frame (EVEN field data is optional if these
+blocks would be identical).
+
+Note that interlace structure and individual fields of data should be
+treated as an internal feature of the image data representation. The
+entire frame remains an indivisible unit on which editors etc. should
+operate.  The following is an example of what the image data chunk
+would look like for a non-interleaved stream.
+
+
+
+X'FF', SOI
+   X'FF', APP0' 14, "AVI1", 0, 0, 0, 0, 0, 0, 0, 0
+
+   X'FF', DRI, length, restart interval
+	  length               Lq = 67 for JPEG_Y or
+				    132 for JPEG_YCbCr or JPEG_RGB
+	  Precision, Table ID, Pq = 0, Tq = 0
+	  DQT data [64]
+	  [If 3 components
+	      Precision, Table ID,  Pq = 0, Tq = 1
+	      DQT data [64]
+	  ]
+
+   X'FF', SOF0, length,
+
+	  Sample Precision     P = 8
+	  Number of lines      Y = biHeight
+	  Sample per line      X = biWidth
+	  Number of components Nc = 1 or 3
+
+					     YCbCr    RGB
+	  1st Component parameters     C1=   1 =Y     4 =R
+	  2nd Component parameters     C2=   2 =Cb    5 =G
+	  3rd Component parameters     C3=   3 =Cr    6 =B
+
+   X'FF', SOS, length,
+	  Number of components     Ns = 1 or 3
+
+
+					     YCbCr    RGB
+	  1st Component parameters     C1=   1 =Y     4 =R
+	  2nd Component parameters     C2=   2 =Cb    5 =G
+	  3rd Component parameters     C3=   3 =Cr    6 =B
+	  *
+	  *
+	  *
+
+   X'FF', EOI
+
+Note that the order in which the internal JPEG data segments (other
+than APP0) shown above can actually occur is not restricted by this
+definition; see ISO 10918 for any ordering restrictions that are
+defined.
+
+To identify motion JPEG frames in an AVI "movi'" segment, the stream
+ID plus the two-character code for a compressed DIB is used and would
+have the following format:
+
+
+
+   DIB Bits '##dc'
+      BYTE abJPEGImageData [ ];
+
+JPEG DIB Definitions
+
+The following have been added to MMREG.H:
+
+
+
+#define JPEG_DIB     mmioFOURCC('J','P','E','G');
+		     /* Still image JPEG DIB biCompression */
+#define MJPG_DIB     mmioFOURCC('M','J','P','G');
+		     /* Motion JPEG DIB biCompression     */
+
+    /* JPEGProcess Definitions */
+#define JPEG_PROCESS_BASELINE    0    /* Baseline DCT */
+
+    /* JIF Marker byte pairs in JPEG Interchange Format sequence */
+#define JIFMK_SOF0    0xFFC0   /* SOF Huff  - Baseline DCT*/
+#define JIFMK_SOF1    0xFFC1   /* SOF Huff  - Extended sequential DCT*/
+
+#define JIFMK_SOF2    0xFFC2   /* SOF Huff  - Progressive DCT*/
+#define JIFMK_SOF3    0xFFC3   /* SOF Huff  - Spatial (sequential) lossless*/
+#define JIFMK_SOF5    0xFFC5   /* SOF Huff  - Differential sequential DCT*/
+#define JIFMK_SOF6    0xFFC6   /* SOF Huff  - Differential progressive DCT*/
+#define JIFMK_SOF7    0xFFC7   /* SOF Huff  - Differential spatial*/
+#define JIFMK_JPG     0xFFC8   /* SOF Arith - Reserved for JPEG extensions*/
+#define JIFMK_SOF9    0xFFC9   /* SOF Arith - Extended sequential DCT*/
+
+#define JIFMK_SOF10   0xFFCA   /* SOF Arith - Progressive DCT*/
+#define JIFMK_SOF11   0xFFCB   /* SOF Arith - Spatial (sequential) lossless*/
+#define JIFMK_SOF13   0xFFCD   /* SOF Arith - Differential sequential DCT*/
+#define JIFMK_SOF14   0xFFCE   /* SOF Arith - Differential progressive DCT*/
+#define JIFMK_SOF15   0xFFCF   /* SOF Arith - Differential spatial*/
+#define JIFMK_DHT     0xFFC4   /* Define Huffman Table(s) */
+#define JIFMK_DAC     0xFFCC   /* Define Arithmetic coding conditioning(s) */
+
+#define JIFMK_RST0    0xFFD0   /* Restart with modulo 8 count 0 */
+#define JIFMK_RST1    0xFFD1   /* Restart with modulo 8 count 1 */
+#define JIFMK_RST2    0xFFD2   /* Restart with modulo 8 count 2 */
+#define JIFMK_RST3    0xFFD3   /* Restart with modulo 8 count 3 */
+#define JIFMK_RST4    0xFFD4   /* Restart with modulo 8 count 4 */
+#define JIFMK_RST5    0xFFD5   /* Restart with modulo 8 count 5 */
+#define JIFMK_RST6    0xFFD6   /* Restart with modulo 8 count 6 */
+#define JIFMK_RST7    0xFFD7   /* Restart with modulo 8 count 7 */
+
+#define JIFMK_SOI     0xFFD8   /* Start of Image */
+#define JIFMK_EOI     0xFFD9   /* End of Image */
+#define JIFMK_SOS     0xFFDA   /* Start of Scan */
+#define JIFMK_DQT     0xFFDB   /* Define quantization Table(s) */
+#define JIFMK_DNL     0xFFDC   /* Define Number of Lines */
+#define JIFMK_DRI     0xFFDD   /* Define Restart Interval */
+#define JIFMK_DHP     0xFFDE   /* Define Hierarchical progression */
+#define JIFMK_EXP     0xFFDF   /* Expand Reference Component(s) */
+
+#define JIFMK_APP0    0xFFE0   /* Application Field 0*/
+#define JIFMK_APP1    0xFFE1   /* Application Field 1*/
+#define JIFMK_APP2    0xFFE2   /* Application Field 2*/
+#define JIFMK_APP3    0xFFE3   /* Application Field 3*/
+#define JIFMK_APP4    0xFFE4   /* Application Field 4*/
+#define JIFMK_APP5    0xFFE5   /* Application Field 5*/
+#define JIFMK_APP6    0xFFE6   /* Application Field 6*/
+#define JIFMK_APP7    0xFFE7   /* Application Field 7*/
+#define JIFMK_JPG0    0xFFF0   /* Reserved for JPEG extensions */
+
+#define JIFMK_JPG1    0xFFF1   /* Reserved for JPEG extensions */
+#define JIFMK_JPG2    0xFFF2   /* Reserved for JPEG extensions */
+#define JIFMK_JPG3    0xFFF3   /* Reserved for JPEG extensions */
+#define JIFMK_JPG4    0xFFF4   /* Reserved for JPEG extensions */
+#define JIFMK_JPG5    0xFFF5   /* Reserved for JPEG extensions */
+#define JIFMK_JPG6    0xFFF6   /* Reserved for JPEG extensions */
+#define JIFMK_JPG7    0xFFF7   /* Reserved for JPEG extensions */
+#define JIFMK_JPG8    0xFFF8   /* Reserved for JPEG extensions */
+
+#define JIFMK_JPG9    0xFFF9   /* Reserved for JPEG extensions */
+#define JIFMK_JPG10   0xFFFA   /* Reserved for JPEG extensions */
+#define JIFMK_JPG11   0xFFFB   /* Reserved for JPEG extensions */
+#define JIFMK_JPG12   0xFFFC   /* Reserved for JPEG extensions */
+#define JIFMK_JPG13   0xFFFD   /* Reserved for JPEG extensions */
+#define JIFMK_COM     0xFFFE   /* Comment */
+#define JIFMK_TEM     0xFF01   /* for temp private use arith code */
+#define JIFMK_RES     0xFF02   /* Reserved */
+
+#define JIFMK_00      0xFF00   /* Zero stuffed byte - entropy data */
+#define JIFMK_FF      0xFFFF   /* Fill byte */
+
+/* JPEGColorSpaceID Definitions */
+#define JPEG_Y        1        /* Y only component of YCbCr */
+#define JPEG_YCbCr    2        /* YCbCr as define by CCIR 601 */
+#define JPEG_RGB      3        /* 3 component RGB */
+
+/* Structure definitions */
+typedef struct tagEXBMINFOHEADER {
+	BITMAPINFOHEADER      bmi;
+	/* extended BITMAPINFOHEADER fields */
+
+	DWORD   biExtDataOffset;
+	/* Other stuff will go here */
+
+	/* Format-specific information */
+	/* biExtDataOffset points here */
+} EXBMINFOHEADER;
+
+typedef struct tagJPEGINFOHEADER {
+	/* compression-specific fields */
+	/* these fields are defined for 'JPEG' and 'MJPG' */
+	DWORD   JPEGSize;
+	DWORD   JPEGProcess;
+
+	/* Process specific fields */
+	DWORD   JPEGColorSpaceID;
+	DWORD   JPEGBitsPerSample;
+
+	DWORD   JPEGHSubSampling;
+	DWORD   JPEGVSubSampling;
+} JPEGINFOHEADER
+
+
+#ifdef MJPGDHTSEG_STORAGE
+
+/* Default DHT Segment */
+
+MJPGHDTSEG_STORAGE BYTE MJPGDHTSeg[0x1A0] = {
+ /* JPEG DHT Segment for YCrCb omitted from MJPG data */
+ 0xFF,0xC4,0x01,0xA2,
+ 0x00,0x00,0x01,0x05,0x01,0x01,0x01,0x01,0x01,0x01,0x00,0x00,0x00,0x00,0x00,
+ 0x00,0x00,0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x01,
+ 0x00,0x03,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x00,0x00,0x00,0x00,
+
+ 0x00,0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x10,0x00,
+ 0x02,0x01,0x03,0x03,0x02,0x04,0x03,0x05,0x05,0x04,0x04,0x00,0x00,0x01,0x7D,
+ 0x01,0x02,0x03,0x00,0x04,0x11,0x05,0x12,0x21,0x31,0x41,0x06,0x13,0x51,0x61,
+ 0x07,0x22,0x71,0x14,0x32,0x81,0x91,0xA1,0x08,0x23,0x42,0xB1,0xC1,0x15,0x52,
+ 0xD1,0xF0,0x24,0x33,0x62,0x72,0x82,0x09,0x0A,0x16,0x17,0x18,0x19,0x1A,0x25,
+ 0x26,0x27,0x28,0x29,0x2A,0x34,0x35,0x36,0x37,0x38,0x39,0x3A,0x43,0x44,0x45,
+ 0x46,0x47,0x48,0x49,0x4A,0x53,0x54,0x55,0x56,0x57,0x58,0x59,0x5A,0x63,0x64,
+
+ 0x65,0x66,0x67,0x68,0x69,0x6A,0x73,0x74,0x75,0x76,0x77,0x78,0x79,0x7A,0x83,
+ 0x84,0x85,0x86,0x87,0x88,0x89,0x8A,0x92,0x93,0x94,0x95,0x96,0x97,0x98,0x99,
+ 0x9A,0xA2,0xA3,0xA4,0xA5,0xA6,0xA7,0xA8,0xA9,0xAA,0xB2,0xB3,0xB4,0xB5,0xB6,
+ 0xB7,0xB8,0xB9,0xBA,0xC2,0xC3,0xC4,0xC5,0xC6,0xC7,0xC8,0xC9,0xCA,0xD2,0xD3,
+ 0xD4,0xD5,0xD6,0xD7,0xD8,0xD9,0xDA,0xE1,0xE2,0xE3,0xE4,0xE5,0xE6,0xE7,0xE8,
+ 0xE9,0xEA,0xF1,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7,0xF8,0xF9,0xFA,0x11,0x00,0x02,
+ 0x01,0x02,0x04,0x04,0x03,0x04,0x07,0x05,0x04,0x04,0x00,0x01,0x02,0x77,0x00,
+
+ 0x01,0x02,0x03,0x11,0x04,0x05,0x21,0x31,0x06,0x12,0x41,0x51,0x07,0x61,0x71,
+ 0x13,0x22,0x32,0x81,0x08,0x14,0x42,0x91,0xA1,0xB1,0xC1,0x09,0x23,0x33,0x52,
+ 0xF0,0x15,0x62,0x72,0xD1,0x0A,0x16,0x24,0x34,0xE1,0x25,0xF1,0x17,0x18,0x19,
+ 0x1A,0x26,0x27,0x28,0x29,0x2A,0x35,0x36,0x37,0x38,0x39,0x3A,0x43,0x44,0x45,
+ 0x46,0x47,0x48,0x49,0x4A,0x53,0x54,0x55,0x56,0x57,0x58,0x59,0x5A,0x63,0x64,
+ 0x65,0x66,0x67,0x68,0x69,0x6A,0x73,0x74,0x75,0x76,0x77,0x78,0x79,0x7A,0x82,
+ 0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8A,0x92,0x93,0x94,0x95,0x96,0x97,0x98,
+
+ 0x99,0x9A,0xA2,0xA3,0xA4,0xA5,0xA6,0xA7,0xA8,0xA9,0xAA,0xB2,0xB3,0xB4,0xB5,
+ 0xB6,0xB7,0xB8,0xB9,0xBA,0xC2,0xC3,0xC4,0xC5,0xC6,0xC7,0xC8,0xC9,0xCA,0xD2,
+ 0xD3,0xD4,0xD5,0xD6,0xD7,0xD8,0xD9,0xDA,0xE2,0xE3,0xE4,0xE5,0xE6,0xE7,0xE8,
+ 0xE9,0xEA,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7,0xF8,0xF9,0xFA
+};
+#endif
+
+
+
+
+
+
+</pre>
+</td></tr></table></center>
+</body></html>
+
+<br><br>
+<center>
+<a href="http://www.billboard.cz/link/redirect/a5547/28036/" target="_top">
+<img src="http://www.billboard.cz/link/show/a5547/28036/" border="0" width="468" height="60" ismap></a><br>
+<font face="Arial, Helvetica" size=1>
+<a href="http://www.billboard.cz">ProgNET-CZ is member of system BillBoard.cz - banner exchange
+</a></font>

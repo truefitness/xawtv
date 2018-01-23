@@ -1,0 +1,20 @@
+<a href="/100/00.html">100</a> &nbsp;
+<a href="/200/00.html">200</a> &nbsp;
+<a href="/300/00.html">300</a> &nbsp;
+<a href="/400/00.html">400</a> &nbsp;
+<a href="/500/00.html">500</a> &nbsp;
+<a href="/600/00.html">600</a> &nbsp;
+<a href="/700/00.html">700</a> &nbsp;
+<a href="/800/00.html">800</a> &nbsp;
+<a href="/about.html">about</a>
+</div>
+<form name="goto" action="/goto/">
+Jump to page
+<input type="text"  name="p" size="4" maxlength="3">
+<input type="submit" value="ok">
+</form>
+<script language="JavaScript">
+document.forms["goto"].elements["p"].focus();
+</script>
+</body>
+</html>

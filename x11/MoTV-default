@@ -1,0 +1,258 @@
+
+! ----------------------------------------------------------------------------
+! some standard motif stuff [i18n]
+
+!*.cancelLabelString:				Cancel
+!*.applyLabelString:				Apply
+!*.XmFileSelectionBox.dirListLabelString:	Directories
+!*.XmFileSelectionBox.fileListLabelString:	Files
+!*.XmFileSelectionBox.selectionLabelString:	Selection
+
+
+! ----------------------------------------------------------------------------
+! strings [i18n]
+
+MoTV.about_box_popup.title:		About motv
+MoTV*about_box_popup*messageString:	\
+	motv - Motif TV application	\n\
+	\n\
+	(c) 2002 Gerd Knorr <kraxel@bytesex.org>
+
+MoTV.errbox_popup.title:		Errors
+
+control*menubar*fileM.tearOffTitle:	File
+control*menubar*editM.tearOffTitle:	Edit
+control*menubar*toolsM.tearOffTitle:	Tools
+control*menubar*tuneM.tearOffTitle:	Tuner control
+control*menubar*grabM.tearOffTitle:	Grab image
+control*menubar*ratioM.tearOffTitle:	Aspect ratio
+control*menubar*launchM.tearOffTitle:	Launch
+control*menubar*subM.tearOffTitle:	Subtitles
+control*menubar*stationsM.tearOffTitle:	TV Stations
+control*menubar*optionsM.tearOffTitle:	Options
+control*menubar*helpM.tearOffTitle:	Help
+control*menubar*captureM.tearOffTitle:	Capture
+control*menubar*freqM.tearOffTitle:	Frequency table
+control*menubar*inputM.tearOffTitle:	Inputs
+control*menubar*normM.tearOffTitle:	TV Norm
+
+control*menubar.file.labelString:	File
+control*menubar.file.mnemonic:		F
+control*menubar.edit.labelString:	Edit
+control*menubar.edit.mnemonic:		E
+control*menubar.tools.labelString:	Tools
+control*menubar.tools.mnemonic:		T
+control*menubar*tune.labelString:	Tuner
+control*menubar*grab.labelString:	Grab image
+control*menubar*ratio.labelString:	Aspect ratio
+control*menubar*launch.labelString:	Launch
+control*menubar*sub.labelString:	Subtitles
+control*menubar.stations.labelString:	Stations
+control*menubar.stations.mnemonic:	S
+control*menubar.options.labelString:	Options
+control*menubar.options.mnemonic:	O
+control*menubar.filter.labelString:	Filter
+control*menubar.filter.mnemonic:	F
+control*menubar.help.labelString:	Help
+control*menubar.help.mnemonic:		H
+
+! file menu
+control*menubar*rec.labelString:	Record movie ...
+control*menubar*rec.mnemonic:		R
+control*menubar*rec.acceleratorText:	R
+control*menubar*rec.accelerator:	<Key>R
+control*menubar*quit.labelString:	Quit
+control*menubar*quit.mnemonic:		Q
+control*menubar*quit.acceleratorText:	Q
+control*menubar*quit.accelerator:	<Key>Q
+
+! edit menu
+control*menubar*copy.labelString:	Copy
+control*menubar*copy.mnemonic:		C
+control*menubar*copy.acceleratorText:	Ctrl+C
+control*menubar*copy.accelerator:	Ctrl<Key>C
+
+! tools menu
+control*menubar*mute.labelString:	Mute audio
+control*menubar*mute.mnemonic:		a
+control*menubar*mute.acceleratorText:	A
+control*menubar*mute.accelerator:	<Key>A
+control*menubar*full.labelString:	Fullscreen
+control*menubar*full.mnemonic:		F
+control*menubar*full.acceleratorText:	F
+control*menubar*full.accelerator:	<Key>F
+control*menubar*ontop.labelString:	Stay on Top
+control*menubar*ontop.mnemonic:		T
+control*menubar*ontop.acceleratorText:	T
+control*menubar*ontop.accelerator:	<Key>T
+control*menubar*levels.labelString:	Record level monitor ...
+control*menubar*levels.mnemonic:	l
+control*menubar*levels.acceleratorText:	L
+control*menubar*levels.accelerator:	<Key>L
+control*menubar*st_up.labelString:	Next station
+control*menubar*st_up.acceleratorText:	page up
+control*menubar*st_dn.labelString:	Previous station
+control*menubar*st_dn.acceleratorText:	page down
+
+control*menubar*ch_up.labelString:	Channel up
+control*menubar*ch_up.acceleratorText:	up
+control*menubar*ch_dn.labelString:	Channel down
+control*menubar*ch_dn.acceleratorText:	down
+control*menubar*fi_up.labelString:	Finetune up
+control*menubar*fi_up.acceleratorText:	right
+control*menubar*fi_dn.labelString:	Finetune down
+control*menubar*fi_dn.acceleratorText:	left
+
+control*menubar*ppm_f.labelString:	PPM, max size
+control*menubar*ppm_f.acceleratorText:	G
+control*menubar*ppm_f.accelerator:	~Ctrl<Key>G
+control*menubar*ppm_w.labelString:	PPM, window size
+control*menubar*ppm_w.acceleratorText:	Ctrl+G
+control*menubar*ppm_w.accelerator:	Ctrl<Key>G
+control*menubar*jpg_f.labelString:	JPEG, max size
+control*menubar*jpg_f.mnemonic:		J
+control*menubar*jpg_f.acceleratorText:	J
+control*menubar*jpg_f.accelerator:	~Ctrl<Key>J
+control*menubar*jpg_w.labelString:	JPEG, window size
+control*menubar*jpg_w.acceleratorText:	Ctrl+J
+control*menubar*jpg_w.accelerator:	Ctrl<Key>J
+
+control*menubar*r_no.labelString:	no ratio
+control*menubar*r_no.mnemonic:		n
+control*menubar*r_43.labelString:	4:3
+control*menubar*r_43.mnemonic:		4
+
+control*menubar*s_off.labelString:	disable
+control*menubar*s_150.labelString:	page 150
+control*menubar*s_150.mnemonic:		1
+control*menubar*s_333.labelString:	page 333
+control*menubar*s_333.mnemonic:		3
+control*menubar*s_777.labelString:	page 777
+control*menubar*s_777.mnemonic:		7
+control*menubar*s_801.labelString:	page 801
+control*menubar*s_801.mnemonic:		0
+control*menubar*s_888.labelString:	page 888
+control*menubar*s_888.mnemonic:		8
+
+! options menu
+control*menubar*add.labelString:	Add station ...
+control*menubar*add.mnemonic:		A
+control*menubar*scan.labelString:	Channel scan ...
+control*menubar*pref.labelString:	Preferences ...
+control*menubar*pref.mnemonic:		P
+control*menubar*save.labelString:	Save configuration
+control*menubar*save.mnemonic:		S
+
+control*menubar*capture.labelString:	Capture
+control*menubar*capture.mnemonic:	C
+control*menubar*freq.labelString:	Frequency table
+control*menubar*freq.mnemonic:		F
+control*menubar*scale.labelString:	Scales ...
+control*menubar*scale.mnemonic:		S
+control*menubar*scale.acceleratorText:	S
+control*menubar*scale.accelerator:	<Key>S
+
+control*menubar*input.labelString:	Input
+control*menubar*input.mnemonic:		I
+control*menubar*norm.labelString:	TV Norm
+control*menubar*norm.mnemonic:		N
+
+! filter menu
+control*menubar*fnone.labelString:	No filter
+control*menubar*fnone.mnemonic:		N
+
+! help menu
+control*menubar*man.labelString:	Show manpage
+control*menubar*man.mnemonic:		m
+control*menubar*about.labelString:	About ...
+control*menubar*about.mnemonic:		A
+
+! tooltips (needs openmotif 2.2)
+control*tool.prev.toolTipString:	previous station
+control*tool.next.toolTipString:	next station
+control*tool.snap.toolTipString:	grab image
+control*tool.movie.toolTipString:	record movie
+control*tool.mute.toolTipString:	mute audio
+control*tool.exit.toolTipString:	quit
+
+control*box.XmPushButton*menu.del.labelString:	Delete
+control*box.XmPushButton*menu.edit.labelString:	Edit ...
+
+! channel scan
+*chscan_popup.title:		Channel scan
+*chscan_popup*okLabelString:	Start
+*chscan_popup*hints.labelString:	\
+	You can let me scan all channels for\n\
+	TV stations here.  This will create a\n\
+	new channel list from scratch, your\n\
+	current list will be lost.\n\
+	\n\
+	Make sure you have configured the correct\n\
+	TV norm and Frequency table first (it's in\n\
+	the options menu too), otherwise the scan\n\
+	will not find any station ...\n\
+	\n
+
+! channel properties
+*prop_popup.title:			Edit Station
+*prop_popup*rc.nameL.labelString:	Station name
+*prop_popup*rc.keyL.labelString:	Hotkey
+*prop_popup*rc.groupL.labelString:	Group
+*prop_popup*rc.channelL.labelString:	Channel
+*prop_popup*rc.buttons.ok.labelString:	OK
+*prop_popup*rc.buttons.cancel.labelString: Cancel
+*prop_popup*no_name_popup.title:	Error
+*prop_popup*no_name_popup*messageString: \
+	You have to specify a name for the TV Station
+
+! preferences
+*pref_popup.title:			Preferences
+*pref_popup*okLabelString:		Save
+*pref_popup*fsL.labelString:		Fullscreen
+*pref_popup*fsT.labelString:		Enable mode switching
+*pref_popup*fsO.labelString:		Video mode:
+*pref_popup*mixL.labelString:		Volume (needs restart to take effect)
+*pref_popup*mixT.labelString:		Use mixer device for volume control
+*pref_popup*mix1O.labelString:		mixer device:
+*pref_popup*mix2O.labelString:		mixer control:
+*pref_popup*optL.labelString:		Options
+*pref_popup*osd.labelString:		Use onscreen display in Fullscreen mode
+*pref_popup*keypad-ntsc.labelString:	keypad: ntsc mode
+*pref_popup*keypad-partial.labelString:	\
+	keypad: enable partial (switch on first key)
+*pref_popup*jpeg.label.labelString:	JPEG quality:
+
+scale.title:				Scale controls
+scale*volume.titleString:		Volume
+scale*bright.titleString:		Bright
+scale*hue.titleString:			Hue
+scale*color.titleString:		Saturation
+scale*contrast.titleString:		Contrast
+
+levels.title:				Monitor
+levels*enable.labelstring:		enable
+
+streamer.title:				record a movie
+streamer*driverL.labelString:		Output format
+streamer*driver.labelString:		Driver:
+streamer*videoL.labelString:		Video options
+streamer*video.labelString:		Format:
+streamer*fpsL.labelString:		fps:
+streamer*audioL.labelString:		Audio options
+streamer*audio.labelString:		Format:
+streamer*rateL.labelString:		Rate:
+streamer*fileL.labelString:		Filenames
+streamer*fvideoL.labelString:		Video:
+streamer*faudioL.labelString:		Audio:
+streamer*status.labelString:		fixme
+
+streamer*files.labelString:		Browse ...
+streamer*buttons.rec.labelString:	Record
+streamer*buttons.stop.labelString:	Stop
+streamer*buttons.play.labelString:	Playback
+streamer*buttons.cancel.labelString:	Close
+
+MoTV.man_popup.title:			Manual page
+MoTV.man_popup*okLabelString:		close window
+MoTV.man_popup*label.labelString:	please wait ...
+

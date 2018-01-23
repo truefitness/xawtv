@@ -1,0 +1,1899 @@
+3.103
+=====
+
+* Improve alsa stream handling
+* Add support for alsa audio loopback to the radio app
+* Add support for multiple-band (AM+FM) tuners to radio app
+* Tons of other bugfixes + improvements for the radio app
+* Fix xawtv window flashing to black when changing channel or taking a snapshot
+* Fix crackle crackle sound on mp34xx cards when changing channel
+* Various other bugfixes
+
+3.102
+=====
+
+* Improve alsa latency handler and document the -alsa-latency parameter
+* Improve alsa handling, fixing a cut and past error that causes
+  breakages with some cards
+* Improve audio parameters detection
+* fix build with ld --as-needed --no-copy-dt-needed
+
+3.101
+=====
+
+* Man fix to remove mention of v4l1, and describe libv4l instead
+* Fixes at fr/es manuals
+* Warning fixes
+* Addition of alsa streaming at xawtv: now, for devices with video
+  associated with audio inputs.
+* Use X11 editres, instead of its on version, based on a port from
+  a motif library released under a licence that is not GPL compatible
+* Add auto-detection logic for xawtv: by default, it will now seek for
+  the first TV device. If not available, fall back to the first grabber
+  device.
+* Add auto-detection logic for scanv: by default, it will now seek for
+  the first TV device. If not available, fails.
+* Add optional support for libexplain at the v4l2/libv4l driver.
+  Libexplain provides a  more complete explanation for the error codes,
+  helping developers to better track what's happened.
+* Don't expose tuner commands, on devices that are grabber or  webcams
+  at xawtv.
+
+3.100
+=====
+
+* Update to the latest version of videodev2.h (kernel 2.6.38)
+* console/v4l-info: Fix control detection
+
+3.99.rc6
+========
+
+* Check the return value properly in debug print as well
+* fbtools: close file properly
+* use "dev/vbi0" instead of "dev/vbi" etc
+* MoTV: avoid some warnings when "motv" starts
+* Use modern fonts for MoTV and mtt
+* motif locale patch: use UTF-8 for charsets
+* Whitespace cleanups
+* Add an option on apps to select between libv4l and v4l2 driver
+* Add other XV attributes found on bttv + nv driver
+* Fix a small bug at the V4L2_CID_USER_BASE get ctrl logic
+* v4l-conf.c: Don't abend if VT_GETSTATE is not supported
+* v4l-info: Add support for V4L2_CID_USER_BASE
+* Check the return value for XF86DGAGetVideoLL()
+* Remove the remaining requirements for libFS
+* Remove a Fedora-specific comment
+* Fix xawtv DGA mode
+
+3.99.rc5
+========
+
+* Re-add locale to xawtv/motv/mtt
+* Print plugin info only when debug
+* avoid usage of "bool"
+* Change some obsoleted headers pathes
+* Remove dead code
+
+3.99.rc4
+========
+
+* Don't mix install-sh scripts
+* motv/mtt: Disable locale setting, as this cause failure
+* x11/xawtv: Disable locale setting, as this cause failure
+* Remove the legacy xfs connection for FB
+
+3.99.rc3
+========
+
+* Auto-detect libquicktime include directory
+* Add detection for glib2
+* Fix a memory leak at drv0-v4l2
+* Auto-detect KFreeBSD variant
+* vbi-conf.8 reports that it still in man1 section instead of man8
+* Improve xft library detection
+
+3.99.rc2
+========
+
+* Add a libv4l driver, using it as default
+* Now, it displays the optional features that are configured at ./configure
+* Use fonts found on modern (Xorg) setups
+
+3.99.rc1
+========
+* Fixed radio backport to V4L2
+* es,fr manpages are now in UTF-8
+* Auto-detect Xorg default place for apps
+* Remove the old obsolete V4L2 driver
+
+3.98
+====
+* Re-added v4l-info/v4l-conf, just removing V4L1 bits
+* Some fixes, backported from Fedora tree
+
+3.97
+====
+* Fixed a compilation error
+* Ported a few applications to V4L2
+* Removed V4L1 support
+
+3.96
+====
+ * misc minor fixes collected at Fedora 12.
+ * Fix requirement of /dev/vbi instead of /dev/vbi0 on scantv.
+ * Fix compilation with Xorg and remove the --x_libraries parameter from
+   the configure script (as, on Xorg, X11 libraries are at /usr/lib).
+ * Now, providing that all build dependencies are satisfied, just typing
+   make after the download is enough to generate/run configure and build
+   the tools.
+
+3.95
+====
+
+ * misc minor fixes collected over time.
+ * make it build with gcc4.
+
+
+3.91
+====
+
+ * misc minor bugfixes.
+
+
+3.90
+====
+
+ * bugfix release (was intented to be 3.88.2, but a debian NMU f*cked
+   up my version numbering ...).
+
+
+3.87 => 3.88
+============
+
+ * removed xxl core file from source tree.
+
+
+3.86 => 3.87
+============
+
+ * fixed "default = grabdisplay" not working.
+ * added Xrandr support.
+ * lots of mtt (motif teletext viewer) tweaks.
+ * 64bit fixes for record + showriff
+
+
+3.85 => 3.86
+============
+
+ * tweaked font sets.
+ * some FreeBSD fixes.
+ * various minor build fixes
+
+
+3.84 => 3.85
+============
+
+ * added UYVY support.
+
+
+3.83 => 3.84
+============
+
+ * fix startup segfault in xawtv + motv.
+
+
+3.83 => 3.84
+============
+
+ * fixed a number of gcc 3.3 warnings, also did some other cleanups
+   while being at it.
+ * Multimedia keyboard support.
+ * commented alsa-mixer plugin (segfaults for me).
+
+
+3.82 => 3.83
+============
+
+ * compile fixes.
+ * propwatch updates.
+ * added config option to disable _NET_WM_STATE_FULLSCREEN support.
+ * added config option to move the OSD (Alex Ibrado <alex@ibrado.com>).
+ * minor radio tweaks (DAVID BALAZIC <david.balazic@uni-mb.si>).
+
+
+3.81 => 3.82
+============
+
+ * compile fixes again ...
+ * v4l-conf fix (Kyosti Malkki <kmalkki@cc.hut.fi>).
+ * wmhook fix (Marcin Krzyzanowski <krzak@hakore.com>).
+ * still a few compile bug left ...
+ * s/recode/iconv/.  iconv should (unlike recode) be present on almost
+   every system as it comes with glibc ...
+ * wmhooks fixes.
+ * added -driver command line switcht to xawtv/motv.
+
+
+3.80 => 3.81
+============
+
+ * even more compile fixes.
+ * fixed some core dumps (freqtab changes init bugs in fbtv + ttv).
+ * new config option for webcam (times=, much like once).
+
+
+3.79 => 3.80
+============
+
+ * misc small compile fixes and bugfixes.
+
+
+3.78 => 3.79
+============
+
+ * More v4l2 fixes.
+ * Some infrastructure for dumping structs.  Used that for
+   completely rewritten debug output of the video4linux plugins.
+   There is also a new utility called "v4l-info" which uses this.
+ * moved frequency tables into config files instead of having them
+   compiled-in
+ * added "group = " tag to channels.  motv builds submenus per group
+   using this.
+
+
+3.77 => 3.78
+============
+
+ * build fixes.
+ * new v4l2 module fixes.
+
+
+3.76 => 3.77
+============
+
+ * fixed broken alevtd
+ * swapped gnome + netwm protocol checks (wmhooks.c), netwm is
+   preferred now.
+ * Added showqt utility (dumps structure of QuickTime files like
+   showriff does for AVI files).
+ * Added vdr control code.
+ * webcam's archive function now creates directories if needed.
+ * fixed spec file.
+ * started adding support for reading/writing raw dv files via libdv.
+   Probably not that useful yet, at least my box is far away from
+   being able to encode dv streams in real time.  Even playback drops
+   more than 50% of the frames.
+ * added alsa mixer plugin (Malte Starostik <malte.starostik@t-online.de>).
+ * added plugin for new v4l2 api
+
+
+3.75 => 3.76
+============
+
+ * reorganized screen blitting code (used for grabdisplay), moved that
+   to another file.
+ * Added OpenGL support (for hw-scaled RGB-images through gl-textures).
+ * libng got support for reading movie files.  Added libquicktime
+   interface and AVI file parser.
+ * started writing a playback utility (debug/play.c for now ...), should
+   be able to playback all AVI/QuickTime movies recorded by
+   xawtv/streamer.  Other QuickTime files should work too as long as the
+   codec is supported by libquicktime.
+ * Added Australian Optus cable TV channels (contributor wishes to remain
+   anonymous).
+ * Added icons (by Pedro Romão <pedro.romao@netvisao.pt>, they are in
+   contrib/)
+ * some A/V sync tweaks for the recording code.
+ * Correction of lens distortion for webcam (Frederic Helin
+   <Frederic.Helin@inrialpes.fr>).
+
+
+3.74 => 3.75
+============
+
+ * fixed fullscreen code.
+ * webcam has a new option (wait=, see manpage).
+ * selection / dnd / cut+paste fixes.
+ * french translation (jose.jorge@cpam-auch.cnamts.fr)
+ * webcam: support multiple ftp connections (idea from "D. Brian
+   Larkins" <brian@sysd.com>).
+ * webcam: config options for text color (based on a patch from
+   Bill Marr <marr@shianet.org>)
+ * lots of VBI changes: dropped libvbi directory, using libzvbi
+   instead (http://zapping.ft.net, version 0.2.1 or newer).
+ * unbundled the fonts, there is another tarball with all the fonts
+   now.
+ * some more Makefile tweaks.
+
+
+3.73 => 3.74
+============
+
+ * rewrote Makefiles.  No recursive make any more.  Faster now,
+   has sane dependences.  Parallelizes (make -j) very good.
+   Really needs GNU make now.
+ * shuffled around source files.
+ * xscreensaver support.  xawtv/motv will prevent xscreensaver kick in
+   when in fullscreen mode, and rootv can be used as xscreensaver
+   hack now.
+ * Changed the naming of the Xvideo extention command line switches,
+   hope they are a bit less confusing now.
+ * Changed motv mixer config, moved detection code to the oss sound
+   plugin.
+ * some spanish man pages (Ricardo Villalba <rvm@escomposlinux.org>).
+ * MoTV.ad: move <Key>osf* entries to the bottom of the translation
+   tables.
+ * minor alevtd fix (merge from webfsd).
+
+
+3.72 => 3.73
+============
+
+ * new YUV4MPEG format support (Juan Antonio Zubimendi
+   <andoni@ilex.lpsat.net>).
+ * made grabdisplay check the aspect ratio configuration.
+ * dropped quicktime4linux support, using libquicktime
+   (http://libquicktime.sf.net) instead.
+ * added "fixed" as last fallback to all font sets.
+ * made plugin Makefile delete old, incompatible plugins.
+ * added iso8859-15 led font, for all these foobar@euro
+   locales ...
+
+
+3.71 => 3.72
+============
+
+ * v4l2 fixes.
+ * irish frequency table fix (Dan Lindstrom).
+ * made the snap command write files using "write tmpfile + rename"
+   to allow atomic updates.
+
+
+3.70 => 3.71
+============
+
+ * The idea to drop ~/.lircrc altogether wasn't that great, doesn't
+   work well with multiple apps receiving lirc events...  xawtv
+   reads it again if present, but you don't need one.  Check
+   README.lirc for the details.
+ * Fixed buffer overflow in "xawtv-remote vtx aaaaaa..."
+
+
+3.69 => 3.70
+============
+
+ * Hacked up configureable input event mapping infrastructure.  There
+   is a new [eventmap] section in the config file.  Check the xawtvrc
+   man page for details.
+ * Made lirc code use the event mapping.  xawtv does not use the
+   ~/.lircrc file config any more, but is configured using the
+   [eventmap] mentioned above.  xawtv also has a reasonable default
+   configuration now, so lirc works out-of-the-box.
+ * Made midi input configurable via event mapping.
+ * Made joystick input configurable via event mapping.
+ * Made fbtv's ncurses kbd keys go through event mapping.
+ * added -a switch to scantv.
+ * fixed some bugs in handling TV stations which are specified by
+   frequency instead of channel name.
+ * fixed volume control segfault.
+ * added tooltips for motv (needs OpenMotif 2.2).
+ * color support for bktr driver (Rolandas Naujikas <rolnauj@delfi.lt>).
+
+
+3.68 => 3.69
+============
+
+ * added API versioning to the plugins.
+ * added attributes to struct ng_filter, so you can control filter
+   settings via GUI.
+ * added gamma filter plugin.
+ * updated documentation (libng/OVERVIEW), added some hints for
+   filter plugin programming.  Note: motv has a menu to deal with
+   filters, xawtv has no GUI elements yet.
+ * more record tool improvements (level trigger for recording).
+ * removed fixed 0-65535 range for integer attributes, using min and
+   max values instead.  This also affects the attributes specified
+   within the config file.
+ * Some improvements for the radio utility.
+ * make v4l-conf run most code as real user, not root.  That should
+   improve security and also make v4l-conf not fail on ~/.Xauthority
+   located at root-squash mounted NFS dirs.
+ * hacked up a test app to play with OpenGL textures for video
+   playback.  Not built by default.  Needs Motif.  Check src/gl.c if
+   you wanna have a look.
+
+
+3.67 => 3.68
+============
+
+ * more build/install fixes.
+ * various new switches for the record tool.
+ * fixed channel switching bug, the long delay is gone now ...
+ * xawtv/motv keep track of TV norm and input source per TV
+   station now.
+ * fixed audio mode (mono vs. stereo) handling for v4l2.
+ * increased audio mode check delay to get better results.
+ * replaced rpm specfile
+
+
+3.66 => 3.67
+============
+
+ * NOTE: take this one a bit with care, it isn't tested that much and
+   rushed out (after x-max + newyear holidays) because it has various
+   build fixes.  Also various patches from other people are integrated,
+   I don't have anything pending in my inbox now.  If I missed / broke
+   something, please resend patches against this version.
+ * more plugin support in libng.
+ * some libng stuff is now implemented as plugin.
+ * build plugins with -fPIC.
+ * fixed FreeBSD build problems (due to new plugins).
+ * fixed bugs in fbdev code.
+ * moved OSS code to libng.
+ * avevtd patches (Gerald Schnabel <etk20835@stud.uni-stuttgart.de>).
+ * ssh support for webcam.
+
+
+3.65 => 3.66
+============
+
+ * various scantv fixes.
+ * added "show" command for v4lctl, updated man-page.
+ * LFS bug in showriff fixed, now it finally displays large
+   files correctly.
+ * Added experimental image filtering plugin interface, for
+   now only works for the x11 screen in "grabdisplay" mode.
+ * Made it build with both alsa 0.5.x and 0.9.x.
+ * Made it build without X11 installed.
+
+
+3.64 => 3.65
+============
+
+ * fixed FreeBSD build problems.
+ * control *tv via joystick (based on patches from "W. Michael Petullo"
+   <mike@flyn.org>).
+ * fixed fbtv cursor keys to work as documented (and like they work in
+   xawtv).
+ * splitted reading and parsing of the config file to fix some minor
+   initialization order issues.
+ * more alevtd fixes/patches (Alessandro Fausto).
+ * added window clipping fixups (range checks, drop empty clips,
+   try merge clip windows).
+ * removed chromakey color flash on channel switches
+ * added -c option for scantv.
+ * full devfs support for fbtv.
+
+
+3.63 => 3.64
+============
+
+ * fixed build problems without alsa installed.
+ * alevtd: subpage link list tweaks.
+ * alevtd: clear cache on SIGUSR1.
+ * fixed a segfault in fbtv.
+
+
+3.62 => 3.63
+============
+
+ * tried to reduce the channel switch delay a bit.
+ * motv: italian translations (Mij <mij@fastwebnet.it>).
+ * wrote README.translate
+ * wrote some code to control xawtv/motv/fbtv via alsa midi.
+ * moved lirc code to xt.c, added lirc support to motv.
+ * "fbtv -M" + v4l2 fixed.
+ * ttv: ignore aspect ratio.
+ * ttv: segfault-at-exit fixed.
+ * added subpage link list to alevtd pages
+   (Alessandro Fausto <fareale@libero.it>).
+ * updated libvbi to alevt 1.6.0 code.
+
+
+3.61 => 3.62
+============
+
+ * fixed italy frequency table (Gianluca <gialluca@tiscalinet.it>).
+ * oss changes to improve audio/video sync with some sound cards.
+ * Fancy DnD icon for motv.
+ * preferences dialog for motv.
+ * fixed segfault when typing '00' on the keypad.
+ * fixed VIDIOCSWIN error handling.
+ * major changes for the radio app:  Added reasonable command line
+   parsing, can be easily used non-interactively now.  Added station
+   scanner (Gunther Mayer <Gunther.Mayer@t-online.de>).
+ * added frequency table for argentina
+   ("KciNicK M. M." <kcinick@ciudad.com.ar>).
+ * MIT-SHM support is no longer a compile time option.
+ * Fixed MIT-SHM bug in xv.c
+ * v4l2 format assignments fixed (fixes swapped red+blue for yuv)
+
+
+3.60 => 3.61
+============
+
+ * keypad-partial fix.
+ * record utility documentation update.
+ * movie recording: display audio/video times relative to real time.
+ * added some examples to "streamer -h" output.
+ * minor fix for v4lctl.
+ * reactivated "xawtv-remote webcam"
+ * fixed "xawtv-remove movie driver ..." for motv.
+ * Some minor DnD fixes.
+ * audio mode fixes
+ * added keypad support for motv.
+ * temporarely suspend grabdisplay for attribute changes.
+ * mjpeg-quality config option is gone, jpeg-quality is used
+   everythere now.
+
+
+3.59 => 3.60
+============
+
+ * Added proper cleanup code for DnD.  This breaks DnD with KDE apps
+   because they _first_ signal the transfer is finished, _then_ try to
+   read the tmp file which might be already deleted at that point ...
+ * separated primary selection (aka clipboard) and DnD selection data.
+ * fixed segfault with DnD + not capturing devices (i.e. Xvideo).
+
+
+3.58 => 3.59
+============
+
+ * keypad-partial fixes.
+ * added a few more buttons to motv's toolbar.
+ * fixed v4l-conf compile problem with v4l2-patched kernels.
+ * added console mode for record (Gergely Tamas <dice@mfa.kfki.hu>),
+   also added a switch to set the sample rate and fixed some minor
+   problems.
+ * Added support for selections (clipboard & dnd) to motv.
+ * Fixed missing "setinput next"
+
+
+3.57 => 3.58
+============
+
+ * Makefile / build process updates.  make depend is done automagically
+   now if needed.  Parallel builds (make -j) work better.  Enabled a few
+   more warnings.
+ * new keypad-partial config option (Pawel Sakowski <pawel@sakowski.eu.org>).
+ * made oss mixer work again for fbtv.
+ * merged some stuff from Kawamata/Hitoshi <kwmt@din.or.jp>'s patches.
+ * finally multithreaded compression for those of you with SMP boxen.
+ * text/plain support for alevtd (Adam Sampson <azz@gnu.org>).
+ * Documentation updates.
+
+
+3.56 => 3.57
+============
+
+ * changed oss mixer control internals
+ * made 4:3 aspect ratio the default.
+ * more Motif GUI fixes.
+
+
+3.55 => 3.56
+============
+
+ * chromakey tyops fixed.
+ * updated / reorganized the manual pages.
+ * wrote a manual page for motv.
+ * lots of motv improvements.
+ * streamer also accepts hh:mm:ss for -t now (W. Michael Petullo).
+ * added color space conversion functions for yuv 420 planar
+   (Sunjin Yang <lethean@realtime.ssu.ac.kr>).
+
+
+3.54 => 3.55
+============
+
+ * some fbtv fixes.
+
+
+3.53 => 3.54
+============
+
+ * NOTE: starting with 3.53 "make depend" is REQUIRED to build
+   xawtv.
+ * more motif code / fixes.
+ * moved devices.c to libng, added init function for switching to
+   devfs namespace.
+ * made xawtv/motv more quiet by default, prefixed some messages
+   with "if (debug)".
+ * copyed new fb font rendering from fbi for fbtv.
+ * Made grabdisplay in fbtv work again.
+ * Added german application defaults for motv.
+ * fixed default dsp device.
+ * added v4l2 support to v4l-conf.
+
+
+3.52 => 3.53
+============
+
+ * various build fixes (aa.c / build without Xvideo / FreeBSD).
+ * s|/dev/video|/dev/video0|, also moved stuff to a single file.
+ * ttv fixes, made ttv use the conversion functions.
+
+
+3.51 => 3.52
+============
+
+ * Added ttv -- a aalib based tv viewer.
+ * wrote some docs for libng.
+ * optimized the tracking code for the window clipping.
+ * more motif code / fixes.
+ * added support for planar yuv (grabdisplay via Xvideo).
+ * bytesex fixes for showriff.
+
+
+3.50 => 3.51
+============
+
+ * Major documentation update
+ * Some more motif tweaks.  Build it with --enable-motif if you have
+   openmotif installed and want to have a look, comments about the
+   new GUI are welcome.  motv is the exectutable (anyone has a idea for
+   a better name ?).
+ * disabled packed pixel yuv for FreeBSD (broken).
+ * added -hwscan option.
+
+
+3.49 => 3.50
+============
+
+ * lot of new motif stuff
+ * added a workaround for a bttv bug.
+ * minor fix in subtitles script.
+
+
+3.48 => 3.49
+============
+
+ * added archive function to the webcam utility.
+ * config file tags are case insensitive now.
+ * changed webcam to use libng conversions (i.e. it can deal
+   with yuv-only devices now).
+ * raw yuv data support for quicktime (with help from
+   W. Michael Petullo <mike@flyn.org>)
+ * more new motif stuff.
+
+
+3.47 => 3.48
+============
+
+ * added config file entries for record settings.
+ * fixed some minor FreeBSD build problems on.
+ * Managed it to get the locate stuff right for the motif
+   version.
+ * fixed a rate control bug.
+ * fixed a bug in vtx display code.
+ * frequency table for south africa (Hendrik Visage <hvisage@envisage.co.za>)
+
+
+3.46 => 3.47
+============
+
+ * fixed more makefile flaws (which broke rpm -ta).
+ * fixed a bug in color space conversion
+   (FUKUCHI Kentarou <fukuchi@is.titech.ac.jp>)
+ * reactivated chromakeying code.  Untested.
+ * Bumped the timeout for VIDIOCSYNC from one to three
+   seconds.  Seems some USB-Devices need more time
+   for the first frame.
+ * dropped Xaw3d support altogether.
+ * added back in some 3D effects using the new features of the
+   XFree86 4 Athena widgets.
+
+
+3.45 => 3.46
+============
+
+ * fixed Makefile bug (which caused fonts not being included in the
+   tarball).
+
+
+3.44 => 3.45
+============
+
+ * Xaw3d disabled by default -- it crashes xawtv with i18n turned on.
+
+
+3.43 => 3.44
+============
+
+ * fixed minor bug in grab-v4l.c
+ * rewrote much of the conversion/compression code, made it reentrant.
+ * moved the conversion/compression code to a thread.
+ * rewrote the grabdisplay code.
+ * The -xvideo and -device switches implicitly turn on/off the Xvideo
+   extention.
+ * The vtx command (see xawtv-remote man-page) can parse ANSI color
+   sequences too.
+ * new shell script to display subtitles.
+ * update for cc (Adam <adam@cfar.umd.edu>).  Moved the utility
+   out of the contrib, renamed it to ntsc-cc (to avoid name clashes
+   with the C compiler) and included it into the Makefile tree, so
+   it gets compiled and installed by default.  Wrote a short man
+   page for it.
+ * some progress on the motif version.
+ * fixed a bug in webcam (Kelsey Hudson <khudson@rohan.sdsu.edu>).
+
+
+3.42 => 3.43
+============
+
+ * webcam update (tmp file fix, allow to give a config file as
+   argument)
+ * turned off the *&%($ debugging code in grab-v4l.c
+ * some bugfixes in sound recording code.
+ * made the motif version compile again (still very incomplete
+   and not built by default).
+
+
+3.41 => 3.42
+============
+
+ * Added color space conversion functions for 4:2:2 yuv (packed) to rgb.
+ * Added color space conversion functions for 4:2:2 yuv (planar) to rgb.
+ * minor cleanups in the conversion functions.
+ * some fixes from Kawamata/Hitoshi <kwmt@din.or.jp>.
+
+
+3.40 => 3.41
+============
+
+  * changed xawtv's internal time representation.
+  * rewrote rate control again.  xawtv can puts frames twice into
+    the queue now, recording @ 25fps without frame drops is no
+    problem any more.
+  * made video stream recording optional.  streamer can record
+    video only, video/audio and audio only (xawtv GUI not updated
+    yet).  This implies that for avi and quicktime streams specifing
+    a video format isn't optional any more.  If no video format is
+    given, streamer will not pick one for you, but will record audio
+    only.
+  * reorganized sound recording code a bit, added byteswapping support.
+  * MIT SHM failures with XvImages are catched now (=> hw scaling on
+    a remote display should work -- untested)
+  * gracefully fallback to "normal" rgb ximages if hw scaling with
+    Xvideo failes because the v4l driver can't capture packed yuv.
+  * 0.05 MHz steps for the radio app (Nils Kassube <kassube@gmx.net>).
+  * fixed one more segfault.
+  * updated README.recording
+
+
+3.39 => 3.40 [the segfault bugfix release]
+==========================================
+
+  * 3 lines fix in grab-v4l.c.
+
+
+3.38 => 3.39
+============
+
+  * fixed a bug in color space conversion.
+  * fixed minor initialization bugs in grab-v4l.c + grab-v4l2.c
+  * added attribute reading for BSD.
+  * added a switch to alevtd to set the vbi device.
+
+
+3.37 => 3.38
+============
+
+  * attribute fixes for v4l and v4l2.
+  * implemented boolean attributes.
+  * deleted some obsoleted (by the new attr handling) status
+    variables, fixed various places which used the old ones (with
+    *ahem* intresting side effects).
+
+
+3.36 => 3.37
+============
+
+  * minor fixes and tweaks in the capture code.
+  * added missing libng initialization to fbtv, streamer
+    and v4lctl (Oops...).
+
+
+3.35 => 3.36
+============
+
+  * better fullscreen switching in xinerama.
+  * added the missing config.h include to xvideo.c
+  * moved some code into the new libng directory.
+  * rewrote compression + color space conversion.
+  * Fixed v4lctl segfault.
+  * Fixed a minor bug in v4l code (PAL-M with bttv works again).
+  * updated webcam, uses libng now.  It expects TV norm and
+    video source as strings ("PAL" instead of "0", ...) now.
+    Works also on FreeBSD, switches between v4l + v4l2 at runtime
+    not compile time.
+  * made Makefiles portable.
+
+
+3.34 => 3.35
+============
+
+  * fixed segfault in scantv.
+  * don't list "normal" ioctl failures for v4l2 (i.e. the ones which are
+    do *not* indicate some error the user should care about).
+  * rewrote xawtv's attribute handling.
+  * made the -bpp switch work again.
+  * detect xinerama (not used yet).
+
+
+3.33 => 3.34
+============
+
+  * attribute fixes for Xvideo and v4l2.
+  * fbtv bugfixes.
+
+
+3.32 => 3.33
+============
+
+  * lots of fixes: bugs in the new capture code, portability problems.
+  * fixes in the bktr support, can do full framerate now, added yuv
+    capture.  Think it works reasonable well now (so I can list BSD
+    as "supported" on the Homepage without getting flamed for it :-)
+
+
+3.31 => 3.32 [non-public release]
+=================================
+
+  * fixed a few bugs in the new v4l code, re-added capture using
+    read().
+  * removed videodev.h from the tarball, using the kernel's header
+    file instead.  This means xawtv will not build on 2.0.x kernels
+    any more.
+  * made v4l2 support working again, added ioctl tracking for easier
+    debugging.  I have no audio yet, althrouth this might be a bttv2
+    problem as bttv2 + v4l interface doesn't work either but bttv
+    0.7.x is fine.
+  * It builds cleanly on FreeBSD, bktr support working again.  Sort
+    of.  Overlay has some intresting clipping issues, capture works
+    without rate control and 12 fps max.  No yuv capture yet.
+
+
+3.30 => 3.31 [non-public release]
+=================================
+
+  * Got a few pointers for malloc debuggers (http://www.dmalloc.com,
+    http://freshmeat.net/projects/njamd/,
+    http://www.cbmamiga.demon.co.uk/mpatrol).  Thanks to all, I'll
+    have a look next time I need one...
+  * started rewriting the driver interfaces (new attribute handling,
+    switch over to grab-ng.h structs + interfaces).  v4l and Xvideo
+    are ported and passed brief testing, v4l2 + bsd are temporarely
+    broken.
+  * some jpeg/mjpeg compression fiddeling.
+
+
+3.29 => 3.30
+============
+
+  * fix build problems.
+
+
+3.28 => 3.29
+============
+
+  * next chunk of the capture core rewrite.
+  * moved audio recording to a thread, this hopefully fixes a few
+    problems (should stop audio overruns, doesn't need select
+    support in the driver any more).
+  * Added a fancy status display which hopefully helps to trouble-shoot
+    syncronisation problems.
+  * major update for README.recording
+  * killed the --enable-efence configure option.  Isn't thread safe :-(
+    Anyone knows a free malloc debugger which is?
+  * added autoconf tests for getopt.h / getopt_long
+  * streamer can write raw video data (again).
+
+
+3.27 => 3.28
+============
+
+  * completed v4l ioctl tracking.
+  * bug fixed in quicktime code.
+  * scantv fixes.
+  * fixed bugs in the movie recording code (memory leak,
+    uncatched failures).
+
+
+3.26 => 3.27
+============
+
+  * (hopefully) fixed rpm build problems.
+  * started adding ioctl tracking to the v4l code.
+  * fixed a bug in overlay code (uninitialized video_picture.depth)
+
+
+3.25 => 3.26
+============
+
+  * initialization order bug in volume control fixed (thanks to
+    rolf.siebrecht@t-online.de).
+  * added a few options to scantv, allowing it to be used
+    non-interactive.
+  * added GUI support for the rewritten capture code, recording
+    movies with xawtv works again.
+
+
+3.24 => 3.25 [non-public release]
+=================================
+
+  * teached the v4l code to turn off (and back on) overlay when fiddeling
+    with SPICT and SWIN ioctls for read() capture.  Mixing overlay and
+    read() capture works now without funny effects.
+  * fixed a bug in grabdisplay error handling (which made xawtv die with
+    "aiee: grab_fps==0" because it forgot to clean up on capture errors).
+  * started a major rewrite of the core capture code.  See grab-ng.h
+    Step one:
+     - rewrote the movie output code.
+     - writeavi.c is reentrant now.
+     - Added quicktime support (lousely based on W. Michael Petullo's
+       quicktime patches).
+     - Added support for recording image files with audio in a separate
+       wav file.
+     - xawtv's movie recording is temporarely broken, GUI updates not in
+       place yet.  You'll have to use streamer for now, sorry.
+
+
+3.23 => 3.24
+============
+
+  * -xvport does _really_ work now...
+  * Improved the OpenBSD port.  Clipping works better now, single frame
+    capture works.
+  * decreased the timeout for hiding the mouse pointer.
+  * fixed onscreen display logic.
+  * removed 320x240 capture size limit for yuv (Xvideo-scaled) grabdisplay
+    mode.
+  * fixed rate control (and killed the anonying but harmless error message
+    in grabdisplay mode).
+  * Added cc.c patches (Adam <adam@cfar.umd.edu>).
+
+
+3.22 => 3.23
+============
+
+  * added -xvport option to set the Xv port.
+  * Killed all the old mouse pointer handling code and the assorted config
+    config options / cmd line switches.  Replaced it with a simple timeout
+    logic:  If you don't move the mouse for some time xawtv will hide the
+    pointer.  Any pointer motion event will show the pointer again.
+  * new xawtv-remote command: showtime.
+
+
+3.21 => 3.22
+============
+
+  * FastText for alevtd (Malcolm Parsons <malcolm@bits.bris.ac.uk>).
+  * xawtv-remote patch (Adam <adam@cfar.umd.edu>)
+  * misc bugfixes
+  * netwm support (Dirk Mueller <dmuell@gmx.net>)
+
+
+3.20 => 3.21
+============
+
+  * specfile fixed (app-defaults are missing).
+  * compile fix for alevtd.
+  * bugfix in v4l2 code.
+  * removed the boring core dump from the source tree.
+
+
+3.19 => 3.20
+============
+
+  * minor man-page updates.
+  * OpenBSD port starts working:  xawtv compiles, overlay works.
+    Clipping doesn´t work for some reason (It´s me or the driver?).
+    As FreeBSD uses the same driver it should be easy to make xawtv
+    work there too.
+  * Plenty of autoconf tweaks to make the whole package compile
+    cleanly on BSD.
+  * converted a number of structs to "field: value" style
+    initialization.
+  * Added audio= option to ~/.xawtv
+  * manpage updates.
+
+
+3.18 => 3.19
+============
+
+  * Added libvbi (vbi decoding code from alevt)
+  * Added scantv: does a channel scan, picks up the station id from
+    vbi, writes a xawtv config file.
+  * minor webcam tweaks
+  * Added alevtd - a http server for videotext pages.
+
+
+3.17 => 3.18
+============
+
+  * off-by-one bug in colorspace.c fixed.
+  * Documentation updates
+  * webcam patches from les Niles <lniles@narus.com>
+  * libjpeg dependency changed from optional to required (webcam
+    never worked without libjpeg before, and libjpeg is present
+    on nearly any linux system anyway, so...)
+  * Added triggers to the webcam - compare the current image with the
+    last uploaded one, try to figure if it has changed and upload only
+    if it has...
+
+
+3.16 => 3.17
+============
+
+  * new -w switch for streamer (Santiago Garcia Mantinan <manty@i.am>)
+
+
+3.15 => 3.16
+============
+
+  * The 3.15 tarball had a big binary included by mistake.
+  * Some v4l2 fixes.
+
+
+3.14 => 3.15
+============
+
+  * fixed a bug in the channel editor (did'nt saved the input for
+    new channels)
+  * shuffled around some code -- split Xaw and general Xt/X11 code.
+  * added max size check to v4l2 overlay code.
+  * added (un)mute to rootv
+
+
+3.13 => 3.14
+============
+
+  * Added a "fix-aspect-ratio" option (quick guide: add
+    "radio=4:3" to the [global] section).
+  * fixed a few bugs in the new avi recording code.
+    audio+video should work again.
+  * A fullscreen option in the config file enables the VidMode
+    extention now.
+  * added read()-based capture support to the webcam.  Untested.
+
+
+3.12 => 3.13
+============
+
+  * some xvideo finetuning
+  * Added xvideo support to v4lctl
+  * Added rootv utility
+  * Added debian package information
+  * Added small script to pick up channels from videotext (*.de,
+    Kabel1 pages, from Kai Fett, it is in contrib/vtx2xawtv)
+  * webcam: moved ftp code to another source file, made it runtime
+    configurable, wrote a man-page
+  * wrote a manpage for showriff
+
+
+3.11 => 3.12
+============
+
+  * Added the missing -D_REENTRANT to the Makefile
+  * picked up the r@dio.mp3 client from the v4l list, put it
+    into the contrib directory.
+  * avi recording fix (audio+video stream length are identical now).
+  * xawtv-remote protocol supports more than one command now.  Commands
+    are separated by a zero-length string, i.e. 'xawtv-remote foo "" bar'
+  * new xawtv-remote command:  vtx (interface for subtitles).  Check
+    the man-page for details.
+  * webcam fixes.
+
+
+3.10 => 3.11
+============
+
+  * fbtv grabdisplay fix, added G400 (works with G200 code too).
+  * lirc code update (Ilya Konstantinov <future@galanet.net>).  You might
+    have to upgrade lirc to compile this version.
+  * fixed the bool ressources.  They are /really/ boolean now,
+    i.e. "xawtv.vidmode: true" works now.
+  * fixed a few bugs in the new recording code.
+  * added support for freq= in ~/.xawtv.  Untested.
+  * avi writing code fix (broken size for one header field,
+    found by David Gesswein <djg@drs-esg.com>).  Now the windows media
+    player accepts xawtv's movies, cool...
+  * Added command line parsing to showriff.  Added a option to make it
+    not stop on errors.
+  * Fixed avi initialization code.  It forgot to reset some counters,
+    and thats why xawtv wrote broken avi files if you've recorded more
+    than one...
+  * Added new command to xawtv-remote: webcam.
+
+
+3.09 => 3.10
+============
+
+  * fixed pthread compile problems.
+  * first cut of the new recording code is active.  It still needs
+    some tweaking, but the basics work.  v4l2 is'nt updated yet.
+    audio+video syncronisation should work better.  It is also possible
+    to start/stop xawtv's avi-recording with xawtv-remote (see manpage).
+
+
+3.08 => 3.09
+============
+
+  * extended showriff a bit
+  * fixed broken rpm build
+  * started rewriting the capture code.  Switching over to threads,
+    hope I get the audio/video syncronisation issues fixed this way.
+    Right now it is dead code only...
+
+
+3.07 => 3.08
+============
+
+  * reverted the frequency table split for europe.  Turned out this
+    was a bad idea...
+  * Added options to enable dga/vidmode/... extentions.  Vidmode is
+    off by default now.  This is the X Extention used for switching
+    video modes, i.e. you'll have to start xawtv with "-vm" now to
+    make it switching the video mode when going to fullscreen mode.
+  * Added chroma keying support.
+  * OpenDML support for avi.  Now the intresting question:  Who can
+    playback or at least read these files?  I don't know how to test
+    this stuff...
+  * Documentation updates
+
+
+3.06 => 3.07
+============
+
+  * added troggle-mouse option (turn on/off mouse when swithing to
+    fullscreen).
+  * Added "stay on bottom".  The "stay-on-top" command does now cycle
+    between normal, top and bottom.
+  * Added support for more than two capture buffers to grab-v4l.c
+
+
+3.06 => 3.07
+============
+
+  * As usual, some bugfixes
+  * values for volume, contrast, color, ... can be specified in
+    percent too, just add '%' to the number:  50% == 32768
+  * more led fonts (latin2, koi8).  Right now you have to set the
+    app-defaults by hand to make use of them, need some more elegant
+    way to switch charsets...
+  * Added the UHF frequencies to europe-cable.  It's used at least in
+    Switzerland for cable TV.
+  * some changes in yuv-to-offscreen handling for fbtv due to bttv
+    changes.
+
+
+3.05 => 3.06
+============
+
+  * Aiee, there was a stale .nfs<longnumber> file in the 3.05 archive...
+
+
+3.04 => 3.05
+============
+
+  * new config options: turn on/off onscreen display, keypad mode,
+    mjpeg quality. Check the man page for details.
+  * Added XvPutImage support for grabdisplay mode.  You'll need
+    XFree86 3.9.17 to compile this release with Xv support.
+  * rearranged the european frequency tables.  They are splitted into
+    broadcast and cable tv now.
+
+
+3.03 => 3.04
+============
+
+  * fbtv font loader fixed.  Nice showstopper, I should start the app at
+    least once next time...
+  * fbtv: ATI Mach64 backend scaler support works now with my revB iMac.
+
+Note: I still have some changes/minor bug reports in my incoming mailbox.
+Next release.  I want to get this one out of the door quickly due to the
+fbtv problems.
+
+
+3.02 => 3.03
+============
+
+  * broke fbtv font loading.
+  * forgot writing Changes entries.
+
+
+3.01 => 3.02
+============
+
+  * some finetuning for the keypad stuff.
+  * G200 backend scaler support in fbtv.
+
+
+3.0 => 3.01
+===========
+
+  * Frequency table renaming was incomplete.  The menu was'nt
+    updated.
+  * v4l-conf did'nt compile with 2.0.x kernel headers.
+  * -c switch (select device) was broken.
+  * added hard coded width limit for capture (buggy kernel bttv :-( )
+
+
+3.0rc1 => 3.0
+=============
+
+  * Added station selection by "two-digit" selection.  All stations
+    are numbered in .xawtv order; entering two numbers within 5
+    seconds are interpreted as station number which should be tuned.
+    You'll have to use the keypad in xawtv.  Should work with lirc too
+    (using the new "keypad" command).
+  * global spellfix s/lauch/launch/.  Attention, this might affect
+    your config file too...
+  * channel editor fixes.
+  * F5-F12 (bright/color/... adjust by keyboard) is back.
+
+
+3.0beta9 => 3.0rc1
+==================
+
+  * updated v4l2 driver to the new interface.
+  * some finetuning in the v4l2 driver.
+  * cleaned up v4l-conf.c
+  * renamed the frequency tables:  removed the TV norm from the name
+    to avoid confusion.
+  * the usual set of bugfixes.
+
+
+3.0beta8 => 3.0beta9
+====================
+
+  * webcam: can set input/norm now.
+  * webcam: new cgi script for continously updated image (netscape
+    only, uses serverpush).
+  * the usual set of bugfixes.
+  * write list index for avi files, mjpeg support (with some code
+    from Michael Nastvogel <michael.nastvogel-woerz@ipf.de>)
+    mjpeg is still buggy...
+  * added new frequency table for france (LOUIS-SIDNEY Rodolphe
+    <sidney@gcu-geot.insa-lyon.fr>)
+
+
+3.0beta7 => 3.0beta8
+====================
+
+  * add a new switch (-a) to v4l-conf for setting the base address.
+    This should make bttv configuration more easy if the X-Server
+    lacks DGA support.
+  * fixed the Makefiles for building in a subdirectory (i.e handle
+    "mkdir build; cd build; ../configure && make" correctly).  Now
+    I can switch from ppc to i386 without "make distclean" :-)
+  * Plenty of fixes for the channel editor.  Seems nobody uses it,
+    it must have been broken for weeks...
+  * fbtv+xawtv refuse to work when installed suid root now.  This is
+    /not/ needed, only v4l-conf requires root priviliges.
+  * v4l2: added tuner support, minor fixes.
+  * added channel 36 for australia, this one was missing for some
+    reason...
+
+
+3.0beta6 => 3.0beta7
+====================
+
+  * Added autoscroll for the station menu.  Xaw3d has some redraw
+    problems with this.  Probably some library bug, it does not
+    happen with Xaw.  Workaround idea anyone?
+  * Misc bugfixes.
+  * Documentation updates.  To be continued...
+
+
+3.0beta5 => 3.0beta6
+====================
+
+  * minor appdefauls fixes (wheel-mouse was broken).
+  * config file parser rewritten.  config file format is slightly
+    modified, check the xawtv man page.
+  * unbundled kradio to avoid the KDE compile hassle.
+  * fullscreen fixes.
+  * xawtv-remote supports multiple xawtv instances (querys all
+    xawtv windows, not just the first one it finds, new switch
+    '-i' to set the window ID when passing commands to xawtv).
+
+
+3.0beta4 => 3.0beta5
+====================
+
+  * Added support for qcams (capture via read() system call)
+  * yuv capture support (???, I've already deleted this mail)
+  * radio fixes (from debian bugtraq)
+
+
+3.0beta3 => 3.0beta4
+====================
+
+  * merged some new code for radio from Juli Merino <jmmv@bigfoot.com>
+  * wrote a man-page for radio
+  * added v4l-conf security fixes from Olaf Kirch <okir@lst.de>
+  * lirc bugfix.
+  * xawtv can use another than the default visual now.  Not bugfree yet.
+
+
+3.0beta2 => 3.0beta3
+====================
+
+  * started updating the documentation.
+  * reorganized source code tree.
+  * removed the hardcoded maxsizes from grab-v4l.c
+  * rewrote the attribute (color/hue/... + audio) handling
+
+
+3.0beta1 => 3.0beta2
+====================
+
+  * ditched getopt(), using the Xt lib / X11 resources instead.  This
+    has the effect that the options work a bit different now.
+  * added v4lctl utility.  This allows to control alot v4l options from
+    the command line.  Obsoletes set-tv.
+  * set-tv.c and streamer-old.c moved into the new "oldstuff" directory.
+  * alot of xawtv fixes -- more features are working again.
+  * fbtv is updated too.  It should accept lirc commands now exactly like
+    xawtv.
+
+
+2.45 => 3.0beta1
+================
+
+  * Lot of internal changes.  Separate the control code from the GUI.
+    Simplifies the the xawtv-remote and lirc support, makes xawtv and
+    fbtv share more code.  Lot of stuff is broken currently...
+
+
+2.44 => 2.45
+============
+
+  * Added a 'back' key which switches back to the last station tuned in.
+    Mapped to BackSpace.  Pressing backspace multiple times zaps
+    between the last two stations.
+  * The applications configured with "lauch=..." in ~/.xawtv are listed
+    in a window now ('L' displays it).  Allocation bug in the config file
+    parser fixed.
+  * switched back from double to float for X-Resources.
+
+
+2.43 => 2.44
+============
+
+  * fbtv: added -q switch.  This turns of status messages + clock, and
+    fbtv does'nt reserve space for the status line (i.e. you'll can get
+    true full screen)
+  * started lirc support (currently some debug code only...)
+  * changed float to double for X resources (Xaw scrollbars).  This
+    fixes problems on alpha and seems to work fine on intel.  Hope I
+    did'nt broke ppc...
+  * fixed the radio programs (mute on exit).  Untested.
+  * webcam bugfix (switching to binary mode must be done _after_connecting).
+
+
+2.42 => 2.43
+============
+
+  * Xvideo updates
+  * some bttv changes to make it more compatible to the kernel
+    version, added patches from Greg Alexander <galexand@acm.org>.
+  * removed the "unmute-on-open",  Updated the open/close for
+    radio too.  bttv radio should behave like all other radio
+    drivers do (i.e. you have to open the device only if you
+    want to change some settings).
+  * Unbundled the bttv driver, my bttv code is available as
+    another tar file at the same location (bttv-0.6.3a currently).
+  * Errors (at least some :-) are reported with a dialog box now,
+    not only to stderr.
+  * channel handling is completely rewritten.  If you change the frequency
+    table, all frequencies for the programmed stations are recalculated
+    now.
+  * added some missing channels for japan.
+  * streamer: the -i and -n switches work again.
+  * xawtv dumped core with nonaudio devices, fixed (Pauline Middelink
+    <middelin@polyware.nl>)
+  * updated videodev2.h
+
+
+2.41 => 2.42
+============
+
+  * DON'T PANIC
+
+
+2.40 => 2.41
+============
+
+  * completed avi recording code in xawtv.
+  * renamed streamer to streamer-old and streamer-new to streamer.
+    i.e. ther new streamer tool is the default now.
+  * internal changes (for scanline length != image width)
+  * added grabdisplay mode to fbtv.
+  * Added some SR* channels to frequency table "pal-europe-east" (they
+    are used in Poland).  Hmm, maybe I should reorganize the whole
+    channel setup, it starts getting difficuilt to maintain this the way
+    it is implemented currently...
+  * Alpha cleanups (use long for pointers etc.) from
+    Ralf Uhlig <ralf@uhlig-online.de>
+  * mklinux support for v4l-conf (Takashi Oe)
+  * the "-x" option is gone, there are two new ones instead: "--nodga"
+    to disable DGA and "--novm" to disable VidMode.
+  * Added the capability to lauch programs from within xawtv.
+  * removed the "mute-on-close" from the bttv driver.
+
+
+2.39 => 2.40
+============
+
+  * Endian fixes from Takashi Oe (avi recording works now on big
+    endian boxes).
+  * xawtv can record avi movies directly.  ^S brings you to this
+    dialog.  Please don't complain that you are missing options, this
+    is on my TODO list.  Everything you can set for streamer with
+    command line options will be available in xawtv too.  That stuff
+    is work-in-progress, take the code as beta quality...
+  * Bug fixes and internal changes.
+  * security fixes from marc@suse.de: v4l-conf.c verifies the v4l major,
+    /tmp symlink fix for vtx.sh.
+  * msp3400 bug fixes, short programming (insmod option "simple=1")
+    should work now.  With newer msp34xx chip versions you'll should
+    get stereo for NTSC TV and FM Radio.
+  * more Xvideo code.
+
+
+2.38 => 2.39
+============
+
+  * added --shift option to xawtv, this can be used to shift the
+    image if it is outside the xawtv window.
+  * added time display to fbtv.
+  * stay-on-top added (works with gnome-compilant WM's)
+  * patches from Takashi Oe for devices without audio/tuner support.
+  * Found a new cool rpm feature (this one is new, eh?):
+    "rpm -ta package.tar.gz" will build nice rpm.  No extra spec
+    file needed any more :-)
+  * Started Xvideo support.
+  * A few internal changes.
+
+
+2.37 => 2.38
+============
+
+  * snapshot filename handling has changed: Files are saved with a
+    timestamp (YYYYMMDD-HHMMSS) and channel in the filename.
+  * xawtv is   ^^^^ y2k compilant :-)
+  * new config file entry: "jpeg-quality"
+  * webcam utility updated.  It's now working with the v4l2 winnov videum
+    driver at http://www.BerlinOnline.de/spass/live_kamera/
+  * good news for *.fr:  more msp3400 fixes, NICAM/AM should finally
+    work now.
+
+
+2.36 => 2.37
+============
+
+  * fixed minor compile problems on 2.0.x.
+
+
+2.35 => 2.36
+============
+
+  * documentation updates, new FAQ for sound trouble.
+  * streamer fixes (the endian fixes for 2.33 broke streamer)
+  * driver synced up with bttv 0.6.3
+  * misc minor bug fixes
+
+
+2.34 => 2.35
+============
+
+  * updated bttv to 0.6.2 and fixed the 2.0.x compile problems.
+  * msp3400 problems with 2.2.0pre7+ fixed.
+
+
+2.33 => 2.34
+============
+
+  * new NTSC-HRC frequency table, contributed by
+    Erik Kiledal <ekiledal@home.com>
+  * 15 bpp was broken _again_.  Fixed.
+  * driver: msp3400 updates.  Tried to make nicam mono/stereo switching
+    work, but no success so far...
+  * bttv updated to 0.6.1
+  * DPMS support (turn it off for fullscreen TV), contributed by
+    Martin Denn <mdenn@schachtel.mz.rhein-main.de>
+
+
+2.32 => 2.33
+============
+
+  * more patches from Takashi Oe (endian fixes, make fbtv work with
+    DirectColor visual)
+  * slighly modified audio handling (mono/stereo/bilangual, the driver
+    returns the valid choices instead of the current state now).  This
+    affects both xawtv and driver and is _not_ backward compatible.
+  * various minor changes.
+  * new shell script for browsing videotext pages.  requires a
+    terminal with > 24 lines.
+
+
+2.31 => 2.32
+============
+
+  * bugfix: changed bytesex.h to edian.h in x11.c
+  * bugfix: overlay did'nt work without DGA.
+
+
+2.30 => 2.31
+============
+
+  * more cleanups, the minor overlay flaws should be fixed.
+  * coded up v4l2 overlay support -- completely untested.
+  * minor fbtv fixes.
+  * started to shuffle around some code from streamer.  The
+    new version has another name (streamer-new) for now.  It
+    can already handle v4l2, but can't be started from the
+    xawtv's frontend dialog box.
+  * remote display fixes (should work now if server and client
+    have different bytesex).
+  * Long options (thanks to Takashi Oe <toe@unlinfo.unl.edu>).
+  * "xawtv --help" prints all options.
+
+
+2.29 => 2.30
+============
+
+  * much improved v4l2 support, it should be useable now.  Only
+    grabdisplay is supported so far, overlay-only drivers will not
+    work (yet).
+  * Some internal cleanups/rewrites, removed some hardcoded bttv
+    stuff.  Probably introduced a few new bugs...
+  * pinned down the "segfault-on-exit" bug, credits to Electric Fence.
+  * added the "webcam" tool (does capture, annotate, jpeg-compress,
+    ftp-upload)
+  * added showriff, for those who want to look into *.wav and *.avi
+    files.
+  * bttv: msp3400 + tuner compile problems due to 2.1.127 changes
+    fixed.
+
+
+2.28 => 2.29
+============
+
+  * rpm spec file fixes
+  * minor msp3400 changes (for miro)
+  * automatically generated diff's against Ralph's bttv version.
+  * fixed the broken channel list length define (that
+    only-79-ntsc-channels bug)
+  * If there is a configuration problem, xawtv will disable overlay
+    and continue instead of exiting.
+  * remote display works.  Don't try this unless you have a _real_
+    fast network or your own home network.  Otherwise the network
+    admin will ask what you are doing within five minutes...
+  * started frontend dialog for streamer (Ctrl-S).  Does already work,
+    but needs some more options to be really useful.
+  * started v4l2 support.
+
+
+2.27 => 2.28
+============
+
+  * The 'V' key toggles capture on/off now.  If capture is switched
+    off, xawtv shows a static image.
+  * Added options to set TV norm and input to streamer.  Webcam
+    cronjobs don't need set-tv any more :-)
+  * Picked up some patches from video4linux@phunk.org for the bttv
+    driver.  The Miro PCTV pro might work in stereo, SECAM should work
+    again.
+  * Added autodetect for the Miro pro (untested).
+
+  * RPMified xawtv, thx to Mark Cooke <mpc@star.sr.bham.ac.uk> for the
+    initial spec file.
+    No, I'm not going to upload RPM's, neither source nor binaries.
+    I'll upload the spec file, so you can easily build your own RPM's.
+
+  * removed the experimental driver from the package, it will be
+    available separate.
+  * precompiled binaries are no longer included.
+
+
+2.26 => 2.27
+============
+
+  * fixed the msp34xx problem with new (bt878) Hauppauge boards.
+
+
+2.25 => 2.26
+============
+
+  * more driver PLL fixes
+  * added Hauppauge tuner autodetect (using eeprom)
+  * xawtv saves picture settings in channel switch now.
+
+
+2.24 => 2.25
+============
+
+  * Moved E2-E4 to E1-E3 by mistake in 2.22.  Reverted this.
+  * radio is a nice curses application now.
+  * The driver should work again for PAL.
+
+
+2.23 => 2.24
+============
+
+  * v4l-conf changes
+  * bugfixes in config file parser and channel editor.
+
+
+2.22 => 2.23
+============
+
+  * bugfix: SExx channels did not work.
+    (thanks to Michael Vogt <M.Vogt@ping.de>)
+  * documentation updates.
+  * increased the AUDIO_MUTE_DELAY value in bttv.c, this should
+    reduce the channel-switch noise.
+  * bttv: added changes from patch-2.1.120
+
+
+2.21 => 2.22
+============
+
+  * up to date with bttv 0.5.15
+  * fbtv fixes and improvements (console switching works again)
+  * streamer has a new switch to enable audio recording (off by
+    default).
+  * Channels renamed again: S1 .. S20 is SE1 .. SE20 now.  This
+    should be correct now.  Reordered them (sorted by frequency
+    now).
+  * Channels map for east europe (PAL D/K) added.
+  * channel editor bugfixes
+
+
+2.20 => 2.21
+============
+
+  * Updated driver to 0.5.14, this one is NOT backward compatible older
+    versions.
+  * Updated Simon's i2c code.
+  * Updated the programs too.
+  * added avi recording to streamer.
+
+
+2.19 => 2.20
+============
+
+  * Makefile fixes
+  * Matrox off-by-1024 workaround improved.
+  * fbtv fixes, moved generic fb stuff to a separate file.
+  * grab-one is gone, there is streamer now.  This one can
+    do streaming capture (and of cource still grab single
+    frames as special case).  JPEG support added.
+
+2.18 => 2.19
+============
+
+  * added man-pages for set-tv and fbtv
+  * zapped SuSE and installed RH51, the included precompiled binaries
+    are glibc now.
+  * Unlocked the channel editor (overwrites the old config file now),
+    it is in the man-page now and has the hotkey 'E'.  Be carefull, it
+    will kill all comments in the config file!
+
+
+2.17 => 2.18
+============
+
+  * added xawtv-remote ("remote control" for xawtv)
+  * hopefully completed channel list editor.  But still in debugging
+    mode, it writes the config file to $HOME/.xawtv.out
+
+
+2.17 => 2.18
+============
+
+  * showstopper fixed: xawtv segfaults if there are channels without
+    hotkeys in your $HOME/.xawtv (thanks to
+    Enrico Scholz <enrico.scholz@wirtschaft.tu-chemnitz.de>)
+  * v4l-conf fixed (was broken again for non-DGA Servers line AccelX)
+
+
+2.16 => 2.17
+============
+
+  * started channel list editor (Ctrl-L for now, will be changed
+    later).  Not completed, you can't save your changes yet.
+  * driver updates
+  * added session management to kradio.  Sort of.  The KDE session
+    management functions have a major design bug, probably this works
+    with the bug-compatible kwm only :-(
+  * updates README
+  * wrote Programming-FAQ
+  * And probably a few other changes I forgot about...
+
+
+2.15 => 2.16
+============
+
+  * fixed v4l-conf, handles 15bpp now
+  * configure changes: try "./configure --help", there are some
+    --enable-foo/--disable-foo options now (default for them is
+    enabled).
+  * moved some common code to separate source files.
+  * a few small driver fixes.
+  * added the -c switch to grab-one
+
+
+2.14 => 2.15
+============
+
+  * as allways, a few bug-fixes
+  * added the -c switch to set-tv
+  * i2c problems with hauppauge cards hopefully fixed now.  Check
+    bttv driver's Makefile, the code disabled by default (we don't
+    know what happens with other boards...)
+  * msp3400 uses soundcore instead of sound module (no oss needed
+    any more, tnx to Thomas Sailer <sailer@ife.ee.ethz.ch>)
+
+
+2.13 => 2.14
+============
+
+  * station scan added (Ctrl-Up)
+  * onscreen display in fullscreen mode
+  * misc small enhancements.
+  * The '-c n' switch is gone, you can start xawtv with the station name
+    on the command line instead ("xawtv cnn" for example, like it already
+    works for fbtv and set-tv).
+  * Added a new '-c' switch, this is the video device now.  Added this
+    one for xawtv and fbtv, changed from '-v' to '-c' for v4l-conf.
+  * removed vtx subdirectory.  The driver is now in the 2.1.x tree.  And
+    for 2.0.x it is useless anyway, it does'nt compile...
+
+
+2.12 => 2.13
+============
+
+  * Fixed Makefile bugs.
+  * switched to the new device files:  s|/dev/bttv|/dev/video|
+    MAKEDEV in bttv/driver is updated
+  * Tried to catch that VidMode problem by version check:
+    #define XXX_VERSION (from xf86vmstr.h) against server's QueryVersion
+    results.  If this still does'nt work: remember, there is the '-x'
+    switch to workaround this...
+  * Fast channel scan (Ctrl-Z)
+
+
+2.11 => 2.12
+============
+
+  * added support for 8 bit Servers:  Run the Server with StaticGray
+    visual (-cc 0x27 for XFree) -- and you should get a b/w TV picture.
+  * fixed a few configure-script and #ifdef bugs
+  * modified channel maps again -- hope I got the european map is ok now.
+    there is only one map: pal-europe.  This one should work for both
+    cable and broadcast.
+  * driver changes (capture code -- the SYNC ioctl takes the frame number
+    as argument now)
+
+
+2.10 => 2.11
+============
+
+  * bugfix: xawtv used to ignore "fine = ???" in the config file.
+  * added grab-one, a small tool to grab single, full-sized images.
+    Use the "-h" option for a short description.
+  * added channel window (try the 'C' key).
+  * Added "zap" mode: does channel hopping (tune in every station a
+    few seconds).
+  * added fbtv (for framebuffer devices).
+
+
+2.09 => 2.10
+============
+
+  * glibc compile fixes (hopefully, have still libc5...)
+  * updated driver to bttv-0.5.8
+  * updated applications according to the grabbing changes in the
+    bttv driver
+  * catched a bug in the config parser (was confused by spaces at
+    end-of-line)
+
+
+2.08 => 2.09
+============
+
+  * 15 bit HiColor works now (fixed bttv driver and v4l-conf)
+  * renamed some frequency tables to make the names more consistent
+    you might have to fix the freqtab= setting in $HOME/.xawtv
+    again...
+  * Added stereo support to the msp3400 volume mixer.
+  * Improved non-overlayed displaying (called grabdisplay in xawtv).
+    Not rock-solid yet, driver is'nt stable enouth wrt grabbing.
+
+    BTW: if you get "ioctl VIDIOCMCAPTURE: Try again" on stderr, it
+    just means that the bttv driver has no signal (i.e. no station
+    tuned in, wrong TV norm, something like that...).
+
+  * the doc subdirectory of the bttv distribution is included now.
+  * updated the driver to bttv-0.5.7
+
+
+2.07 => 2.08
+============
+
+  * Ha!  Found a complete (?) frequency table on the web, using this
+    one now (and a complete different channel-to-freqency mapping
+    method).
+    Expect a few new bugs and tuning problems -- pointers to frequency
+    lists are welcome.  Check channels.h for details.
+    The names of the freqency mappings have changed, you have to
+    adopt $HOME/.xawtv
+
+  * fixed a bug in the msp3400 module (system hangs on control
+    thread kill)
+  * With the 2.1.x modular sound driver, the msp3400 module registers
+    as mixer device. This allows to control volume, bass and treble with
+    a mixer application of your choice.
+  * the config file parser prints more detailed error messages and
+    does not exit on errors.
+  * Added a workaround for buggy (wrt static gravity) Window managers,
+    see manpage (wm-off-by= ...)
+  * Started non-overlay displaying (try Shift-ESC). Not completed, not
+    stable yet.
+  * Changed v4l-conf handling:  It is installed suid-root now and called
+    by xawtv.
+
+
+2.06 => 2.07
+============
+
+  * Two hours after releasing 2.06 I noticed that the driver did'nt
+    compile with 2.0.33 :-(
+
+
+2.05 => 2.06
+============
+
+  * You can grab both full size and window size now (hold down Ctrl
+    for window size).
+  * Merged some of the latest vger CVS changes to bttv-0.5.6 to keep
+    both versions in sync (at least the ioctl interface). The included
+    driver version supports currently both the new
+    VIDIOCMCAPTURE+VIDIOCSYNC and old BTTV_GRAB+BTTV_SYNC. xawtv uses
+    the new ones.
+    The minor numbers for vbi have changed (from 32 to 224)
+  * hacked msp3400 stereo handling, it does permanent monitoring now
+    and should handle mono/stereo/bilang switches by the TV station
+    correctly.
+
+
+2.04 => 2.05
+============
+
+  * Started writing a Changes file
+  * fixed a quite stupid getopt bug
+  * ditched support for the old-style bttv interface.
+  * The screen saver is turned off now in fullscreen mode
+  * xawtv can switch video modes now (for fullscreen mode). There is
+    a new config file entry for this, check the manpage.
+  * fixed configure script (check for c++ only if required)
+
+  * For the bleeding edge people:
+
+    Added some code for the new VIDIOCMCAPTURE and VIDIOCSYNC ioctl's
+    (new video4linux code in the vger CVS tree) as compile time
+    option.  The configure script should detect the new version and
+    use the kernel driver then.
+
+    The ioctl's are'n really new, the are basically slightly modified
+    BTTV_GRAB and BTTV_SYNC.  Well, this change breaks _again_ grabbing
+    applications, but now there is a standardized interface for
+    mmap-based grabbing available.
+

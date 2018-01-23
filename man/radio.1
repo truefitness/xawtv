@@ -1,0 +1,103 @@
+.TH radio 1 "(c) 1998-2001 Gerd Knorr"
+.SH NAME
+radio - console radio application
+.SH SYNOPSIS
+.B radio [ options ]
+.SH DESCRIPTION
+.B radio
+is a interactive, ncurses-bases console radio application.
+.SH OPTIONS
+.TP
+.B -h
+print a short help text.
+.TP
+.B -d
+enable debug output.
+.TP
+.B -q
+quit after processing the cmd line options, don't enter interactive
+ncurses mode.  Only useful together with other options for obvious
+reasons ...
+.TP
+.B -m
+mute radio.
+.TP
+.B -f freq
+tune the specified radio frequency (and unmute the radio).
+.TP
+.B -c dev
+specify radio device (default is /dev/radio0).
+.TP
+.B -s
+Do a scan for radio stations.
+.TP
+.B -S
+Same as above + write a radio.fmmap with the signal for every
+frequency.  You can get a graph for it with gnuplot (plot
+"radio.fmmap" w lin).
+.TP
+.B -i
+Scan, write a initial ~/.radio file to stdout and quit.  So you can
+create a config file where you only have to fill in the correct
+station names later this way: "radio -i > ~/.radio".  See below for
+the config file syntax.
+.SH CONFIGURATION
+.B radio
+picks up station names and present stations from a config file. 
+It can parse kradio (KDE radio app) config files, therefore it
+first tries the usual KDE config file location:
+\fB~/.kde/share/config/kradiorc\fP. Failing that,
+.B radio
+tries \fB~/.radio\fP (which makes things a bit easier for people
+who don't use kradio).
+.P
+The format looks like this:
+.P
+.nf
+# KDE Config File
+[Buttons]
+1=95800000
+2=91400000
+[Stations]
+100600000=Hundert,6
+95800000=Radio eins
+102600000=Fritz
+94300000=r.s.2
+91400000=Berliner Rundfunk
+.fi
+.P
+The [Buttons] section can have up to eight entries.  That are
+the present stations, they get mapped to F1-F8.  The [Stations]
+section maps frequencies to station names.  The frequencies in
+both sections are specified in Hz.
+.SH KEYS
+.nf
+X	     exit
+ESC,Q,E      mute and exit.
+up/down      inc/dec frequency
+pgup/pgdown  next/previous station.  This one uses the
+             stations from the config file by default.
+             When started with the -s option these keys
+             will cycle througth the stations found during
+             the scan.
+F1-F8, 1-8   preset buttons.
+Ctrl+L       redraw screen.
+.fi
+.SH AUTHOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+Copyright (C) 1997-2001 Gerd Knorr
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.

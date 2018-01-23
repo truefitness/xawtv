@@ -1,0 +1,46 @@
+.TH ttv 1 "(c) 2001 Gerd Knorr"
+.SH NOMBRE
+ttv - muestra TV/video en una tty
+.SH SYNOPSIS
+.B ttv  [ opciones ] [ nombre cadena ]
+.SH DESCRIPTION
+.B ttv
+muestra TV/video en un terminal, dibujando las imágenes mediante aalib.
+.SH OPCIONES
+.TP
+.B -h
+muestra un mensaje de ayuda.
+.TP
+.B -f
+usa la función de dibujado rápido de aalib.
+.TP
+.B -c dispositivo
+dispositivo de video4linux (por defecto /dev/video0).
+.TP
+.B -D driver
+driver de video4linux (por defecto "libv4l").
+.P
+Hay además muchas opciones para aalib, mire la documentación de aalib
+para más detalles.  El texto de ayuda incluye una lista.
+.SH VEA TAMBIÉN
+xawtv(1), fbtv(1)
+.SH AUTOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+Copyright (C) 2000 Gerd Knorr <kraxel@bytesex.org>
+.P
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.P
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.P
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.SH TRADUCCIÓN
+Página traducida al español por Ricardo Villalba <rvm@escomposlinux.org>

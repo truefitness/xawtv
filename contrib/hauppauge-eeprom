@@ -1,0 +1,147 @@
+From roger@cs.strath.ac.uk Mon Nov 30 22:45:25 1998
+Date: Mon, 30 Nov 1998 16:47:15 +0000
+From: Roger Hardiman <roger@cs.strath.ac.uk>
+To: olivier.lahaye@cea.fr, roger@cs.strath.ac.uk
+Cc: kraxel@goldbach.in-berlin.de, video4linux@phunk.org
+Subject: Roger's complete Hauppauge EEPROM info
+
+Olivier, Gerd and V4L developers.
+
+Here is my list of the Hauppauge EEPROM contents which I built up for
+the
+FreeBSD bt848 driver.
+
+If you want further details, I can provide about 20 EEPROM contents
+dumps from
+different USA and European cards.
+I also have email contacts inside Hauppauge who can supply info when we
+require it.
+Special thanks to Steve Passe, Amancio Hasty and Randall Hopper and all
+the others
+who send in EEPROM contents to me or to the FreeBSD multimedia list.
+
+There are 5 datablocks, each can vary in size.
+
+Block 1
+=======
+This is of the format
+84 11 00 00 04 followed by 15 bytes
+or
+84 12 00 00 05 followed by 16 bytes
+
+In this block,
+byte 6 is the chipset type (see below)
+byte 9 is the tuner type (see below)
+byte 11 and 12 are the model number
+I'm sure byte 13 is the revision but I cannot decode it.
+
+There is also a byte which reports the ability to get Radio but I've
+forgotten it.
+
+
+Block 2
+=======
+84 0a 00 01 01 20 77 00 40
+This seems to be common for all cards
+
+Block 3
+=======
+84 then 3 bytes
+Bytes 1,2 and 3 are the serial number
+
+Block 4
+=======
+This varies if you have No Stereo decoder, TDA decoder or MSP decoder
+Within this block, byte 3 tells us the stereo decoder chip type (or no
+stereo decoder)
+
+If byte 3 is 00 == No stereo decoder chip. The block is 5 bytes. EG.
+74 02 01 00 03
+
+If byte 3 indicates a MSP chip, the block is 5 bytes, EG
+74 02 01 06 02
+
+If byte 3 indicates a TDA chip, the block is 8 bytes, EG
+77 02 01 03 03 43 17 12
+byte 5, 6 and 7 are used in programming the TDA (the TDA dbx alignment
+bytes).
+Each TDA chip needs different values found during card calibration at
+Hauppage.
+
+
+Block 5
+=======
+This is
+79 followed by a one byte checksum
+
+Free Space
+==========
+the remainer of the eeprom is either filled with 00 or with ff.
+
+
+
+Missing Info
+------------
+I cannot work out the bits which tell me
+a) presence of SVIDEO
+b) presence of Teletext decoder
+
+The decode table you need for the chip type, tuner type and steroe chip
+are
+Chipset byte
+0  Reserved
+1  BT815
+2  BT817
+3  BT819
+4  BT815A
+5  BT817A
+6  BT819A
+7  BT827
+8  BT829
+9  BT848
+a  BT848A
+b  BT849A
+c  BT829A
+d  BT827A
+e  BT878
+f  BT879
+10 BT880
+
+BUT only 0x09 and 0x0e have been used.
+
+
+Tuner Byte
+       1 External
+       2 Unspecified
+       3 Phillips FI1216
+       4 Phillips FI1216MF
+       5 Phillips FI1236
+       6 Phillips FI1246
+       7 Phillips FI1256
+       8 Phillips FI1216 MK2
+       9 Phillips FI1216MF MK2
+       a Phillips FI1236 MK2
+       b Phillips FI1246 MK2
+       c Phillips FI1256 MK2
+       d Temic 4032FY5
+       e Temic 4002FH5
+       f Temic 4062FY5
+       10 Phillips FR1216 MK2
+       11 Phillips FR1216MF MK2
+       12 Phillips FR1236 MK2
+       13 Phillips FR1246 MK2
+       14 Phillips FR1256 MK2
+       15 Phillips FM1216
+       16 Phillips FM1216MF
+       17 Phillips FM1236
+       18 Temic ???
+
+Stereo Decoder byte
+0 None
+1 TEA6300
+2 TEA6320
+3 TDA9850
+4 MSP3400C
+5 MSP3410D
+6 MSP3415
+7 MSP3430

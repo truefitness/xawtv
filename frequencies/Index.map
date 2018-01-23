@@ -1,0 +1,55 @@
+[us-bcast]
+file = ntsc-bcast.list
+
+[us-cable]
+file = ntsc-cable.list
+
+[us-cable-hrc]
+file = ntsc-hrc.list
+
+[japan-bcast]
+file = ntsc-bcast-jp.list
+
+[japan-cable]
+file = ntsc-cable-jp.list
+
+[europe-west]
+file = europe-west.list
+
+[europe-east]
+file = europe-east.list
+
+[italy]
+file = pal-italy.list
+
+[newzealand]
+file = pal-newzealand.list
+
+[australia]
+file = pal-australia.list
+
+[ireland]
+file = pal-ireland.list
+
+[france]
+file = secam-france.list
+
+[china-bcast]
+file = pal-bcast-cn.list
+
+[southafrica]
+file = pal-bcast-za.list
+
+[argentina]
+file = argentina.list
+
+# canada + us use the same tables, likely this just works due
+# to a broken tuner configuration ...
+#[canada-cable]
+#file = ntsc-cable-ca.list
+
+[australia-optus]
+file = pal-australia-optus.list
+
+[russia]
+file = secam-russia.list

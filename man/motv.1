@@ -1,0 +1,248 @@
+.TH motv 1 "(c) 1997-2001 Gerd Knorr"
+.SH NAME
+motv - a Motif program for watching TV
+.SH SYNOPSIS
+.B motv [ options ] [ station name ]
+.SH DESCRIPTION
+.B motv
+is a Motif application for watching TV with your unix box.
+.P
+It is basically xawtv with a more userfriendly GUI.  It has the same
+features, uses the same config file, has the same command line
+switches, you can control it using xawtv-remote.  Most keyboards
+shortcuts are identical too.
+.SH OPTIONS
+All command line options also have a Resource, so you can put them
+into your .Xdefaults file too.
+.TP
+\fB-h\fP, \fB-help\fP
+Print a short description of all command line options.
+.TP
+\fB-hwscan\fP
+Print a list of available devices.
+.TP
+\fB-f\fP, \fB-fullscreen\fP
+startup in fullscreen mode.
+.br
+Resource: motv.fullscreen (bool).
+.TP
+\fB-n\fP, \fB-noconf\fP
+don't read the config file ($HOME/.xawtv).
+.br
+Resource: motv.readconfig (bool).
+.TP
+\fB-o\fP, \fB-outfile\fP base
+set basestring for the snapshot output files.  The filename will be
+"base-timestamp-nr.ext".
+.br
+Resource: motv.basename (string).
+.TP
+\fB-c\fP, \fB-device\fP device
+set video4linux device (default is /dev/video0).  This option also
+disables Xvideo support.
+.br
+Resource: motv.device (string).
+.TP
+\fB-D\fP, \fB-driver\fP name
+set video4linux driver (default is "libv4l").  This option also
+disables Xvideo support.
+.br
+Resource: motv.driver (string).
+.TP
+\fB-C\fP, \fB-dspdev\fP device
+set audio device (default is /dev/dsp).
+.br
+Resource: motv.dspdev (string).
+.TP
+\fB-vbidev\fP device
+set vbi device (default is /dev/vbi0).
+.br
+Resource: motv.vbidev (string).
+.TP
+\fB-c\fP, \fB-xvport\fP number
+set Xvideo port (defaults to the first usable if Xvideo is available).
+This option also enables Xvideo support.
+.br
+Resource: motv.xvport (int).
+.TP
+\fB-joydev\fP device
+joystick device to use for controlling xawtv.
+.br
+Resource: xawtv.joydev (string).
+.TP
+\fB-v\fP, \fB-debug\fP level
+Be verbose,
+.B level
+may be 0 (default), 1 or 2.  It exists just for debugging and
+trouble-shooting.
+.br
+Resource: motv.debug (int).
+.TP
+\fB-remote\fP
+X11 display is remote.  This basically disables overlay mode, you
+might need this if xawtv fails to autodetect a remote X11 display.
+.br
+Resource: motv.remote (bool).
+.TP
+\fB-b\fP, \fB-bpp\fP n
+force xawtv into
+.B n
+bpp color depth.  Works for switching between 15/16 and 24/32 bpp.
+This gets just passed through to v4l-conf(8).
+.br
+Resource: motv.bpp (int).
+.TP
+\fB-shift\fP n
+Shift the video display by
+.B n
+bytes.  Try this if your video display is'nt within the xawtv window,
+some older matrox cards show this problem.  This gets passed through
+to v4l-conf(8) too.
+.br
+Resource: motv.shift (int).
+.TP
+\fB-fb\fP
+Use the framebuffer device to determine the video framebuffer address
+(instead of the DGA extension).  Yet another pass through argument.
+.br
+Resource: motv.fbdev (bool).
+.TP
+\fB-xv/-noxv \fP
+enable/disable the usage of the Xvideo extension altogether,
+i.e. -noxv has the same effect as both -noxv-video and -noxv-image
+switches (see below).
+.br
+Resource: xawtv.xv (bool).
+.TP
+\fB-xv-video/-noxv-video \fP
+enable/disable the usage of the Xvideo extension for video overlay
+(i.e. XvPutVideo).  overlay mode uses this.  default is on.
+.br
+Resource: xawtv.xvVideo (bool).
+.TP
+\fB-xv-image/-noxv-image \fP
+enable/disable the usage of the Xvideo extension for image scaling
+(i.e. XvPutImage).  grabdisplay mode uses this.  default is on.
+.br
+Resource: xawtv.xvImage (bool).
+.TP
+\fB-vm/-novm\fP
+enable/disable the usage of the VidMode extension, default is off.
+If there is a fullscreen video mode configured in the config file,
+the vidmode extension will be enabled automatically.
+.br
+Resource: motv.vidmode (bool).
+.TP
+\fB-dga/-nodga\fP
+enable/disable the usage of the DGA extension, default is on.
+.br
+Resource: motv.dga (bool).
+.TP
+\fB-parallel\fP n
+use n compression threads (default: one).
+.br
+Resource: xawtv.parallel (int).
+.P
+The usual toolkit options like \fB-geometry\fP are supported too.
+.SH SUPPORTED HARDWARE / INTERFACES
+.TP
+.B v4l
+video4linux - \fBthe\fP linux video capture API.
+.TP
+.B v4l2
+video4linux two - new, improved capture interface which fixes a number
+of v4l design bugs.
+.TP
+.B bktr
+FreeBSD / OpenBSD driver for bt848/878 grabber cards.
+.TP
+.B Xvideo
+X11 Extension for video devices.  Note that the Xvideo extension does
+support overlay only, you can't capture images/movies if the Xvideo
+extension is used.  On the other hand this is the only way to scaled
+video overlay (i.e. fullscreen without black borders @ 1024x748) if
+both hardware and xfree86 driver support it.  See README.xfree4 for
+more details and hints on how to setup Xvideo.
+.SH GETTING STARTED
+.B motv
+starts up with the TV window.  The left mouse button shows a menu with
+all TV Stations (empty until you have defined some).  The right mouse
+button brings up the control window.
+.P
+The first time you have configure motv, i.e. set TV norm and frequency
+table to the correct values.  Check if the hardware works correctly
+(if tuning does not work it is very likely a driver configuration
+issue).  If the hardware operates fine, you can let motv look for TV
+stations (Options => Channel scan).  The channel buttons have a
+context menu for deleting and editing.  Don't forget to save your
+configuration when you are done.
+.P
+You can also create/edit a config file with any text editor, see
+xawtvrc(5) for a description of the config file syntax.  There are a
+number of config options which can only be set by editing the config
+file.
+.SH KEYBOARD SHORTCUTS
+Some of them work in the TV window only.  The cursor keys for example
+are used by the motif toolkit to allow full keyboard control of the
+GUI and therefore have other functions in the control window.
+.P
+.nf
+V            \fIV\fPideo (Capture) on/off
+A            \fIA\fPudio on/off
+F            \fIF\fPullscreen on/off
+G            \fIG\fPrab picture (full size, ppm)
+J            Grab picture (full size, \fIj\fPpeg)
+Ctrl+G       \fIG\fPrab picture (window size, ppm)
+Ctrl+J       Grab picture (window size, \fIj\fPpeg)
+Ctrl+C       Copy to clipboard.
+C            Popup \fIC\fPontrol Window
+R            Popup AVI \fIR\fPecording Window
+S            Popup \fIS\fPcale controls
+Z            Channel Hopper (\fIz\fPapping, tune in every
+	     station a few seconds)
+Ctrl+Z       Fast Channel Hopping (grab the images for the
+	     Channel Bottons)
+
+up/down      tune up/down one channel
+left/right   fine tuning
+pgup/pgdown  station up/down (the ones you have in the config file)
+space        next station (same as pgup)
+backspace    previously tuned station
+Ctrl+up      scan for next station
+
+ESC,Q        \fIQ\fPuit
+
++/-          Volume up/down (keypad)
+Enter        mute (keypad)
+.fi
+.SH BUGS
+.B Bug reports with images attached go to /dev/null unseen.
+.P
+motv depends on a correct driver configuration.  If you can't tune TV
+stations even if the settings in the options window are correct it is
+very likely a driver issue.
+.SH SEE ALSO
+xawtvrc(5), xawtv(1), fbtv(1), v4l-conf(8), mtt(1)
+.br
+http://bytesex.org/xawtv/ (homepage)
+.SH AUTHOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+Copyright (C) 1997-2001 Gerd Knorr <kraxel@bytesex.org>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.SH MISC
+Huh?  Still with me?  Looks like some people \fBdo\fP read manuals
+carefully.

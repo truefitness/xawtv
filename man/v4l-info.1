@@ -1,0 +1,15 @@
+.TH v4l-info 1 "(c) Gerd Knorr"
+.SH NAME
+v4l-info - dump video4linux(2) device info to stdout
+.SH SYNOPSIS
+.B  v4l-info [ device ]
+.SH DESCRIPTION
+.B v4l-info
+just prints the v4l(2) device info, i.e. calls lots of ioctls and dumps
+the results to stdout.  It optionally accepts the device you want to
+query.  Default is /dev/video0.
+.P
+Was written to help debug drivers, probably not that useful for end
+users ...
+.SH AUTHOR
+Gerd Knorr <kraxel@bytesex.org>

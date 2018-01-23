@@ -1,0 +1,20 @@
+.TH subtitles 1 "(c) 2000 Gerd Knorr"
+.SH NAME
+subtitles - display subtitles within xawtv.
+.SH SYNOPSIS
+.B subtitles [ -help | -tty ] <page>
+.SH DESCRIPTION
+.B subtitles
+fetches the given teletext page with the alevt-cap utility and
+displays it using xawtv-remote in an endless loop.  It's most
+useful for pages which carry subtitles for the current TV program.
+It's page 150 in Germany.
+.SH OPTIONS
+.TP
+.B -help
+print a short help text.
+.TP
+.B -tty
+dump a copy of the videotext page to the tty.
+.SH SEE ALSO
+xawtv(1), xawtv-remote(1), alevt-cap(1)

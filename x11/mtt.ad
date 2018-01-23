@@ -1,0 +1,90 @@
+! general
+mtt.title:				teletext test utility
+mtt.deleteResponse:			DO_NOTHING
+
+! fonts
+*renderTable:
+*renderTable.fontType: FONT_IS_FONTSET
+*renderTable.fontName: \
+ -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso10646-1, \
+ -misc-fixed-bold-r-normal--13-*-*-*-*-*-iso8859-* \
+ -*-*-*-*--13-*-*-*-*-*-*-*,*
+
+! arrange widgets
+mtt.form.*.leftAttachment:		ATTACH_FORM
+mtt.form.*.rightAttachment:		ATTACH_FORM
+mtt.form.tool.topAttachment:		ATTACH_WIDGET
+mtt.form.tool.topWidget:		bar
+mtt.form.tt.topAttachment:		ATTACH_WIDGET
+mtt.form.tt.topWidget:			tool
+mtt.form.tt.bottomAttachment:		ATTACH_FORM
+mtt.form.tt.background:			black
+mtt.form.tt.foreground:			white
+
+! menubar
+mtt*bar.file.labelString:		File
+mtt*bar.file.mnemonic:			F
+mtt*bar.edit.labelString:		Edit
+mtt*bar.edit.mnemonic:			E
+mtt*bar.go.labelString:			Go to
+mtt*bar.go.mnemonic:			G
+mtt*bar.subpage.labelString:		Subpage
+mtt*bar.subpage.mnemonic:		S
+mtt*bar.station.labelString:		Stations
+mtt*bar.station.mnemonic:		t
+mtt*bar.font.labelString:		Fonts
+mtt*bar.font.mnemonic:			o
+
+! toolbar
+mtt*tool.orientation:			HORIZONTAL
+mtt*tool.?.shadowThickness:		1
+mtt*tool.?.labelType:			PIXMAP
+mtt*tool.XmSeparator.orientation:	VERTICAL
+mtt*tool.XmSeparator.width:		12
+mtt*tool.XmSeparator.margin:		3
+mtt*tool.100.labelPixmap:		home
+mtt*tool.prev.labelPixmap:		prev
+mtt*tool.next.labelPixmap:		next
+mtt*tool.exit.labelPixmap:		exit
+
+! menu file
+mtt*bar*new.labelString:		New window
+mtt*bar*new.mnemonic:			N
+mtt*bar*new.acceleratorText:		N
+mtt*bar*new.accelerator:		<Key>N
+mtt*bar*save.labelString:		Save as ...
+mtt*bar*save.mnemonic:			S
+mtt*bar*save.acceleratorText:		S
+mtt*bar*save.accelerator:		<Key>S
+mtt*bar*quit.labelString:		Close
+mtt*bar*quit.mnemonic:			C
+mtt*bar*quit.acceleratorText:		Q
+mtt*bar*quit.accelerator:		<Key>Q
+
+! menu edit
+mtt*bar*copy.labelString:		Copy
+mtt*bar*copy.mnemonic:			C
+mtt*bar*copy.acceleratorText:		Ctrl+C
+mtt*bar*copy.accelerator:		Ctrl<Key>C
+
+! menu go
+mtt*bar*100.labelString:		Index
+mtt*bar*100.mnemonic:			I
+mtt*bar*100.acceleratorText:		I
+mtt*bar*100.accelerator:		<Key>I
+mtt*bar*prev.labelString:		Previous page
+mtt*bar*prev.mnemonic:			P
+mtt*bar*prev.acceleratorText:		PgUp
+mtt*bar*prev.accelerator:		<Key>Page_Up
+mtt*bar*next.labelString:		Next page
+mtt*bar*next.mnemonic:			N
+mtt*bar*next.acceleratorText:		PgDown
+mtt*bar*next.accelerator:		<Key>Page_Down
+
+! menu subpage
+mtt*bar*s00.labelString:		cycle subpages
+
+! save as dialog
+mtt.save_popup.title:			Save File
+mtt.save_popup*format.labelString:	Character set:
+

@@ -1,0 +1,29 @@
+				  vtx2xawtv
+			 Public Domain, von Kai Fett
+				 K@i-Fett.de
+
+Schonmal drüber geärgert, daß das Erfassen der Sendernamen ewgig
+lange dauert und noch dazu nervenaufreibend ist? Insbesondere bei den
+"Privaten", die die Hälfte der Zeit Werbung und damit kein Senderlogo
+zeigen?
+
+Das geht auch einfacher: Kabel 1 bietet ab Videotextseite 600 eine
+Kanalübersicht der Telekom, die sich herrlich zur Weiterverarbeitung
+mit Perl eignet:
+
+- Zunächst packt man die für seinen Ort passenden Seiten in Text-
+  dateien, z.B. in alevt mit Taste 's', oder mit vbidecode und
+  vtx2ascii -a. Bitte die Seiten als ASCII abspeichern!
+
+- Dann piped man diese Textdateien durch das beiliegende Script
+  vtx2xawtv, und fügt den Output an seine Konfigurationsdatei an:
+
+		   cat vtx*.txt | ./vtx2xawtv >> ~/.xawtv
+
+Schon hat man alle Sender mit der offiziellen Senderbezeichnung in
+xawtv zur Verfügung.
+
+Über Feedback würde ich mich freuen!
+
+Viel Spaß
+     Kai

@@ -1,0 +1,20 @@
+
+About adding new lists here ...
+
+ (1) Check that there isn't already a list which works for you.  Often
+     the same frequency lists are used in multiple countries, so you
+     can try if one of some other country near to you works.
+
+ (2) A reason for tuning not working (or not fully working, i.e. fails
+     for some frequency ranges) also might be that the tuner
+     configuration of the device driver isn't correct.  Try to fix
+     your setup first instead of trying to create a new list which is
+     bug-compatible to your broken setup.
+
+ (3) There are some lists for common stuff.  The UHF channels are in
+     uhf.list for example.  You can simply #include these.  That will
+     save you some typing work and also makes the lists more readable.
+
+ (4) Giving some reference (URL to your cable provider for example) for
+     the new list highly increases the chance of getting this included.
+

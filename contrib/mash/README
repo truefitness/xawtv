@@ -1,0 +1,33 @@
+From hankm@netvideo.com Tue Aug  4 22:29:52 1998
+Date: Thu, 30 Jul 1998 16:47:28 -0700
+From: hankm@netvideo.com, Hank Magnuski <hankm@netvideo.com>
+To: mash-developers@mash.cs.berkeley.edu, rowe@bmrc.berkeley.edu
+Cc: kraxel@cs.tu-berlin.de, alan@cymru.net
+Subject: Video4Linux BTTV(Bt848) Driver for Mash
+
+I've taken the video-grabber code developed by
+Gerd Knorr and have Mashified it so that there is
+now a new Video-4-Linux BTTV (Bt848) video capture
+driver available for the Mash development environment.
+
+See
+
+  http://user.cs.tu-berlin.de/~kraxel/linux/
+
+under the section "Xawtv" for the low level BTTV driver
+that this package calls.
+
+You can, for example, construct a Mash version of Vic
+using this new code. More information on Mash is at
+
+  http://www-mash.cs.berkeley.edu/mash/
+
+Since I'm not a regular Mash developer (which is to say
+once step above clueless) any feedback or error reports
+would be appreciated.
+
+Hank
+
+  [Part 2, Application/X-GZIP  7.7KB]
+  [Unable to print this part]
+

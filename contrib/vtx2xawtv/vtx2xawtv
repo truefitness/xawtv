@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+#
+#  vtx2xawtv - Konvertiert Kabel1-Kanalliste ins .xawtv-Format
+#
+#  1) Mit Videotext-Tool aus dem Kabel1-Text die Seiten mit
+#     den Kanal-Listen aufrufen und abspeichern, z.B. als
+#     vtx1.txt bis vtx3.txt
+#
+#  2) Diese Seiten durch vtx2xawtv pipen:
+#
+#        cat vtx?.txt | vtx2xawtv >> ~/.xawtv
+#
+#
+#  Have Fun,
+#     Kai  (K@i-Fett.de)
+#
+#  PS: Dieses Scriptchen ist natürlich Public Domain, es wäre aber schön,
+#      wenn mein Name in weiteren Versionen drinbleibt.
+#
+#############################################################################
+									    #
+while(<STDIN>){                                                             #
+    if (/\*/) {                                                             #
+									    #
+      # Zeile in 3 Teile zerlegen, jeweils feste Breite                     #
+									    #
+      /(.........................)(..)(...)/;                               #
+	$name=$1;                  $typ=$2;
+				       $chan=$3;
+
+      $name=~s/\(.*\)//;   # Bemerkungen in Klammern löschen
+      $name=~s/(\ )*$//;   # Leerzeichen am Ende...
+      $name=~s/^(\ )//;    # ...und am Anfang löschen
+
+      if ($typ=~/K/){$typ='E'}                # Die Kabel1-Liste notiert
+      if ($typ=~/S/ and $chan<21){$typ='SE'}  # die Kanäle etwas
+      if ($typ=~/S/ and $chan>20){$typ='S'}   # anders als xawtv
+
+      $chan=~s/(\ )*$//;  # Auch wieder füllende
+      $chan=~s/^(\ )*//;  # und führende Leerzeichen abschneiden
+
+      print "[$name]\nchannel=$typ$chan\n\n"; # Und im xawtv-Format ausgeben.
+   }
+}

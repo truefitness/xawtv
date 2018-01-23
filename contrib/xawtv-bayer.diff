@@ -1,0 +1,377 @@
+Ok..This is the patch for xawtv-3.92..
+
+diff -uprN xawtv-3.92/libng/color_bayer2rgb.c xawtv-3.92-devel/libng/color_bayer2rgb.c
+--- xawtv-3.92/libng/color_bayer2rgb.c	1970-01-01 01:00:00.000000000 +0100
++++ xawtv-3.92-devel/libng/color_bayer2rgb.c	2004-05-31 10:37:11.000000000 +0200
+@@ -0,0 +1,257 @@
++/*
++ * colorspace conversion functions
++ *    -- bayer to rgb colorspace conversions
++ *
++ * (c) 2004 Luca Risolia <luca.risolia@studio.unibo.it>
++ *     Heavily based on color_yuv2rgb.c by Gerd Knorr <kraxel@bytesex.org>
++ *     sbggr8_to_rgb24 written by Christopher Cramer
++ */
++
++#define NG_PRIVATE
++#include "config.h"
++
++#include <stdio.h>
++#include <stdlib.h>
++#include <unistd.h>
++#include <pthread.h>
++#include <sys/time.h>
++#include <sys/types.h>
++
++#include "grab-ng.h"
++
++#define RED	0
++#define GREEN	1
++#define BLUE	2
++
++#define avg2(x,y) ((((int)(x)) + ((int)(y))) / 2)
++#define avg3(x,y,z) ((((int)(x)) + ((int)(y)) + ((int)(z))) / 3)
++#define avg4(w,x,y,z) ((((int)(w)) + ((int)(x)) + ((int)(y)) + ((int)(z))) / 4)
++
++/* ------------------------------------------------------------------- */
++/* bayer bgbg...grgr...to rgb24                                        */
++
++/*
++	bgbgbg
++	grgrgr
++	bgbgbg
++	grgrgr
++*/
++
++static void
++sbggr8_to_rgb24(void *h, struct ng_video_buf *out, struct ng_video_buf *in)
++{
++    unsigned char *restrict s, *restrict d;
++    unsigned long x, y, i, j;
++
++    d = out->data;
++    s = in->data;
++    x  = in->fmt.width;
++    y  = in->fmt.height;
++
++    /* upper left corner */
++    d[0 + RED] = s[x + 1];
++    d[0 + BLUE] = s[0];
++    d[0 + GREEN] = ((int)s[1] + (int)s[x]) / 2;
++
++    /* top line (minus corners) */
++    i = 1;
++    while (i < x - 2) {
++	d[i * 3 + RED] = s[x + i];
++	d[i * 3 + GREEN] = s[i];
++	d[i * 3 + BLUE] = avg2(s[i - 1], s[i + 1]);
++
++	i++;
++
++	d[i * 3 + RED] = avg2(s[x + i - 1], s[x + i + 1]);
++	d[i * 3 + GREEN] = avg3(s[i - 1], s[i + 1], s[x + 1]);
++	d[i * 3 + BLUE] = s[i];
++
++	i++;
++    }
++
++    /* upper right corner */
++    d[i * 3 + RED] = s[x + i];
++    d[i * 3 + GREEN] = s[i];
++    d[i * 3 + BLUE] = s[i - 1];
++
++    /* middle lines */
++    j = 1;
++    while (j < y - 2) {
++	d[j * x * 3 + RED] = s[j * x + 1];
++	d[j * x * 3 + GREEN] = s[j * x];
++	d[j * x * 3 + BLUE] = avg2(s[(j - 1) * x], s[(j + 1) * x]);
++
++	i = 1;
++	while (i < x - 2) {
++	    d[(j * x + i) * 3 + RED] = s[j * x + i];
++	    d[(j * x + i) * 3 + GREEN] = avg4(s[(j - 1) * x + i],
++					      s[j * x + i - 1],
++					      s[j * x + i + 1],
++					      s[(j + 1) * x + i]);
++	    d[(j * x + i) * 3 + BLUE] = avg4(s[(j - 1) * x + i - 1],
++					     s[(j - 1) * x + i + 1],
++					     s[(j + 1) * x + i - 1],
++					     s[(j + 1) * x + i + 1]);
++
++	    i++;
++
++	    d[(j * x + i) * 3 + RED] = avg2(s[j * x + i - 1],
++					    s[j * x + i + 1]);
++	    d[(j * x + i) * 3 + GREEN] = s[j * x + i];
++	    d[(j * x + i) * 3 + BLUE] = avg2(s[(j - 1) * x + i],
++					     s[(j + 1) * x + i]);
++
++	    i++;
++	}
++
++	d[(j * x + i) * 3 + RED] = s[j * x + i];
++	d[(j * x + i) * 3 + BLUE] = avg2(s[(j - 1) * x + i - 1],
++					 s[(j + 1) * x + i - 1]);
++	d[(j * x + i) * 3 + GREEN] = avg2(s[(j - 1) * x + i],
++					  s[(j + 1) * x + i]);
++
++	j++;
++
++	d[(j * x + i) * 3 + RED] = avg2(s[(j - 1) * x + i + 1],
++					s[(j + 1) * x + i + 1]);
++	d[(j * x + i) * 3 + BLUE] = s[j * x + i];
++	d[(j * x + i) * 3 + GREEN] = avg3(s[(j - 1) * x + i],
++					  s[j * x + i + 1],
++					  s[(j + 1) * x + i]);
++
++	i = 1;
++	while (i < x - 2) {
++	    d[(j * x + i) * 3 + RED] = avg2(s[(j - 1) * x + i],
++					    s[(j + 1) * x + i]);
++	    d[(j * x + i) * 3 + GREEN] = s[j * x + i];
++	    d[(j * x + i) * 3 + BLUE] = avg2(s[j * x + i - 1],
++					     s[j * x + i + 1]);
++
++	    i++;
++
++	    d[(j * x + i) * 3 + RED] = avg4(s[(j - 1) * x + i - 1],
++					    s[(j - 1) * x + i + 1],
++					    s[(j + 1) * x + i - 1],
++					    s[(j + 1) * x + i + 1]);
++	    d[(j * x + i) * 3 + GREEN] = avg4(s[(j - 1) * x + i],
++					      s[j * x + i - 1],
++					      s[j * x + i + 1],
++					      s[(j + 1) * x + i]);
++	    d[(j * x + i) * 3 + BLUE] = s[j * x + i];
++
++	    i++;
++	}
++
++	j++;
++    }
++
++    /* lower left corner */
++    d[(j * x) * 3 + RED] = s[j * x + 1];
++    d[(j * x) * 3 + GREEN] = s[j * x];
++    d[(j * x) * 3 + BLUE] = s[(j - 1) * x];
++
++    /* bottom line */
++    i = 1;
++    while (i < x - 2) {
++	d[(j * x + i) * 3 + RED] = s[j * x + i];
++	d[(j * x + i) * 3 + GREEN] = avg2(s[j * x + i - 1],  s[j * x + i + 1]);
++	d[(j * x + i) * 3 + BLUE] = avg2(s[(j - 1) * x + i - 1],
++					 s[(j - 1) * x + i + 1]);
++
++	i++;
++
++	d[(j * x + i) * 3 + RED] = avg2(s[j * x + i - 1], s[j * x + i + 1]);
++	d[(j * x + i) * 3 + GREEN] = s[j * x + i];
++	d[(j * x + i) * 3 + BLUE] = s[(j - 1) * x + i];
++
++	i++;
++    }
++
++    /* lower right corner */
++    d[(j * x + i) * 3 + RED] = s[j * x + i];
++    d[(j * x + i) * 3 + GREEN] = avg2(s[(j - 1) * x + i], s[j * x + i - 1]);
++    d[(j * x + i) * 3 + BLUE] = s[(j - 1) * x + i - 1];
++}
++
++/* ------------------------------------------------------------------- */
++/* bayer bgbg...grgr...to rgb16                                        */
++
++static void
++sbggr8_to_rgb16(void *p, struct ng_video_buf *out, struct ng_video_buf *in)
++{
++	unsigned char *restrict s1, *restrict s2, *restrict d;
++	unsigned long i, j, x, y, w, h;
++	unsigned char r, g1, g2, b, g;
++
++	w  = in->fmt.width;
++	h  = in->fmt.height;
++	d = out->data;
++	s1 = in->data;
++	s2 = s1 + w;
++	i = 0;
++	j = w;
++
++	for (y = 0; y < h; y += 2, i += w * 2, j += w * 2) {
++		for (x = 0; x < w; x += 2) {
++
++			b = d[i + x] ;
++			g1 = d[i + 1 + x];
++			g2 = d[j + x];
++			r = d[j + 1 + x];
++			g = (g1 >> 1) + (g2 >> 1);
++
++			*s1 = ( ((r & 0xF8) >> 3) |
++			        ((g1 & 0xFC) << 3) |
++			        ((b & 0xF8) << 8) );
++
++			s1 += 2;
++
++			*s1 = ( ((r & 0xF8) >> 3) |
++			        ((g & 0xFC) << 3) |
++			        ((b & 0xF8) << 8) );
++
++			s1 += 2;
++
++			*s2 = ( ((r & 0xF8) >> 3) |
++			        ((g & 0xFC) << 3) |
++			        ((b & 0xF8) << 8) );
++
++			s2 += 2;
++
++			*s2 = ( ((r & 0xF8) >> 3) |
++			        ((g2 & 0xFC) << 3) |
++			        ((b & 0xF8) << 8) );
++
++			s2 += 2;
++		}
++	}
++}
++
++/* ------------------------------------------------------------------- */
++
++static struct ng_video_conv conv_list[] = {
++    {
++	init:           ng_conv_nop_init,
++	fini:           ng_conv_nop_fini,
++	frame:          sbggr8_to_rgb24,
++	fmtid_in:	VIDEO_SBGGR8,
++	fmtid_out:	VIDEO_RGB24,
++    },
++    {
++	init:           ng_conv_nop_init,
++	fini:           ng_conv_nop_fini,
++	frame:          sbggr8_to_rgb16,
++	fmtid_in:	VIDEO_SBGGR8,
++	fmtid_out:	VIDEO_RGB16_LE,
++    }
++
++};
++static const int nconv = sizeof(conv_list)/sizeof(struct ng_video_conv);
++
++/* ------------------------------------------------------------------- */
++
++void ng_color_bayer2rgb_init(void)
++{
++    /* register stuff */
++    ng_conv_register(NG_PLUGIN_MAGIC,"built-in",conv_list,nconv);
++}
+diff -uprN xawtv-3.92/libng/grab-ng.c xawtv-3.92-devel/libng/grab-ng.c
+--- xawtv-3.92/libng/grab-ng.c	2003-03-28 13:19:28.000000000 +0100
++++ xawtv-3.92-devel/libng/grab-ng.c	2004-05-30 23:59:15.000000000 +0200
+@@ -42,6 +42,7 @@ const unsigned int ng_vfmt_to_depth[] = 
+     0,               /* unused   */
+     8,               /* RGB8     */
+     8,               /* GRAY8    */
++    8,               /* SBGGR8   */
+     16,              /* RGB15 LE */
+     16,              /* RGB16 LE */
+     16,              /* RGB15 BE */
+@@ -64,6 +65,7 @@ const char* ng_vfmt_to_desc[] = {
+     "none",
+     "8 bit PseudoColor (dithering)",
+     "8 bit StaticGray",
++    "8 bit Sequential Bayer BGGR",
+     "15 bit TrueColor (LE)",
+     "16 bit TrueColor (LE)",
+     "15 bit TrueColor (BE)",
+@@ -865,6 +867,7 @@ ng_init(void)
+     ng_device_init();
+     ng_color_packed_init();
+     ng_color_yuv2rgb_init();
++    ng_color_bayer2rgb_init();
+     ng_writefile_init();
+ 
+     count += ng_plugins(LIBDIR);
+diff -uprN xawtv-3.92/libng/grab-ng.h xawtv-3.92-devel/libng/grab-ng.h
+--- xawtv-3.92/libng/grab-ng.h	2003-02-14 15:14:07.000000000 +0100
++++ xawtv-3.92-devel/libng/grab-ng.h	2004-05-30 21:44:23.000000000 +0200
+@@ -41,23 +41,24 @@ extern char ng_v4l_conf[256];
+ #define VIDEO_NONE           0
+ #define VIDEO_RGB08          1  /* bt848 dithered */
+ #define VIDEO_GRAY           2
+-#define VIDEO_RGB15_LE       3  /* 15 bpp little endian */
+-#define VIDEO_RGB16_LE       4  /* 16 bpp little endian */
+-#define VIDEO_RGB15_BE       5  /* 15 bpp big endian */
+-#define VIDEO_RGB16_BE       6  /* 16 bpp big endian */
+-#define VIDEO_BGR24          7  /* bgrbgrbgrbgr (LE) */
+-#define VIDEO_BGR32          8  /* bgr-bgr-bgr- (LE) */
+-#define VIDEO_RGB24          9  /* rgbrgbrgbrgb (BE) */
+-#define VIDEO_RGB32         10  /* -rgb-rgb-rgb (BE) */
+-#define VIDEO_LUT2          11  /* lookup-table 2 byte depth */
+-#define VIDEO_LUT4          12  /* lookup-table 4 byte depth */
+-#define VIDEO_YUYV	    13  /* 4:2:2 */
+-#define VIDEO_YUV422P       14  /* YUV 4:2:2 (planar) */
+-#define VIDEO_YUV420P	    15  /* YUV 4:2:0 (planar) */
+-#define VIDEO_MJPEG	    16  /* MJPEG (AVI) */
+-#define VIDEO_JPEG	    17  /* JPEG (JFIF) */
+-#define VIDEO_UYVY	    18  /* 4:2:2 */
+-#define VIDEO_FMT_COUNT	    19
++#define VIDEO_SBGGR8         3  /* 8 bpp lines: bgbgbgbg...grgrgrgr... */
++#define VIDEO_RGB15_LE       4  /* 15 bpp little endian */
++#define VIDEO_RGB16_LE       5  /* 16 bpp little endian */
++#define VIDEO_RGB15_BE       6  /* 15 bpp big endian */
++#define VIDEO_RGB16_BE       7  /* 16 bpp big endian */
++#define VIDEO_BGR24          8  /* bgrbgrbgrbgr (LE) */
++#define VIDEO_BGR32          9  /* bgr-bgr-bgr- (LE) */
++#define VIDEO_RGB24         10  /* rgbrgbrgbrgb (BE) */
++#define VIDEO_RGB32         11  /* -rgb-rgb-rgb (BE) */
++#define VIDEO_LUT2          12  /* lookup-table 2 byte depth */
++#define VIDEO_LUT4          13  /* lookup-table 4 byte depth */
++#define VIDEO_YUYV	    14  /* 4:2:2 */
++#define VIDEO_YUV422P       15  /* YUV 4:2:2 (planar) */
++#define VIDEO_YUV420P	    16  /* YUV 4:2:0 (planar) */
++#define VIDEO_MJPEG	    17  /* MJPEG (AVI) */
++#define VIDEO_JPEG	    18  /* JPEG (JFIF) */
++#define VIDEO_UYVY	    19  /* 4:2:2 */
++#define VIDEO_FMT_COUNT	    20
+ 
+ #define AUDIO_NONE           0
+ #define AUDIO_U8_MONO        1
+@@ -478,6 +479,7 @@ void ng_rgb24_to_lut4(unsigned char *des
+ /* init functions */
+ void ng_color_packed_init(void);
+ void ng_color_yuv2rgb_init(void);
++void ng_color_bayer2rgb_init(void);
+ void ng_writefile_init(void);
+ 
+ /* for yuv2rgb using lookup tables (color_lut.c, color_yuv2rgb.c) */
+diff -uprN xawtv-3.92/libng/plugins/drv0-v4l2.c xawtv-3.92-devel/libng/plugins/drv0-v4l2.c
+--- xawtv-3.92/libng/plugins/drv0-v4l2.c	2003-04-09 20:15:07.000000000 +0200
++++ xawtv-3.92-devel/libng/plugins/drv0-v4l2.c	2004-05-30 18:35:20.000000000 +0200
+@@ -134,6 +134,7 @@ struct ng_vid_driver v4l2_driver = {
+ static __u32 xawtv_pixelformat[VIDEO_FMT_COUNT] = {
+     [ VIDEO_RGB08 ]    = V4L2_PIX_FMT_HI240,
+     [ VIDEO_GRAY ]     = V4L2_PIX_FMT_GREY,
++    [ VIDEO_SBGGR8]    = V4L2_PIX_FMT_SBGGR8,
+     [ VIDEO_RGB15_LE ] = V4L2_PIX_FMT_RGB555,
+     [ VIDEO_RGB16_LE ] = V4L2_PIX_FMT_RGB565,
+     [ VIDEO_RGB15_BE ] = V4L2_PIX_FMT_RGB555X,
+diff -uprN xawtv-3.92/libng/Subdir.mk xawtv-3.92-devel/libng/Subdir.mk
+--- xawtv-3.92/libng/Subdir.mk	2003-02-14 15:14:07.000000000 +0100
++++ xawtv-3.92-devel/libng/Subdir.mk	2004-05-30 20:23:41.000000000 +0200
+@@ -6,6 +6,7 @@ OBJS-libng := \
+ 	libng/color_packed.o \
+ 	libng/color_lut.o \
+ 	libng/color_yuv2rgb.o \
++	libng/color_bayer2rgb.o \
+ 	libng/convert.o
+ 
+ libng/libng.a: $(OBJS-libng)
+diff -uprN xawtv-3.92/libng/videodev2.h xawtv-3.92-devel/libng/videodev2.h
+--- xawtv-3.92/libng/videodev2.h	2003-02-14 15:14:07.000000000 +0100
++++ xawtv-3.92-devel/libng/videodev2.h	2004-05-30 22:18:01.000000000 +0200
+@@ -177,6 +177,7 @@ struct v4l2_pix_format
+ #define V4L2_PIX_FMT_BGR32   v4l2_fourcc('B','G','R','4') /* 32  BGR-8-8-8-8   */
+ #define V4L2_PIX_FMT_RGB32   v4l2_fourcc('R','G','B','4') /* 32  RGB-8-8-8-8   */
+ #define V4L2_PIX_FMT_GREY    v4l2_fourcc('G','R','E','Y') /*  8  Greyscale     */
++#define V4L2_PIX_FMT_SBGGR8  v4l2_fourcc('B','A','8','1') /*  8  BGBG..GRGR..  */
+ #define V4L2_PIX_FMT_YVU410  v4l2_fourcc('Y','V','U','9') /*  9  YVU 4:1:0     */
+ #define V4L2_PIX_FMT_YVU420  v4l2_fourcc('Y','V','1','2') /* 12  YVU 4:2:0     */
+ #define V4L2_PIX_FMT_YUYV    v4l2_fourcc('Y','U','Y','V') /* 16  YUV 4:2:2     */
+

@@ -1,0 +1,51 @@
+
+How send audio/video data over the net?
+=======================================
+
+
+Just some pointers where to look.  I haven't tried everything myself.
+
+
+still images (webcam)
+---------------------
+
+You can use the xawtv's webcam utility (in the webcam subdirectory) to
+capture single frames and upload them to a (web-)server using ftp.
+
+There are plenty of other tools for that purpose, http://freshmeat.net
+has a list.
+
+
+both audio and video
+--------------------
+
+You can use video conferencing tools, see http://www.openh323.org.  That
+should even interoperate with M$ Netmeeting.  I've heard there is a
+project named "gnomemeeting" ...
+
+You might want to have a look at videolan (http://www.videolan.org).
+
+Using the mbone tools (i.e. vic for video, vat or rat for audio) works
+too,  see http://www-mice.cs.ucl.ac.uk/multimedia/software/
+Drawback is that these two work independent of each other, that's why
+there is no way to make audio and video sync properly.
+
+
+video only
+----------
+
+xawtv works with a remote display.  Eats plenty of network bandwith as
+the X11 protocol is not optimized for streaming video.  Can be used to
+max-out ATM cards.  Don't even think about it with something slower
+than Ethernet.
+
+
+audio only
+----------
+
+Use some network sound daemon, esound for example:
+sox -w -c 2 -r 44100 -t ossdsp /dev/dsp -t raw - | esdcat -r 44100
+
+Check out http://freshmeat.net, IIRC there are some tools to multicast
+audio data.
+

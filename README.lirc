@@ -1,0 +1,38 @@
+
+Starting with version 3.71 xawtv + friends do not need a ~/.lircrc
+config file any more.  There is a new config mechanism to map input
+events (lirc, joystick, keyboard) into xawtv commands which is called
+"eventmap".  Check the xawtvrc manpage ([eventmap] section) for
+details.  There also is an default configuration now, so lirc support
+should simply work out-of-the-box.
+
+If there is no ~/.lircrc config file present, xawtv will generate
+lirc-key-* events for every key pressed on the IR remote.
+
+If ~/.lircrc is present, xawtv will still use it.  As strings for
+"config" are the usual xawtv commands (the traditional way to
+configure lirc support, see "man xawtv-remote") and the keyword
+"eventmap" allowed.  Specifying "eventmap" will make xawtv simply
+generate lirc-key-* events.
+
+The main difference between using no config file at all and one with
+"config = eventmap" is that the later allows you to filter the
+keypresses depending on the current mode.  The simpliest way to make
+xawtv use the default eventmap configuration, but respond to key
+presses in xawtv mode only looks like this:
+
+begin xawtv
+	begin
+		prog = xawtv
+		config = eventmap
+	end
+end xawtv
+
+You probably need this if you are going to control multiple
+applications with your IR remote, check out the lirc documentation for
+details.
+
+Have fun,
+
+  Gerd
+

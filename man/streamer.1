@@ -1,0 +1,46 @@
+.TH streamer 1
+.SH NAME
+streamer - record audio and/or video
+.SH SYNOPSIS
+.B streamer [ options ]
+.SH DESCRIPTION
+.B streamer
+reads audio and/or video data from /dev/video0 and /dev/dsp and
+writes the data to the disk.  Various output formats are supported.
+Start streamer with '-h' for a list of options and supported output
+formats.
+.P
+streamer will use the file extention of the output file name to figure
+which format to use.  You need the -f/-F options only if the extention
+allows more than one format.  If you get the "neither audio nor video
+format specified/found" message and don't know why, you can enable the
+debug output (-d switch) to see what is going on.
+.P
+You can safely stop the recording at any time with Ctrl+C.  streamer
+will catch the signal and stop recording correctly (i.e. write movie
+file headers) before exiting.
+.SH EXAMPLES
+.TP
+.B streamer -o foobar.jpeg
+write a single jpeg file.
+.TP
+.B streamer -o quicktime.mov -f yuv2 -F stereo -r 12 -t 0:10
+record a short quicktime movie.
+.SH SEE ALSO
+xawtv(1), v4lctl(1)
+.SH AUTHOR
+Gerd Knorr <kraxel@bytesex.org>
+.SH COPYRIGHT
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.P
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.P
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.

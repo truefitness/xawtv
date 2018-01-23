@@ -1,0 +1,79 @@
+#!/bin/sh
+#
+# test capture...
+#
+STREAMER=src/streamer
+PLAYBACK="xanim +f +Sr +Ze -Zr -Av"
+LEN=600
+#DEST=/media/test
+DEST=/tmp/media
+
+################################################################
+# init
+
+test -d $DEST || mkdir $DEST
+
+function run () {
+	 echo "*** $* ***"
+	 $*
+	 sync
+	 sleep 2
+}
+
+
+################################################################
+# images
+
+# single ppm
+run $STREAMER -o $DEST/image.ppm
+run $STREAMER -o $DEST/image.pgm
+
+# single jpeg
+run $STREAMER -o $DEST/image.jpeg
+
+# multiple images
+run $STREAMER -r5 -t10 -o $DEST/movie000.jpeg
+
+
+################################################################
+# movies
+
+# avi
+run $STREAMER -r10 -t$LEN -f rgb15 -F mono8  -b 32 -o $DEST/rgb15.avi
+run $STREAMER -r10 -t$LEN -f rgb24 -F mono16 -b 32 -o $DEST/rgb24.avi
+run $STREAMER -r10 -t$LEN -f mjpeg -F stereo -b 32 -o $DEST/mjpeg.avi
+
+# quicktime
+run $STREAMER -r10 -t$LEN -f raw   -F mono8  -b 32 -o $DEST/raw.mov
+run $STREAMER -r10 -t$LEN -f jpeg  -F mono8  -b 32 -o $DEST/jpeg.mov
+run $STREAMER -r10 -t$LEN -f mjpa  -F mono8  -b 32 -o $DEST/mjpa.mov
+run $STREAMER -r10 -t$LEN -f png   -F mono8  -b 32 -o $DEST/png.mov
+
+
+################################################################
+# raw data
+
+for format in rgb gray 422 422p; do
+    run $STREAMER -d -f $format -o $DEST/$format.raw 2>&1 | grep ^grab:
+done
+
+
+################################################################
+# check
+
+xv $DEST/*.p[pg]m $DEST/*.jpeg
+
+$PLAYBACK $DEST/rgb15.avi
+$PLAYBACK $DEST/rgb24.avi
+$PLAYBACK $DEST/mjpeg.avi
+
+$PLAYBACK $DEST/raw.mov
+$PLAYBACK $DEST/jpeg.mov
+$PLAYBACK $DEST/mjpa.mov
+$PLAYBACK $DEST/png.mov
+
+display -size 320x240 gray:$DEST/gray.raw
+display -size 320x240 rgb:$DEST/rgb.raw
+display -size 640x240 gray:$DEST/422.raw
+display -size 320x480 gray:$DEST/422p.raw
+#display -size 320x360 gray:$DEST/420p.raw

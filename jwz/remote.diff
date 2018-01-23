@@ -1,0 +1,89 @@
+--- xscreensaver-4.00/driver/remote.h	Sun Nov 14 01:15:07 1999
++++ remote.h	Tue Mar 26 11:01:34 2002
+@@ -21,4 +21,6 @@
+ 					 char **user_ret,
+ 					 char **host_ret);
+ 
++extern void xscreensaver_init(Display *dpy);
++
+ #endif /* _XSCREENSAVER_REMOTE_H_ */
+--- xscreensaver-4.00/driver/remote.c	Mon Dec 20 12:24:19 1999
++++ remote.c	Tue Mar 26 11:31:14 2002
+@@ -33,16 +33,20 @@
+ #include <X11/Xutil.h>		/* for XGetClassHint() */
+ #include <X11/Xos.h>
+ 
++/* for xawtv */
++#include <X11/Intrinsic.h>
++extern XtAppContext      app_context;
++
+ #include "remote.h"
+ 
+ #ifdef _VROOT_H_
+ ERROR! you must not include vroot.h in this file
+ #endif
+ 
+-extern char *progname;
+-extern Atom XA_SCREENSAVER, XA_SCREENSAVER_VERSION, XA_SCREENSAVER_RESPONSE;
+-extern Atom XA_SCREENSAVER_ID, XA_SCREENSAVER_STATUS, XA_EXIT;
+-extern Atom XA_VROOT, XA_SELECT, XA_DEMO, XA_BLANK, XA_LOCK;
++static char *progname = "fixme";
++static Atom XA_SCREENSAVER, XA_SCREENSAVER_VERSION, XA_SCREENSAVER_RESPONSE;
++static Atom XA_SCREENSAVER_ID, XA_SCREENSAVER_STATUS, XA_EXIT;
++static Atom XA_VROOT, XA_SELECT, XA_DEMO, XA_BLANK, XA_LOCK;
+ 
+ 
+ static XErrorHandler old_handler = 0;
+@@ -261,13 +265,13 @@
+                     }
+ 
+                 if (any && nhacks == 1)
+-                  fprintf (stdout, " (hack #%d)\n", data[2]);
++                  fprintf (stdout, " (hack #%ld)\n", data[2]);
+                 else if (any)
+                   {
+                     fprintf (stdout, " (hacks: ");
+                     for (i = 0; i < nhacks; i++)
+                       {
+-                        fprintf (stdout, "#%d", data[2 + i]);
++                        fprintf (stdout, "#%ld", data[2 + i]);
+                         if (i != nhacks-1)
+                           fputs (", ", stdout);
+                       }
+@@ -380,7 +384,7 @@
+       else
+ 	{
+ 	  XEvent event;
+-	  XNextEvent (dpy, &event);
++          XtAppNextEvent(app_context,&event);
+ 	  if (event.xany.type == PropertyNotify &&
+ 	      event.xproperty.state == PropertyNewValue &&
+ 	      event.xproperty.atom == XA_SCREENSAVER_RESPONSE)
+@@ -459,6 +463,8 @@
+ 		      return ret;
+ 		    }
+ 		}
++	    } else {
++		XtDispatchEvent(&event);
+ 	    }
+ 	}
+     }
+@@ -568,3 +574,18 @@
+ 	XFree (id);
+     }
+ }
++
++void xscreensaver_init(Display *dpy)
++{
++    XA_VROOT = XInternAtom (dpy, "__SWM_VROOT", False);
++    XA_SCREENSAVER = XInternAtom (dpy, "SCREENSAVER", False);
++    XA_SCREENSAVER_ID = XInternAtom (dpy, "_SCREENSAVER_ID", False);
++    XA_SCREENSAVER_VERSION = XInternAtom (dpy, "_SCREENSAVER_VERSION",False);
++    XA_SCREENSAVER_STATUS = XInternAtom (dpy, "_SCREENSAVER_STATUS", False);
++    XA_SCREENSAVER_RESPONSE = XInternAtom (dpy, "_SCREENSAVER_RESPONSE", False);
++    XA_SELECT = XInternAtom (dpy, "SELECT", False);
++    XA_EXIT = XInternAtom (dpy, "EXIT", False);
++    XA_DEMO = XInternAtom (dpy, "DEMO", False);
++    XA_LOCK = XInternAtom (dpy, "LOCK", False);
++    XA_BLANK = XInternAtom (dpy, "BLANK", False);
++}
