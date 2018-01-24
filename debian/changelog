@@ -1,3 +1,9 @@
+xawtv (3.103-4build1true1) UNRELEASED; urgency=medium
+
+  * Change timeout from 0.2 to 1 second
+
+ -- Robert Hedges <rhedges@hpz-bonk-pig>  Wed, 24 Jan 2018 10:39:10 -0600
+
 xawtv (3.103-4build1) zesty; urgency=medium
 
   * Rebuild against drop liblircclient0 dependency.

@@ -1,0 +1,21 @@
+From: Robert Hedges <rhedges@truefitness.com>
+Date: Wed, 24 Jan 2018 10:38:44 -0600
+Subject: Change timeout from 0.2 to 1 second
+
+---
+ console/scantv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/console/scantv.c b/console/scantv.c
+index 931e707..560947d 100644
+--- a/console/scantv.c
++++ b/console/scantv.c
+@@ -286,7 +286,7 @@ main(int argc, char **argv)
+ 	    fprintf(stderr,"?? %6.2f MHz (%-4s): ",f/16.0,
+ 		    (i == chancount) ? "-" : chanlist[i].name);
+ 	    drv->setfreq(h_drv,f);
+-	    usleep(200000); /* 0.2 sec */
++	    usleep(1000000); /* 1 sec */
+ 	    tuned = drv->is_tuned(h_drv);
+ 
+ 	    /* state machine */
