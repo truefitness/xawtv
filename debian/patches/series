@@ -16,3 +16,4 @@ do_not_link_xprint.diff
 0016-Update-to-V4L2-API.patch
 0017-Change-timeout-from-0.2-to-1-second.patch
 0018-Change-timeout-from-2-seconds.patch
+0019-Change-timeout-to-5-seconds.patch

@@ -1,0 +1,21 @@
+From: Robert Hedges <rhedges@truefitness.com>
+Date: Thu, 25 Jan 2018 13:02:51 -0600
+Subject: Change timeout to 5 seconds
+
+---
+ console/scantv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/console/scantv.c b/console/scantv.c
+index 2562a5d..eccd633 100644
+--- a/console/scantv.c
++++ b/console/scantv.c
+@@ -257,7 +257,7 @@ main(int argc, char **argv)
+ 	    fprintf(stderr,"%-4s (%6.2f MHz): ",chanlist[i].name,
+ 		    (float)chanlist[i].freq/1000);
+ 	    do_va_cmd(2,"setchannel",chanlist[i].name);
+-	    usleep(2000000); /* 2 sec */
++	    usleep(5000000); /* 5 sec */
+ 	    if (0 == drv->is_tuned(h_drv)) {
+ 		fprintf(stderr,"no station\n");
+ 		continue;
